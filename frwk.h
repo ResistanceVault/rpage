@@ -5,12 +5,12 @@
 #ifndef _FRAMEWORK_HEADER_
 #define _FRAMEWORK_HEADER_
 
-#include "frwk/utils.h"
+#include "rpage/utils.h"
 
 #ifdef LATTICE
 #include <exec/types.h>
 #include <graphics/gfx.h>
-#include "frwk/amiga/color.h"
+#include "rpage/amiga/color.h"
 
 typedef struct BitMap rpage_bitmap;
 typedef unsigned short rpage_palette;

@@ -7,11 +7,11 @@
 		Misc bitmap routines
 */
 
-#include "frwk/amiga/includes.prl"
-#include "frwk/amiga/debug.h"
+#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/debug.h"
 #include "external/tinfl.h"
-#include "frwk/amiga/shrinkler.h"
-#include "frwk/frwk.h"
+#include "rpage/amiga/shrinkler.h"
+#include "rpage/frwk.h"
 
 extern struct DosLibrary *DOSBase;
 extern struct GfxBase *GfxBase;
@@ -248,7 +248,7 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, UWORD **new_palette,
 					Read(fileHandle, packed_block, packed_block_size);
 					tinfl_decompress_mem_to_mem((**new_bitmap).Planes[0], size * d, packed_block, packed_block_size, 1);
 					if (self_alloc_unpack_buffer)
-						free_mem_checked(packed_block, packed_block_size);
+						FreeMem(packed_block, packed_block_size);
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -273,7 +273,7 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, UWORD **new_palette,
 					Read(fileHandle, packed_block, packed_block_size);
 					ShrinklerDecompress(packed_block, (**new_bitmap).Planes[0], NULL, NULL);
 					if (self_alloc_unpack_buffer)
-						free_mem_checked(packed_block, packed_block_size);
+						FreeMem(packed_block, packed_block_size);
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -350,14 +350,14 @@ void free_allocated_bitmap(struct BitMap *allocated_bitmap)
 		for (i = 0; i < (*allocated_bitmap).Depth; i++)
 		{
 #ifdef DEBUG_MACROS				
-			printf("free_mem_checked() plane[%i], block_len = %i\n", i, block_len);
+			printf("FreeMem() plane[%i], block_len = %i\n", i, block_len);
 #endif
-			free_mem_checked((*allocated_bitmap).Planes[i],
+			FreeMem((*allocated_bitmap).Planes[i],
 						   block_len);
 		}
 
 		block_len = (LONG)sizeof(struct BitMap);
-		free_mem_checked(allocated_bitmap, block_len);
+		FreeMem(allocated_bitmap, block_len);
 	}
 }
 

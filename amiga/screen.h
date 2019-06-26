@@ -6,7 +6,7 @@
 #ifndef SCREEN_ROUTINES
 #define SCREEN_ROUTINES
 
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
 

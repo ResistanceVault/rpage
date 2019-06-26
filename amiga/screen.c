@@ -10,10 +10,10 @@
 #include <clib/graphics_protos.h>
 #include <clib/intuition_protos.h>
 
-#include "frwk/amiga/screen_size.h"
-#include "frwk/amiga/color.h"
-#include "frwk/amiga/screen.h"
-#include "frwk/amiga/debug.h"
+#include "rpage/amiga/screen_size.h"
+#include "rpage/amiga/color.h"
+#include "rpage/amiga/screen.h"
+#include "rpage/amiga/debug.h"
 
 // #ifdef LATTICE
 // int CXBRK(void)    { return(0); }  /* Disable Lattice CTRL/C handling */
@@ -252,7 +252,7 @@ struct BitMap *setupBitMap(LONG depth, LONG width, LONG height)
 		freePlanes(main_bitmap, depth, width, height);
 	}
 
-	free_mem_checked(main_bitmap, (LONG)sizeof(struct BitMap));
+	FreeMem(main_bitmap, (LONG)sizeof(struct BitMap));
 	return NULL;
 }
 
@@ -262,7 +262,7 @@ struct BitMap *setupBitMap(LONG depth, LONG width, LONG height)
 VOID freeBitMap(struct BitMap *main_bitmaps, LONG depth, LONG width, LONG height)
 {
 	freePlanes(main_bitmaps, depth, width, height);
-	// free_mem_checked(main_bitmaps, (LONG)sizeof(struct BitMap));
+	// FreeMem(main_bitmaps, (LONG)sizeof(struct BitMap));
 }
 
 /*

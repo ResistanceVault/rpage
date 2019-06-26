@@ -10,7 +10,4 @@
 // */
 
 // #endif
-#include "frwk/amiga/includes.prl"
-
-void free_mem_checked(void *memoryBlock, ULONG byteSize);
 #endif

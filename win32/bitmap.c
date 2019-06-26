@@ -8,7 +8,7 @@
 */
 
 // #include "external/tinfl.h"
-#include "frwk/frwk.h"
+#include "rpage/frwk.h"
 
 BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packed_block, UBYTE *name)
 {

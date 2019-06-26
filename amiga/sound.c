@@ -5,14 +5,14 @@
 */
 
 /* Include some important header files: */
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 #include <exec/types.h>
 #include <exec/memory.h>
 #include <devices/audio.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "frwk/amiga/sound.h"
+#include "rpage/amiga/sound.h"
 
 #define CLOCK_CONSTANT 3579545
 #define MUSIC_PRIORITY 0

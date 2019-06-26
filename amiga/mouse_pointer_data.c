@@ -4,7 +4,7 @@
 
 #ifdef LATTICE
 #include <exec/types.h>
-#include "frwk/amiga/mouse_pointer_data.h"
+#include "rpage/amiga/mouse_pointer_data.h"
 
 USHORT chip pointer_normal_data[36] =
     {

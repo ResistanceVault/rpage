@@ -9,7 +9,7 @@
 #include <intuition/intuition.h>
 #include <hardware/custom.h>
 #include <hardware/cia.h>
-#include "frwk/amiga/input.h"
+#include "rpage/amiga/input.h"
 
 extern struct IntuitionBase *IntuitionBase;
 extern struct Custom far custom;

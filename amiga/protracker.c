@@ -3,7 +3,7 @@
 */
 
 #ifdef LATTICE
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 #include <time.h>
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
@@ -12,14 +12,14 @@
 #include <hardware/custom.h>
 #include <graphics/gfxmacros.h>
 
-#include "frwk/amiga/ptreplay.h"
-#include "frwk/amiga/ptreplay_protos.h"
-#include "frwk/amiga/ptreplay_pragmas.h"
+#include "rpage/amiga/ptreplay.h"
+#include "rpage/amiga/ptreplay_protos.h"
+#include "rpage/amiga/ptreplay_pragmas.h"
 
-#include "frwk/amiga/bitmap.h"
+#include "rpage/amiga/bitmap.h"
 
-#include "frwk/frwk.h"
-#include "frwk/amiga/protracker.h"
+#include "rpage/frwk.h"
+#include "rpage/amiga/protracker.h"
 
 /* Music */
 struct Library *PTReplayBase = NULL;

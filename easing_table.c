@@ -2,7 +2,7 @@
     Released under MIT License, see license.txt for details.
 */
 
-#include "frwk/utils.h"
+#include "rpage/utils.h"
 
 const UWORD easing_table[] =
 {

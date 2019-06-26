@@ -3,9 +3,9 @@
 */
 
 #ifdef LATTICE
-#include "frwk/amiga/includes.prl"
-#include "frwk/amiga/color.h"
-#include "frwk/utils.h"
+#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/color.h"
+#include "rpage/utils.h"
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
 #include <graphics/gfxmacros.h>

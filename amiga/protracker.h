@@ -6,9 +6,9 @@
 #ifndef AUDIO_ROUTINES
 #define AUDIO_ROUTINES
 
-#include "frwk/amiga/ptreplay.h"
-#include "frwk/amiga/ptreplay_protos.h"
-#include "frwk/amiga/ptreplay_pragmas.h"
+#include "rpage/amiga/ptreplay.h"
+#include "rpage/amiga/ptreplay_protos.h"
+#include "rpage/amiga/ptreplay_pragmas.h"
 
 BOOL init_protracker_player(void);
 void uninit_protracker_player(void);

@@ -3,9 +3,9 @@
 */
 
 #ifdef LATTICE
-#include "frwk/frwk.h"
+#include "rpage/frwk.h"
 
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 #include <time.h>
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
@@ -22,28 +22,28 @@
 /*
 Common
 */
-#include "frwk/amiga/board.h"
-#include "frwk/amiga/ptreplay.h"
-#include "frwk/amiga/ptreplay_protos.h"
-#include "frwk/amiga/ptreplay_pragmas.h"
+#include "rpage/amiga/board.h"
+#include "rpage/amiga/ptreplay.h"
+#include "rpage/amiga/ptreplay_protos.h"
+#include "rpage/amiga/ptreplay_pragmas.h"
 
 /*
 Routines
 */
-#include "frwk/amiga/screen.h"
-#include "frwk/amiga/bitmap.h"
-#include "frwk/amiga/color.h"
-#include "frwk/amiga/helper.h"
-#include "frwk/amiga/protracker.h"
-#include "frwk/amiga/input.h"
-#include "frwk/amiga/time.h"
+#include "rpage/amiga/screen.h"
+#include "rpage/amiga/bitmap.h"
+#include "rpage/amiga/color.h"
+#include "rpage/amiga/helper.h"
+#include "rpage/amiga/protracker.h"
+#include "rpage/amiga/input.h"
+#include "rpage/amiga/time.h"
 
 /*
 Graphic assets
 */
-#include "frwk/amiga/screen_size.h"
-#include "frwk/amiga/mouse_pointer_data.h"
-#include "frwk/amiga/debug.h"
+#include "rpage/amiga/screen_size.h"
+#include "rpage/amiga/mouse_pointer_data.h"
+#include "rpage/amiga/debug.h"
 
 struct IntuitionBase *IntuitionBase = NULL;
 struct GfxBase *GfxBase = NULL;

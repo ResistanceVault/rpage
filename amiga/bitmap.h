@@ -10,7 +10,7 @@
 		Misc bitmap routines headers
 */
 
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +28,7 @@
 #include <clib/graphics_protos.h>       /* Exec function prototypes */
 #include <clib/intuition_protos.h>  /* Intuition function prototypes */
 
-#include "frwk/amiga/debug.h"
+#include "rpage/amiga/debug.h"
 
 /*
 	Image loading

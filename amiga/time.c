@@ -12,7 +12,7 @@
 #include <proto/dos.h>
 #include <devices/timer.h>
 
-#include "frwk/amiga/debug.h"
+#include "rpage/amiga/debug.h"
 
 // #include <proto/all.h>
 

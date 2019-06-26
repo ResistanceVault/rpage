@@ -3,7 +3,7 @@
 */
 
 #ifdef LATTICE
-#include "frwk/amiga/includes.prl"
+#include "rpage/amiga/includes.prl"
 
 extern struct IntuitionBase *IntuitionBase;
 extern struct GfxBase *GfxBase;

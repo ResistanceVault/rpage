@@ -6,8 +6,8 @@
 #ifndef COLOR_ROUTINES
 #define COLOR_ROUTINES
 
-#include "frwk/utils.h"
-#include "frwk/amiga/includes.prl"
+#include "rpage/utils.h"
+#include "rpage/amiga/includes.prl"
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
 

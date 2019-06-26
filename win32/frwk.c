@@ -3,9 +3,9 @@
 */
 
 #ifdef WIN32
-#include "frwk/frwk.h"
-#include "frwk/win32/screen_size.h"
-#include "frwk/utils.h"
+#include "rpage/frwk.h"
+#include "rpage/win32/screen_size.h"
+#include "rpage/utils.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include <stdio.h>
@@ -14,7 +14,7 @@
 /*
 Graphic assets
 */
-#include "frwk/amiga/screen_size.h"
+#include "rpage/amiga/screen_size.h"
 
 short scr_x_offset = 0, scr_y_offset = 0;
 SDL_Window *main_window = NULL;
