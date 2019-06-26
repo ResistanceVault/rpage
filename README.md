@@ -2,7 +2,7 @@
 ## Resistance's Portable-Adventure-Game-Engine
 
 **R-PAGE** (pronounced 'arpège') is a **C framework** meant to accelerate the creation of **adventure games** for the Amiga OCS/ECS range of computers. It is designed with portability in mind, speed performance being a lesser concern.<br>
-R-PAGE is brought to you by the **demoscene** group known as [RESISTANCE](https://www.pouet.net/groups.php?which=1572&order=release).
+R-PAGE is brought to you by the **demoscene** group known as [RESISTANCE](https://resistance.no/).
 
 * Written in C language
 * AmigaOS & OS-friendly for all the access to the Amiga hardware
@@ -10,10 +10,13 @@ R-PAGE is brought to you by the **demoscene** group known as [RESISTANCE](https:
 * Reportedly works on MorphOS using the built-in AmigaOS emulation layer
 * AMIGA OCS/ECS only (AGA is on the roadmap)
 
+### What can I do with this ?
+At the moment, R-PAGE is more a framework than a full feature engine. Feel free to use it as a boostrap for your own adventure project. The roadmap, however, includes a very basic adventure game to showcase the features of this framework.
+
 ### Actual games based on R-PAGE:
-* Athanor 2 by www.safargames.com
+* Athanor 2 by www.safargames.fr
 * ShuffleP\*ck adventures (work in progress title)
-* Next adventure game by www.safargames.com
+* Next adventure game by www.safargames.fr
 
 ### 3rd party softwares included in R-PAGE:
 * [tinfl.c](https://github.com/richgel999/miniz) (Zlib compression/decompression) by Richard Geldreich
