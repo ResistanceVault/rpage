@@ -14,7 +14,7 @@ R-PAGE is brought to you by the **demoscene** group [RESISTANCE](https://resista
 At the moment, R-PAGE is more a framework than a full feature engine. Feel free to use it as a boostrap for your own adventure project. The roadmap, however, includes a very basic adventure game to showcase the features of this framework.
 
 ### Where is the API ?
-You should start looking for [frwk.h](frwk.h)
+You should start looking for [frwk.h](frwk_8h.html)
 
 ### Actual games based on R-PAGE:
 * Athanor 2 by www.safargames.fr
@@ -31,10 +31,3 @@ Palsson
 ## License/Contact
 R-PAGE is released under the MIT License. See [license.txt](license.txt).<br>
 Reach us on Twitter [@RESISTANCE_NO](https://twitter.com/RESISTANCE_NO) or WWW [RESISTANCE HQ](https://resistance.no/)
-
-
-## Sample screenshots
-
-![Screenshot](.screenshots/athanor2_shot0.png)
-![Screenshot](.screenshots/athanor2_shot1.png)
-![Screenshot](.screenshots/athanor2_shot2.png)

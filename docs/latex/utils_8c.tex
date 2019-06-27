@@ -1,0 +1,137 @@
+\hypertarget{utils_8c}{}\section{utils.\+c File Reference}
+\label{utils_8c}\index{utils.c@{utils.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{utils_8c_a1be71f5fbd8d94ae65f3569a44669eee}{F\+P\+\_\+\+S\+H\+FT}}~0
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{utils_8c_ad028eaad8ad3fa754b4b2032a2276fcb}{qsqr}} (int i)
+\item 
+void \mbox{\hyperlink{utils_8c_a5caa2956a259c15d67de63fcddff3e57}{swap}} (char $\ast$x, char $\ast$y)
+\item 
+short \mbox{\hyperlink{utils_8c_ab75b77f16137397e444e7d9a82b00c82}{str\+\_\+find\+\_\+delimiter}} (short start, char $\ast$str)
+\item 
+void \mbox{\hyperlink{utils_8c_af2c0f95bdedc4d81b85aefdbf5dfce19}{reverse}} (char str\mbox{[}$\,$\mbox{]}, int length)
+\item 
+char $\ast$ \mbox{\hyperlink{utils_8c_a76b1908972999895e55d11e3460160fb}{citoa}} (int num, char $\ast$str, int base)
+\item 
+int \mbox{\hyperlink{utils_8c_a59bc24068638c4c4b98ce40327584251}{range\+\_\+adjust}} (int val, int in\+\_\+lower, int in\+\_\+upper, int out\+\_\+lower, int out\+\_\+upper)
+\item 
+int \mbox{\hyperlink{utils_8c_aae80c335ae5abd347322bef225b2dc3a}{clamp}} (int x, int in\+\_\+lower, int in\+\_\+upper)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_a6bc8e36b6f11878c721a878697b69b10}{point\+\_\+within\+\_\+rect}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structrect}{rect}} $\ast$r)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list\mbox{[}$\,$\mbox{]}, unsigned short n\+\_\+pt)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{utils_8c_a1be71f5fbd8d94ae65f3569a44669eee}\label{utils_8c_a1be71f5fbd8d94ae65f3569a44669eee}} 
+\index{utils.c@{utils.c}!FP\_SHFT@{FP\_SHFT}}
+\index{FP\_SHFT@{FP\_SHFT}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{FP\_SHFT}{FP\_SHFT}}
+{\footnotesize\ttfamily \#define F\+P\+\_\+\+S\+H\+FT~0}
+
+
+
+Definition at line 10 of file utils.\+c.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{utils_8c_a76b1908972999895e55d11e3460160fb}\label{utils_8c_a76b1908972999895e55d11e3460160fb}} 
+\index{utils.c@{utils.c}!citoa@{citoa}}
+\index{citoa@{citoa}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{citoa()}{citoa()}}
+{\footnotesize\ttfamily char$\ast$ citoa (\begin{DoxyParamCaption}\item[{int}]{num,  }\item[{char $\ast$}]{str,  }\item[{int}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line 57 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_aae80c335ae5abd347322bef225b2dc3a}\label{utils_8c_aae80c335ae5abd347322bef225b2dc3a}} 
+\index{utils.c@{utils.c}!clamp@{clamp}}
+\index{clamp@{clamp}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{clamp()}{clamp()}}
+{\footnotesize\ttfamily int clamp (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{in\+\_\+lower,  }\item[{int}]{in\+\_\+upper }\end{DoxyParamCaption})}
+
+
+
+Definition at line 104 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}\label{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}} 
+\index{utils.c@{utils.c}!point\_within\_polygon@{point\_within\_polygon}}
+\index{point\_within\_polygon@{point\_within\_polygon}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{point\_within\_polygon()}{point\_within\_polygon()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list\mbox{[}$\,$\mbox{]},  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 117 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_a6bc8e36b6f11878c721a878697b69b10}\label{utils_8c_a6bc8e36b6f11878c721a878697b69b10}} 
+\index{utils.c@{utils.c}!point\_within\_rect@{point\_within\_rect}}
+\index{point\_within\_rect@{point\_within\_rect}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{point\_within\_rect()}{point\_within\_rect()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+rect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structrect}{rect}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line 108 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_ad028eaad8ad3fa754b4b2032a2276fcb}\label{utils_8c_ad028eaad8ad3fa754b4b2032a2276fcb}} 
+\index{utils.c@{utils.c}!qsqr@{qsqr}}
+\index{qsqr@{qsqr}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{qsqr()}{qsqr()}}
+{\footnotesize\ttfamily int qsqr (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line 12 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_a59bc24068638c4c4b98ce40327584251}\label{utils_8c_a59bc24068638c4c4b98ce40327584251}} 
+\index{utils.c@{utils.c}!range\_adjust@{range\_adjust}}
+\index{range\_adjust@{range\_adjust}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{range\_adjust()}{range\_adjust()}}
+{\footnotesize\ttfamily int range\+\_\+adjust (\begin{DoxyParamCaption}\item[{int}]{val,  }\item[{int}]{in\+\_\+lower,  }\item[{int}]{in\+\_\+upper,  }\item[{int}]{out\+\_\+lower,  }\item[{int}]{out\+\_\+upper }\end{DoxyParamCaption})}
+
+
+
+Definition at line 98 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_af2c0f95bdedc4d81b85aefdbf5dfce19}\label{utils_8c_af2c0f95bdedc4d81b85aefdbf5dfce19}} 
+\index{utils.c@{utils.c}!reverse@{reverse}}
+\index{reverse@{reverse}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{reverse()}{reverse()}}
+{\footnotesize\ttfamily void reverse (\begin{DoxyParamCaption}\item[{char}]{str\mbox{[}$\,$\mbox{]},  }\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+
+Definition at line 44 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_ab75b77f16137397e444e7d9a82b00c82}\label{utils_8c_ab75b77f16137397e444e7d9a82b00c82}} 
+\index{utils.c@{utils.c}!str\_find\_delimiter@{str\_find\_delimiter}}
+\index{str\_find\_delimiter@{str\_find\_delimiter}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{str\_find\_delimiter()}{str\_find\_delimiter()}}
+{\footnotesize\ttfamily short str\+\_\+find\+\_\+delimiter (\begin{DoxyParamCaption}\item[{short}]{start,  }\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Definition at line 30 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_a5caa2956a259c15d67de63fcddff3e57}\label{utils_8c_a5caa2956a259c15d67de63fcddff3e57}} 
+\index{utils.c@{utils.c}!swap@{swap}}
+\index{swap@{swap}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily void swap (\begin{DoxyParamCaption}\item[{char $\ast$}]{x,  }\item[{char $\ast$}]{y }\end{DoxyParamCaption})}
+
+
+
+Definition at line 21 of file utils.\+c.
+

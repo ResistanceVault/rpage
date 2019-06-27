@@ -1,0 +1,235 @@
+\hypertarget{utils_8h}{}\section{utils.\+h File Reference}
+\label{utils_8h}\index{utils.h@{utils.h}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvec2}{vec2}}
+\item 
+struct \mbox{\hyperlink{structvec2fp}{vec2fp}}
+\item 
+struct \mbox{\hyperlink{structrect}{rect}}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{T\+R\+UE}}~1
+\item 
+\#define \mbox{\hyperlink{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}~0
+\item 
+\#define \mbox{\hyperlink{utils_8h_abb702d8b501669a23aa0ab3b281b9384}{min}}(x,  y)~((x) $<$ (y) ? (x) \+: (y))
+\item 
+\#define \mbox{\hyperlink{utils_8h_ac39d9cef6a5e030ba8d9e11121054268}{max}}(x,  y)~((x) $>$ (y) ? (x) \+: (y))
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}
+\item 
+typedef unsigned char \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}
+\item 
+typedef unsigned long \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}}
+\item 
+typedef unsigned short \mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}}
+\item 
+typedef int \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}}
+\item 
+typedef unsigned short $\ast$ \mbox{\hyperlink{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}{P\+A\+L\+E\+T\+T\+E\+P\+TR}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{utils_8h_a59bc24068638c4c4b98ce40327584251}{range\+\_\+adjust}} (int val, int in\+\_\+lower, int in\+\_\+upper, int out\+\_\+lower, int out\+\_\+upper)
+\item 
+int \mbox{\hyperlink{utils_8h_aae80c335ae5abd347322bef225b2dc3a}{clamp}} (int x, int in\+\_\+lower, int in\+\_\+upper)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_a6bc8e36b6f11878c721a878697b69b10}{point\+\_\+within\+\_\+rect}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structrect}{rect}} $\ast$r)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list\mbox{[}$\,$\mbox{]}, unsigned short n\+\_\+pt)
+\item 
+char $\ast$ \mbox{\hyperlink{utils_8h_a76b1908972999895e55d11e3460160fb}{citoa}} (int num, char $\ast$str, int base)
+\item 
+short \mbox{\hyperlink{utils_8h_ab75b77f16137397e444e7d9a82b00c82}{str\+\_\+find\+\_\+delimiter}} (short start, char $\ast$str)
+\item 
+int \mbox{\hyperlink{utils_8h_ad028eaad8ad3fa754b4b2032a2276fcb}{qsqr}} (int i)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}\label{utils_8h_aa93f0eb578d23995850d61f7d61c55c1}} 
+\index{utils.h@{utils.h}!FALSE@{FALSE}}
+\index{FALSE@{FALSE}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{FALSE}{FALSE}}
+{\footnotesize\ttfamily \#define F\+A\+L\+SE~0}
+
+
+
+Definition at line 44 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_ac39d9cef6a5e030ba8d9e11121054268}\label{utils_8h_ac39d9cef6a5e030ba8d9e11121054268}} 
+\index{utils.h@{utils.h}!max@{max}}
+\index{max@{max}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{max}{max}}
+{\footnotesize\ttfamily \#define max(\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})~((x) $>$ (y) ? (x) \+: (y))}
+
+
+
+Definition at line 52 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_abb702d8b501669a23aa0ab3b281b9384}\label{utils_8h_abb702d8b501669a23aa0ab3b281b9384}} 
+\index{utils.h@{utils.h}!min@{min}}
+\index{min@{min}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{min}{min}}
+{\footnotesize\ttfamily \#define min(\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})~((x) $<$ (y) ? (x) \+: (y))}
+
+
+
+Definition at line 48 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}\label{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}} 
+\index{utils.h@{utils.h}!TRUE@{TRUE}}
+\index{TRUE@{TRUE}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{TRUE}{TRUE}}
+{\footnotesize\ttfamily \#define T\+R\+UE~1}
+
+
+
+Definition at line 40 of file utils.\+h.
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{utils_8h_a050c65e107f0c828f856a231f4b4e788}\label{utils_8h_a050c65e107f0c828f856a231f4b4e788}} 
+\index{utils.h@{utils.h}!BOOL@{BOOL}}
+\index{BOOL@{BOOL}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{BOOL}{BOOL}}
+{\footnotesize\ttfamily typedef int \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}}}
+
+
+
+Definition at line 31 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}\label{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}} 
+\index{utils.h@{utils.h}!BYTE@{BYTE}}
+\index{BYTE@{BYTE}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{BYTE}{BYTE}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}
+
+
+
+Definition at line 15 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}\label{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}} 
+\index{utils.h@{utils.h}!PALETTEPTR@{PALETTEPTR}}
+\index{PALETTEPTR@{PALETTEPTR}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{PALETTEPTR}{PALETTEPTR}}
+{\footnotesize\ttfamily typedef unsigned short$\ast$ \mbox{\hyperlink{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}{P\+A\+L\+E\+T\+T\+E\+P\+TR}}}
+
+
+
+Definition at line 36 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_a122c4acf389c050379f00341fdcd5812}\label{utils_8h_a122c4acf389c050379f00341fdcd5812}} 
+\index{utils.h@{utils.h}!UBYTE@{UBYTE}}
+\index{UBYTE@{UBYTE}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{UBYTE}{UBYTE}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}
+
+
+
+Definition at line 19 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}\label{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}} 
+\index{utils.h@{utils.h}!ULONG@{ULONG}}
+\index{ULONG@{ULONG}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{ULONG}{ULONG}}
+{\footnotesize\ttfamily typedef unsigned long \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}}}
+
+
+
+Definition at line 23 of file utils.\+h.
+
+\mbox{\Hypertarget{utils_8h_aefbb6ca39ebcf009709e607d159766d5}\label{utils_8h_aefbb6ca39ebcf009709e607d159766d5}} 
+\index{utils.h@{utils.h}!UWORD@{UWORD}}
+\index{UWORD@{UWORD}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{UWORD}{UWORD}}
+{\footnotesize\ttfamily typedef unsigned short \mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}}}
+
+
+
+Definition at line 27 of file utils.\+h.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{utils_8h_a76b1908972999895e55d11e3460160fb}\label{utils_8h_a76b1908972999895e55d11e3460160fb}} 
+\index{utils.h@{utils.h}!citoa@{citoa}}
+\index{citoa@{citoa}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{citoa()}{citoa()}}
+{\footnotesize\ttfamily char$\ast$ citoa (\begin{DoxyParamCaption}\item[{int}]{num,  }\item[{char $\ast$}]{str,  }\item[{int}]{base }\end{DoxyParamCaption})}
+
+
+
+Definition at line 57 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_aae80c335ae5abd347322bef225b2dc3a}\label{utils_8h_aae80c335ae5abd347322bef225b2dc3a}} 
+\index{utils.h@{utils.h}!clamp@{clamp}}
+\index{clamp@{clamp}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{clamp()}{clamp()}}
+{\footnotesize\ttfamily int clamp (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{in\+\_\+lower,  }\item[{int}]{in\+\_\+upper }\end{DoxyParamCaption})}
+
+
+
+Definition at line 104 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}\label{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}} 
+\index{utils.h@{utils.h}!point\_within\_polygon@{point\_within\_polygon}}
+\index{point\_within\_polygon@{point\_within\_polygon}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{point\_within\_polygon()}{point\_within\_polygon()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list\mbox{[}$\,$\mbox{]},  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 117 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_a6bc8e36b6f11878c721a878697b69b10}\label{utils_8h_a6bc8e36b6f11878c721a878697b69b10}} 
+\index{utils.h@{utils.h}!point\_within\_rect@{point\_within\_rect}}
+\index{point\_within\_rect@{point\_within\_rect}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{point\_within\_rect()}{point\_within\_rect()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+rect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structrect}{rect}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line 108 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_ad028eaad8ad3fa754b4b2032a2276fcb}\label{utils_8h_ad028eaad8ad3fa754b4b2032a2276fcb}} 
+\index{utils.h@{utils.h}!qsqr@{qsqr}}
+\index{qsqr@{qsqr}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{qsqr()}{qsqr()}}
+{\footnotesize\ttfamily int qsqr (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line 12 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_a59bc24068638c4c4b98ce40327584251}\label{utils_8h_a59bc24068638c4c4b98ce40327584251}} 
+\index{utils.h@{utils.h}!range\_adjust@{range\_adjust}}
+\index{range\_adjust@{range\_adjust}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{range\_adjust()}{range\_adjust()}}
+{\footnotesize\ttfamily int range\+\_\+adjust (\begin{DoxyParamCaption}\item[{int}]{val,  }\item[{int}]{in\+\_\+lower,  }\item[{int}]{in\+\_\+upper,  }\item[{int}]{out\+\_\+lower,  }\item[{int}]{out\+\_\+upper }\end{DoxyParamCaption})}
+
+
+
+Definition at line 98 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_ab75b77f16137397e444e7d9a82b00c82}\label{utils_8h_ab75b77f16137397e444e7d9a82b00c82}} 
+\index{utils.h@{utils.h}!str\_find\_delimiter@{str\_find\_delimiter}}
+\index{str\_find\_delimiter@{str\_find\_delimiter}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{str\_find\_delimiter()}{str\_find\_delimiter()}}
+{\footnotesize\ttfamily short str\+\_\+find\+\_\+delimiter (\begin{DoxyParamCaption}\item[{short}]{start,  }\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Definition at line 30 of file utils.\+c.
+
