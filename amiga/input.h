@@ -13,6 +13,6 @@
 
 UBYTE Keyboard(void);
 void input_window_init(struct Window *window);
-void input_update(short *button, short *x, short *y, short *rawkey);
+void input_update(short *button, short *x, short *y, unsigned short *rawkey);
 #endif
 #endif

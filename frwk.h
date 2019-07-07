@@ -113,11 +113,18 @@ void rpage_video_set_pixel(short x, short y, short color_index);
 /// Draw a text string to the screen.<br>
 /// * The font must be defined prior to this operation, see ::rpage_video_set_font
 void rpage_video_draw_text(char *str, short x, short y, short color_index);
+/// Draw a tileset-based image to the current screen.
+void rpage_video_draw_tileset(rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width);
+
+/// Draw a tileset-based image into a bitmap.
+void rpage_bitmap_draw_tileset(rpage_bitmap *dest_bitmap, rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width);
+/// Blit the destination bitmap into the source bitmap.
+void rpage_bitmap_blit(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, rpage_bitmap *dest_bitmap);
 
 /// Return the size in bytes of a ::rpage_bitmap.
-ULONG rpage_calculate_bitmap_bytesize(short width, short height, short depth);
+ULONG rpage_bitmap_calculate_bytesize(short width, short height, short depth);
 /// Allocate a new ::rpage_bitmap and return its address in video memory.
-rpage_bitmap *rpage_new_bitmap(short width, short height, short depth);
+rpage_bitmap *rpage_bitmap_new(short width, short height, short depth);
 /// Load a .PAK bitmap file into an existing bitmap.<br>
 /// * The ::rpage_bitmap and ::rpage_palette must be allocated before calling this function.<br>
 /// * the packed_buffer must be allocated before calling this function.<br>
@@ -132,7 +139,7 @@ short rpage_bitmap_get_height(rpage_bitmap *bitmap);
 BOOL rpage_load_pak_to_new_bitmap(rpage_bitmap **new_bitmap, rpage_palette **new_palette, BYTE *packed_buffer, char *bitmap_filename);
 /// Free the memory allocated by a ::rpage_bitmap.<br>
 /// The possiblity related ::rpage_palette is not automatically freed.
-void rpage_free_bitmap(rpage_bitmap *bitmap);
+void rpage_bitmap_free(rpage_bitmap *bitmap);
 
 /// Initialize the input system.<br>
 /// On the Amiga side, the input system needs a Window to be created. This is done automatically by R-PAGE when calling ::rpage_video_open. As a consequence, the input won't work if no screen was created first.
@@ -161,5 +168,7 @@ BOOL rpage_mouse_button_right_is_down(void);
 BOOL rpage_mouse_button_left_was_down(void);
 /// Test if the right mouse button was pressed but isn't anymore.
 BOOL rpage_mouse_button_right_was_down(void);
+/// 
+short rpage_keyboard_rawkey(void);
 
 #endif

@@ -21,7 +21,7 @@ void input_window_init(struct Window *window)
   mouse_window = window;
 }
 
-void input_update(short *button, short *x, short *y, short *rawkey)
+void input_update(short *button, short *x, short *y, unsigned short *rawkey)
 {
   unsigned long class;
   unsigned short code;
@@ -67,24 +67,25 @@ void input_update(short *button, short *x, short *y, short *rawkey)
         }
         break;
       case RAWKEY:         /* The user pressed/released a key! */
+        *rawkey = code;
         /* Print out the raw keycode (both as decimal and hex.): */
         printf("Raw keycode: %6d(d) %6x(h)\n", code, code );
         
-        /* Print out the qualifier (both as decimal and hex.): */
-        printf("Qualifier:   %6d(d) %6x(h)\n", qualifier, qualifier);
+        // /* Print out the qualifier (both as decimal and hex.): */
+        // printf("Qualifier:   %6d(d) %6x(h)\n", qualifier, qualifier);
         
-        /* This shows how you can check if a SHIFT or CTRL */
-        /* qualifier key was also pressed:                 */
-        if( qualifier &= IEQUALIFIER_LSHIFT )
-          printf("Left SHIFT button pressed\n");
+        // /* This shows how you can check if a SHIFT or CTRL */
+        // /* qualifier key was also pressed:                 */
+        // if( qualifier &= IEQUALIFIER_LSHIFT )
+        //   printf("Left SHIFT button pressed\n");
 
-        if( qualifier &= IEQUALIFIER_RSHIFT )
-          printf("Right SHIFT button pressed\n");
+        // if( qualifier &= IEQUALIFIER_RSHIFT )
+        //   printf("Right SHIFT button pressed\n");
         
-        if( qualifier &= IEQUALIFIER_CONTROL )
-          printf("CTRL button pressed\n");
+        // if( qualifier &= IEQUALIFIER_CONTROL )
+        //   printf("CTRL button pressed\n");
 
-        printf("\n");
+        // printf("\n");
         break;
     }
 

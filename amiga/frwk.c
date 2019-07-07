@@ -278,6 +278,12 @@ void rpage_video_clear(void)
     }
 }
 
+void __inline rpage_bitmap_blit(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, rpage_bitmap *dest_bitmap)
+{
+    BltBitMap(source_bitmap, source_x, source_y, dest_bitmap, x, y, width, height, 0xC0, 0xFF, NULL);
+    // WaitBlit();
+}
+
 void __inline rpage_video_blt_bmp(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y)
 {
     BltBitMap(source_bitmap, source_x, source_y, main_screen->bitmaps[main_screen->physical], x, y, width, height, 0xC0, 0xFF, NULL);
@@ -419,6 +425,58 @@ void __inline rpage_video_set_palette(PALETTEPTR palette, short palette_size)
     set_palette(&(main_screen->screen->ViewPort), &palette, 0, palette_size - 1);
 }
 
+void rpage_video_draw_tileset(rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width)
+{
+    UBYTE x , y, tile_idx, prev_tile_idx = 0xFF;
+    unsigned short y_w;
+    UBYTE tile_x, tile_y,  tileset_bitmap_width = rpage_bitmap_get_width(tileset_bitmap) >> 3;
+
+    for(y = (UBYTE)(tile_rect->sy); y < tile_rect->ey; y++)
+    {
+        y_w = y * tileset_width;
+        for(x = (UBYTE)(tile_rect->sx); x < tile_rect->ex; x++)
+        {
+            tile_idx = tileset[x + y_w];
+            if (tile_idx > 0)
+            {
+                if (prev_tile_idx != tile_idx) /* let's avoid 2 divide ops. if possible */ 
+                {
+                    tile_x = (tile_idx%tileset_bitmap_width) << 3;
+                    tile_y = (tile_idx/tileset_bitmap_width) << 3;
+                }
+                rpage_video_blt_bmp(tileset_bitmap, tile_x, tile_y, 8, 8, x << 3, y << 3);
+            }
+            prev_tile_idx = tile_idx;
+        }
+    }
+}
+
+void rpage_bitmap_draw_tileset(rpage_bitmap *dest_bitmap, rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width)
+{
+    UBYTE x , y, tile_idx, prev_tile_idx = 0xFF;
+    unsigned short y_w;
+    UBYTE tile_x, tile_y,  tileset_bitmap_width = rpage_bitmap_get_width(tileset_bitmap) >> 3;
+
+    for(y = (UBYTE)(tile_rect->sy); y < tile_rect->ey; y++)
+    {
+        y_w = y * tileset_width;
+        for(x = (UBYTE)(tile_rect->sx); x < tile_rect->ex; x++)
+        {
+            tile_idx = tileset[x + y_w];
+            if (tile_idx > 0)
+            {
+                if (prev_tile_idx != tile_idx) /* let's avoid 2 divide ops. if possible */ 
+                {
+                    tile_x = (tile_idx%tileset_bitmap_width) << 3;
+                    tile_y = (tile_idx/tileset_bitmap_width) << 3;
+                }
+                rpage_bitmap_blit(tileset_bitmap, tile_x, tile_y, 8, 8, x << 3, y << 3, dest_bitmap);
+            }
+            prev_tile_idx = tile_idx;
+        }
+    }
+}
+
 void __inline rpage_fill_rect(rect *r, short color)
 {
     if (color < 0)
@@ -554,12 +612,12 @@ void rpage_video_close(void)
     -----------------------------
 */
 
-ULONG rpage_calculate_bitmap_bytesize(short width, short height, short depth)
+ULONG rpage_bitmap_calculate_bytesize(short width, short height, short depth)
 {
     return (RASSIZE(width, height) * depth);
 }
 
-rpage_bitmap *rpage_new_bitmap(short width, short height, short depth)
+rpage_bitmap *rpage_bitmap_new(short width, short height, short depth)
 {
     return (rpage_bitmap *)allocate_new_bitmap(width, height, depth);
 }
@@ -591,7 +649,7 @@ rpage_bitmap *rpage_build_bitmap_mask(rpage_bitmap *source_bitmap)
     return NULL;
 }
 
-void rpage_free_bitmap(rpage_bitmap *bitmap)
+void rpage_bitmap_free(rpage_bitmap *bitmap)
 {
     free_allocated_bitmap(bitmap);
 }
@@ -629,6 +687,11 @@ void rpage_mouse_button_flush(void)
 {
     ActivateWindow(main_screen->window); /* FIXME : this patch helps the main window to get the focus after game init */
     input_mouse_button = 0;
+}
+
+short rpage_keyboard_rawkey(void)
+{
+    return input_rawkey;
 }
 
 BOOL rpage_mouse_button_left_is_down(void)

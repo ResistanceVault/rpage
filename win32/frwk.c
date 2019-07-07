@@ -174,12 +174,12 @@ void rpage_video_close(void)
 	-----------------------------
 */
 
-ULONG rpage_calculate_bitmap_bytesize(short width, short height, short depth)
+ULONG rpage_bitmap_calculate_bytesize(short width, short height, short depth)
 {
 	return (width * height);
 }
 
-rpage_bitmap *rpage_new_bitmap(short width, short height, short depth)
+rpage_bitmap *rpage_bitmap_new(short width, short height, short depth)
 {
 	return (rpage_bitmap *)SDL_CreateTexture(main_renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STATIC, width, height);
 }
@@ -214,7 +214,7 @@ BOOL rpage_load_pak_to_new_bitmap(rpage_bitmap **new_bitmap, rpage_palette **new
     return FALSE;
 }
 
-void rpage_free_bitmap(rpage_bitmap *bitmap)
+void rpage_bitmap_free(rpage_bitmap *bitmap)
 {
 	SDL_DestroyTexture((SDL_Texture *)bitmap);
 }
