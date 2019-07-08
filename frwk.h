@@ -169,6 +169,6 @@ BOOL rpage_mouse_button_left_was_down(void);
 /// Test if the right mouse button was pressed but isn't anymore.
 BOOL rpage_mouse_button_right_was_down(void);
 /// 
-short rpage_keyboard_rawkey(void);
+unsigned short rpage_keyboard_rawkey(void);
 
 #endif

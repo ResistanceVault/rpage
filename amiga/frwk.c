@@ -74,7 +74,7 @@ short prev_input_mouse_button;
 vec2 input_mouse_position;
 vec2 prev_input_mouse_position;
 
-short input_rawkey;
+unsigned short input_rawkey;
 
 /* platform interface Amiga implementation */
 
@@ -689,7 +689,7 @@ void rpage_mouse_button_flush(void)
     input_mouse_button = 0;
 }
 
-short rpage_keyboard_rawkey(void)
+unsigned short rpage_keyboard_rawkey(void)
 {
     return input_rawkey;
 }
