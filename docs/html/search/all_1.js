@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['citoa',['citoa',['../utils_8c.html#a76b1908972999895e55d11e3460160fb',1,'citoa(int num, char *str, int base):&#160;utils.c'],['../utils_8h.html#a76b1908972999895e55d11e3460160fb',1,'citoa(int num, char *str, int base):&#160;utils.c']]],
-  ['clamp',['clamp',['../utils_8c.html#aae80c335ae5abd347322bef225b2dc3a',1,'clamp(int x, int in_lower, int in_upper):&#160;utils.c'],['../utils_8h.html#aae80c335ae5abd347322bef225b2dc3a',1,'clamp(int x, int in_lower, int in_upper):&#160;utils.c']]],
-  ['color_2ec',['color.c',['../color_8c.html',1,'']]],
-  ['color_2eh',['color.h',['../color_8h.html',1,'']]]
+  ['bitmap_2ec',['bitmap.c',['../amiga_2bitmap_8c.html',1,'(Global Namespace)'],['../win32_2bitmap_8c.html',1,'(Global Namespace)']]],
+  ['bitmap_2eh',['bitmap.h',['../bitmap_8h.html',1,'']]],
+  ['board_2eh',['board.h',['../board_8h.html',1,'']]],
+  ['bool',['BOOL',['../utils_8h.html#a050c65e107f0c828f856a231f4b4e788',1,'utils.h']]],
+  ['byte',['BYTE',['../utils_8h.html#a4ae1dab0fb4b072a66584546209e7d58',1,'utils.h']]]
 ];

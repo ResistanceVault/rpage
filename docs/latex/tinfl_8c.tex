@@ -1,0 +1,704 @@
+\hypertarget{tinfl_8c}{}\section{ext/tinfl.c File Reference}
+\label{tinfl_8c}\index{ext/tinfl.c@{ext/tinfl.c}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtinfl__huff__table}{tinfl\+\_\+huff\+\_\+table}}
+\item 
+struct \mbox{\hyperlink{structtinfl__decompressor__tag}{tinfl\+\_\+decompressor\+\_\+tag}}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a2297d9004da52ae1dfdd7fd9cd053f7b}{T\+I\+N\+F\+L\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+I\+N\+C\+L\+U\+D\+ED}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}~while (0)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_abc05bb1717f26edc88a010e903de04e8}{T\+I\+N\+F\+L\+\_\+\+D\+E\+C\+O\+M\+P\+R\+E\+S\+S\+\_\+\+M\+E\+M\+\_\+\+T\+O\+\_\+\+M\+E\+M\+\_\+\+F\+A\+I\+L\+ED}}~((size\+\_\+t)(-\/1))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a39dc152de3351183ff8af716f0c556cb}{T\+I\+N\+F\+L\+\_\+\+L\+Z\+\_\+\+D\+I\+C\+T\+\_\+\+S\+I\+ZE}}~32768
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a38425ff8609fe5fe5a9a48612e6f3e46}{tinfl\+\_\+init}}(r)~do \{ (r)-\/$>$m\+\_\+state = 0; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a5542a5383b30c24dc30bc2af3857a291}{tinfl\+\_\+get\+\_\+adler32}}(r)~(r)-\/$>$m\+\_\+check\+\_\+adler32
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a8749219bfc4c8fe35661f5c22ede4bc8}{T\+I\+N\+F\+L\+\_\+\+B\+I\+T\+B\+U\+F\+\_\+\+S\+I\+ZE}}~(32)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a09b9e87cb19529df25b3c3e47c9ad393}{M\+Z\+\_\+\+M\+A\+L\+L\+OC}}(x)~malloc(x)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_ac73e9b464ae92e51b762f496296d7582}{M\+Z\+\_\+\+F\+R\+EE}}(x)~free(x)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a1420c15d77b938f459fa3e8bbd9f4c4d}{M\+Z\+\_\+\+R\+E\+A\+L\+L\+OC}}(p,  x)~realloc(p, x)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_aed350adb9c98cc277b69a348a7478cdb}{M\+Z\+\_\+\+M\+AX}}(a,  b)~(((a)$>$(b))?(a)\+:(b))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_abd12503e988aa99a5d82179c54b1acc8}{M\+Z\+\_\+\+M\+IN}}(a,  b)~(((a)$<$(b))?(a)\+:(b))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a3da1eeeef02435f2d09129914aa2928b}{M\+Z\+\_\+\+C\+L\+E\+A\+R\+\_\+\+O\+BJ}}(obj)~memset(\&(obj), 0, sizeof(obj))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a12c43540bc29b7b9a89f02c4d2ce99d9}{M\+Z\+\_\+\+R\+E\+A\+D\+\_\+\+L\+E16}}(p)~((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}0\mbox{]}) $\vert$ ((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}1\mbox{]}) $<$$<$ 8\+U))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_ad46ee9d5a50dd10df9c3829a93773fb6}{M\+Z\+\_\+\+R\+E\+A\+D\+\_\+\+L\+E32}}(p)~((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}0\mbox{]}) $\vert$ ((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}1\mbox{]}) $<$$<$ 8\+U) $\vert$ ((mz\+\_\+uint32)(((const mz\+\_\+uint8 $\ast$)(p))\mbox{[}2\mbox{]}) $<$$<$ 16\+U) $\vert$ ((mz\+\_\+uint32)(((const mz\+\_\+uint8 $\ast$)(p))\mbox{[}3\mbox{]}) $<$$<$ 24\+U))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a4a70ebaf3e07c9f51d41ba0e552bad0a}{T\+I\+N\+F\+L\+\_\+\+M\+E\+M\+C\+PY}}(d,  s,  l)~memcpy(d, s, l)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a7dd776de8caf03a8e44e7f0329953b68}{T\+I\+N\+F\+L\+\_\+\+M\+E\+M\+S\+ET}}(p,  c,  l)~memset(p, c, l)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a1bf00dad2822034f9b1369579a9c98d1}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+B\+E\+G\+IN}}~switch(r-\/$>$m\+\_\+state) \{ case 0\+:
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a9b76ea2ad5e09a1bd4a7d663745ac29e}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+RN}}(state\+\_\+index,  result)~do \{ status = result; r-\/$>$m\+\_\+state = state\+\_\+index; goto common\+\_\+exit; case state\+\_\+index\+:; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a9b93b1cd46aaf29a27dfb526bd110d63}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+O\+R\+E\+V\+ER}}(state\+\_\+index,  result)~do \{ for ( ; ; ) \{ \mbox{\hyperlink{tinfl_8c_a9b76ea2ad5e09a1bd4a7d663745ac29e}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+RN}}(state\+\_\+index, result); \} \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a99786d0af99c4433d7961581d708da51}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+F\+I\+N\+I\+SH}}~\}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a26b0de30f3238271922e55776feacb0f}{T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+Y\+TE}}(state\+\_\+index,  c)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}{T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS}}(state\+\_\+index,  n)~do \{ \mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}} c; \mbox{\hyperlink{tinfl_8c_a26b0de30f3238271922e55776feacb0f}{T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+Y\+TE}}(state\+\_\+index, c); bit\+\_\+buf $\vert$= (((\mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\+\_\+bit\+\_\+buf\+\_\+t}})c) $<$$<$ num\+\_\+bits); num\+\_\+bits += 8; \} while (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n))
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_aed4ea8f4cdcf4ad4416419dab601e7f0}{T\+I\+N\+F\+L\+\_\+\+S\+K\+I\+P\+\_\+\+B\+I\+TS}}(state\+\_\+index,  n)~do \{ if (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n)) \{ \mbox{\hyperlink{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}{T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS}}(state\+\_\+index, n); \} bit\+\_\+buf $>$$>$= (n); num\+\_\+bits -\/= (n); \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a4cccb4d20cb7fe52ed89300dcd665815}{T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+I\+TS}}(state\+\_\+index,  b,  n)~do \{  if (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n)) \{ \mbox{\hyperlink{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}{T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS}}(state\+\_\+index, n); \} b = bit\+\_\+buf \& ((1 $<$$<$ (n)) -\/ 1); bit\+\_\+buf $>$$>$= (n); num\+\_\+bits -\/= (n); \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a134552e117c26b55d84ee80247828998}{T\+I\+N\+F\+L\+\_\+\+H\+U\+F\+F\+\_\+\+B\+I\+T\+B\+U\+F\+\_\+\+F\+I\+LL}}(state\+\_\+index,  p\+Huff)
+\item 
+\#define \mbox{\hyperlink{tinfl_8c_a5b7562ec245b9e07daefeae07602d7ae}{T\+I\+N\+F\+L\+\_\+\+H\+U\+F\+F\+\_\+\+D\+E\+C\+O\+DE}}(state\+\_\+index,  sym,  p\+Huff)
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned char \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}}
+\item 
+typedef signed short \mbox{\hyperlink{tinfl_8c_a5a94836eff2f4841bcdd2eb4ea3b8cc4}{mz\+\_\+int16}}
+\item 
+typedef unsigned short \mbox{\hyperlink{tinfl_8c_ab88892139a542649bc9bbfa592a9d354}{mz\+\_\+uint16}}
+\item 
+typedef unsigned int \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}}
+\item 
+typedef unsigned int \mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}}
+\item 
+typedef unsigned long \mbox{\hyperlink{tinfl_8c_acfb8b4240861332ed19136ddd7a0bba2}{mz\+\_\+uint64}}
+\item 
+typedef int($\ast$ \mbox{\hyperlink{tinfl_8c_a4e4ea4a3376e8d2a996b848c8e4319df}{tinfl\+\_\+put\+\_\+buf\+\_\+func\+\_\+ptr}}) (const void $\ast$p\+Buf, int len, void $\ast$p\+User)
+\item 
+typedef struct \mbox{\hyperlink{structtinfl__decompressor__tag}{tinfl\+\_\+decompressor\+\_\+tag}} \mbox{\hyperlink{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}{tinfl\+\_\+decompressor}}
+\item 
+typedef \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}} \mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\+\_\+bit\+\_\+buf\+\_\+t}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55baf085740084ef23d974d043aeda6f2245}{T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+P\+A\+R\+S\+E\+\_\+\+Z\+L\+I\+B\+\_\+\+H\+E\+A\+D\+ER}} = 1, 
+\mbox{\hyperlink{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba2eb96c68c6a8df342d8f12d7efcf96c1}{T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+H\+A\+S\+\_\+\+M\+O\+R\+E\+\_\+\+I\+N\+P\+UT}} = 2, 
+\mbox{\hyperlink{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba086ec4df460b3a0c5085e22fd679b7d9}{T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+U\+S\+I\+N\+G\+\_\+\+N\+O\+N\+\_\+\+W\+R\+A\+P\+P\+I\+N\+G\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+UF}} = 4, 
+\mbox{\hyperlink{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba9454c17ebc5717f8553d01ab99b8c1c9}{T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+A\+D\+L\+E\+R32}} = 8
+ \}
+\item 
+enum \mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}{tinfl\+\_\+status}} \{ \newline
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a61c8d6dd2c312ee7a474ac6782e4bed9}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+B\+A\+D\+\_\+\+P\+A\+R\+AM}} = -\/3, 
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3c0ca7cb0911c046d25e1ab3e525a3af}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+A\+D\+L\+E\+R32\+\_\+\+M\+I\+S\+M\+A\+T\+CH}} = -\/2, 
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3d9ecb5e7298395555ec061cda50644c}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+F\+A\+I\+L\+ED}} = -\/1, 
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4af9316c69027621352f435c9a343f1042}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+O\+NE}} = 0, 
+\newline
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a4150e95aacd9bf414c6f9155263b60e8}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+N\+E\+E\+D\+S\+\_\+\+M\+O\+R\+E\+\_\+\+I\+N\+P\+UT}} = 1, 
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a49583f3a8fa8eb17838e17f21c08be05}{T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+H\+A\+S\+\_\+\+M\+O\+R\+E\+\_\+\+O\+U\+T\+P\+UT}} = 2
+ \}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ad908ef7390a1643b0f0dece0d816bd64}{T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+T\+A\+B\+L\+ES}} = 3, 
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7abc60f0bf72551ed7cbbf1ed9b20752ba}{T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+0}} = 288, 
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ac44807ea07817afa2b5e97b5bfc204fb}{T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+1}} = 32, 
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a534af4e11dc848dc29c16f276a6a428e}{T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+2}} = 19, 
+\newline
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}{T\+I\+N\+F\+L\+\_\+\+F\+A\+S\+T\+\_\+\+L\+O\+O\+K\+U\+P\+\_\+\+B\+I\+TS}} = 10, 
+\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a650112828c38f327bd914ec150855c87}{T\+I\+N\+F\+L\+\_\+\+F\+A\+S\+T\+\_\+\+L\+O\+O\+K\+U\+P\+\_\+\+S\+I\+ZE}} = 1 $<$$<$ T\+I\+N\+F\+L\+\_\+\+F\+A\+S\+T\+\_\+\+L\+O\+O\+K\+U\+P\+\_\+\+B\+I\+TS
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{tinfl_8c_a83ec49e8c7a33da568ebd226819bbb56}{tinfl\+Diag}} (void)
+\item 
+void $\ast$ \mbox{\hyperlink{tinfl_8c_a4132a2c848f7a8b3db82735f0abb80f9}{tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+heap}} (const void $\ast$p\+Src\+\_\+buf, size\+\_\+t src\+\_\+buf\+\_\+len, size\+\_\+t $\ast$p\+Out\+\_\+len, int flags)
+\item 
+size\+\_\+t \mbox{\hyperlink{tinfl_8c_ac4642bb91b5abc566c6b23c0658d6995}{tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+mem}} (void $\ast$p\+Out\+\_\+buf, size\+\_\+t out\+\_\+buf\+\_\+len, const void $\ast$p\+Src\+\_\+buf, size\+\_\+t src\+\_\+buf\+\_\+len, int flags)
+\item 
+int \mbox{\hyperlink{tinfl_8c_a3e8087762c8423c4e48d1e5e01a243de}{tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+callback}} (const void $\ast$p\+In\+\_\+buf, size\+\_\+t $\ast$p\+In\+\_\+buf\+\_\+size, \mbox{\hyperlink{tinfl_8c_a4e4ea4a3376e8d2a996b848c8e4319df}{tinfl\+\_\+put\+\_\+buf\+\_\+func\+\_\+ptr}} p\+Put\+\_\+buf\+\_\+func, void $\ast$p\+Put\+\_\+buf\+\_\+user, int flags)
+\item 
+\mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}{tinfl\+\_\+status}} \mbox{\hyperlink{tinfl_8c_ac4e4c006d234780922676ecc31fe1416}{tinfl\+\_\+decompress}} (\mbox{\hyperlink{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}{tinfl\+\_\+decompressor}} $\ast$r, const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$p\+In\+\_\+buf\+\_\+next, size\+\_\+t $\ast$p\+In\+\_\+buf\+\_\+size, \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$p\+Out\+\_\+buf\+\_\+start, \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$p\+Out\+\_\+buf\+\_\+next, size\+\_\+t $\ast$p\+Out\+\_\+buf\+\_\+size, const \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}} decomp\+\_\+flags)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{tinfl_8c_a3da1eeeef02435f2d09129914aa2928b}\label{tinfl_8c_a3da1eeeef02435f2d09129914aa2928b}} 
+\index{tinfl.c@{tinfl.c}!MZ\_CLEAR\_OBJ@{MZ\_CLEAR\_OBJ}}
+\index{MZ\_CLEAR\_OBJ@{MZ\_CLEAR\_OBJ}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_CLEAR\_OBJ}{MZ\_CLEAR\_OBJ}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+C\+L\+E\+A\+R\+\_\+\+O\+BJ(\begin{DoxyParamCaption}\item[{}]{obj }\end{DoxyParamCaption})~memset(\&(obj), 0, sizeof(obj))}
+
+
+
+Definition at line 155 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ac73e9b464ae92e51b762f496296d7582}\label{tinfl_8c_ac73e9b464ae92e51b762f496296d7582}} 
+\index{tinfl.c@{tinfl.c}!MZ\_FREE@{MZ\_FREE}}
+\index{MZ\_FREE@{MZ\_FREE}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_FREE}{MZ\_FREE}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+F\+R\+EE(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~free(x)}
+
+
+
+Definition at line 149 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a704d9384ffb047ede84426d173b656e8}\label{tinfl_8c_a704d9384ffb047ede84426d173b656e8}} 
+\index{tinfl.c@{tinfl.c}!MZ\_MACRO\_END@{MZ\_MACRO\_END}}
+\index{MZ\_MACRO\_END@{MZ\_MACRO\_END}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_MACRO\_END}{MZ\_MACRO\_END}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND~while (0)}
+
+
+
+Definition at line 37 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a09b9e87cb19529df25b3c3e47c9ad393}\label{tinfl_8c_a09b9e87cb19529df25b3c3e47c9ad393}} 
+\index{tinfl.c@{tinfl.c}!MZ\_MALLOC@{MZ\_MALLOC}}
+\index{MZ\_MALLOC@{MZ\_MALLOC}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_MALLOC}{MZ\_MALLOC}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+M\+A\+L\+L\+OC(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~malloc(x)}
+
+
+
+Definition at line 148 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_aed350adb9c98cc277b69a348a7478cdb}\label{tinfl_8c_aed350adb9c98cc277b69a348a7478cdb}} 
+\index{tinfl.c@{tinfl.c}!MZ\_MAX@{MZ\_MAX}}
+\index{MZ\_MAX@{MZ\_MAX}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_MAX}{MZ\_MAX}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+M\+AX(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~(((a)$>$(b))?(a)\+:(b))}
+
+
+
+Definition at line 153 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_abd12503e988aa99a5d82179c54b1acc8}\label{tinfl_8c_abd12503e988aa99a5d82179c54b1acc8}} 
+\index{tinfl.c@{tinfl.c}!MZ\_MIN@{MZ\_MIN}}
+\index{MZ\_MIN@{MZ\_MIN}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_MIN}{MZ\_MIN}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+M\+IN(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~(((a)$<$(b))?(a)\+:(b))}
+
+
+
+Definition at line 154 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a12c43540bc29b7b9a89f02c4d2ce99d9}\label{tinfl_8c_a12c43540bc29b7b9a89f02c4d2ce99d9}} 
+\index{tinfl.c@{tinfl.c}!MZ\_READ\_LE16@{MZ\_READ\_LE16}}
+\index{MZ\_READ\_LE16@{MZ\_READ\_LE16}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_READ\_LE16}{MZ\_READ\_LE16}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+R\+E\+A\+D\+\_\+\+L\+E16(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})~((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}0\mbox{]}) $\vert$ ((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}1\mbox{]}) $<$$<$ 8\+U))}
+
+
+
+Definition at line 161 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ad46ee9d5a50dd10df9c3829a93773fb6}\label{tinfl_8c_ad46ee9d5a50dd10df9c3829a93773fb6}} 
+\index{tinfl.c@{tinfl.c}!MZ\_READ\_LE32@{MZ\_READ\_LE32}}
+\index{MZ\_READ\_LE32@{MZ\_READ\_LE32}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_READ\_LE32}{MZ\_READ\_LE32}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+R\+E\+A\+D\+\_\+\+L\+E32(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})~((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}0\mbox{]}) $\vert$ ((\mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}})(((const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$)(p))\mbox{[}1\mbox{]}) $<$$<$ 8\+U) $\vert$ ((mz\+\_\+uint32)(((const mz\+\_\+uint8 $\ast$)(p))\mbox{[}2\mbox{]}) $<$$<$ 16\+U) $\vert$ ((mz\+\_\+uint32)(((const mz\+\_\+uint8 $\ast$)(p))\mbox{[}3\mbox{]}) $<$$<$ 24\+U))}
+
+
+
+Definition at line 162 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a1420c15d77b938f459fa3e8bbd9f4c4d}\label{tinfl_8c_a1420c15d77b938f459fa3e8bbd9f4c4d}} 
+\index{tinfl.c@{tinfl.c}!MZ\_REALLOC@{MZ\_REALLOC}}
+\index{MZ\_REALLOC@{MZ\_REALLOC}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{MZ\_REALLOC}{MZ\_REALLOC}}
+{\footnotesize\ttfamily \#define M\+Z\+\_\+\+R\+E\+A\+L\+L\+OC(\begin{DoxyParamCaption}\item[{}]{p,  }\item[{}]{x }\end{DoxyParamCaption})~realloc(p, x)}
+
+
+
+Definition at line 150 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a8749219bfc4c8fe35661f5c22ede4bc8}\label{tinfl_8c_a8749219bfc4c8fe35661f5c22ede4bc8}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_BITBUF\_SIZE@{TINFL\_BITBUF\_SIZE}}
+\index{TINFL\_BITBUF\_SIZE@{TINFL\_BITBUF\_SIZE}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_BITBUF\_SIZE}{TINFL\_BITBUF\_SIZE}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+B\+I\+T\+B\+U\+F\+\_\+\+S\+I\+ZE~(32)}
+
+
+
+Definition at line 122 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a1bf00dad2822034f9b1369579a9c98d1}\label{tinfl_8c_a1bf00dad2822034f9b1369579a9c98d1}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_CR\_BEGIN@{TINFL\_CR\_BEGIN}}
+\index{TINFL\_CR\_BEGIN@{TINFL\_CR\_BEGIN}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_CR\_BEGIN}{TINFL\_CR\_BEGIN}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+B\+E\+G\+IN~switch(r-\/$>$m\+\_\+state) \{ case 0\+:}
+
+
+
+Definition at line 168 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a99786d0af99c4433d7961581d708da51}\label{tinfl_8c_a99786d0af99c4433d7961581d708da51}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_CR\_FINISH@{TINFL\_CR\_FINISH}}
+\index{TINFL\_CR\_FINISH@{TINFL\_CR\_FINISH}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_CR\_FINISH}{TINFL\_CR\_FINISH}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+F\+I\+N\+I\+SH~\}}
+
+
+
+Definition at line 171 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a9b76ea2ad5e09a1bd4a7d663745ac29e}\label{tinfl_8c_a9b76ea2ad5e09a1bd4a7d663745ac29e}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_CR\_RETURN@{TINFL\_CR\_RETURN}}
+\index{TINFL\_CR\_RETURN@{TINFL\_CR\_RETURN}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_CR\_RETURN}{TINFL\_CR\_RETURN}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+RN(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{result }\end{DoxyParamCaption})~do \{ status = result; r-\/$>$m\+\_\+state = state\+\_\+index; goto common\+\_\+exit; case state\+\_\+index\+:; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}}
+
+
+
+Definition at line 169 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a9b93b1cd46aaf29a27dfb526bd110d63}\label{tinfl_8c_a9b93b1cd46aaf29a27dfb526bd110d63}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_CR\_RETURN\_FOREVER@{TINFL\_CR\_RETURN\_FOREVER}}
+\index{TINFL\_CR\_RETURN\_FOREVER@{TINFL\_CR\_RETURN\_FOREVER}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_CR\_RETURN\_FOREVER}{TINFL\_CR\_RETURN\_FOREVER}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+R\+N\+\_\+\+F\+O\+R\+E\+V\+ER(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{result }\end{DoxyParamCaption})~do \{ for ( ; ; ) \{ \mbox{\hyperlink{tinfl_8c_a9b76ea2ad5e09a1bd4a7d663745ac29e}{T\+I\+N\+F\+L\+\_\+\+C\+R\+\_\+\+R\+E\+T\+U\+RN}}(state\+\_\+index, result); \} \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}}
+
+
+
+Definition at line 170 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_abc05bb1717f26edc88a010e903de04e8}\label{tinfl_8c_abc05bb1717f26edc88a010e903de04e8}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED@{TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED}}
+\index{TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED@{TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED}{TINFL\_DECOMPRESS\_MEM\_TO\_MEM\_FAILED}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+D\+E\+C\+O\+M\+P\+R\+E\+S\+S\+\_\+\+M\+E\+M\+\_\+\+T\+O\+\_\+\+M\+E\+M\+\_\+\+F\+A\+I\+L\+ED~((size\+\_\+t)(-\/1))}
+
+
+
+Definition at line 68 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a5542a5383b30c24dc30bc2af3857a291}\label{tinfl_8c_a5542a5383b30c24dc30bc2af3857a291}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_get\_adler32@{tinfl\_get\_adler32}}
+\index{tinfl\_get\_adler32@{tinfl\_get\_adler32}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_get\_adler32}{tinfl\_get\_adler32}}
+{\footnotesize\ttfamily \#define tinfl\+\_\+get\+\_\+adler32(\begin{DoxyParamCaption}\item[{}]{r }\end{DoxyParamCaption})~(r)-\/$>$m\+\_\+check\+\_\+adler32}
+
+
+
+Definition at line 94 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a4cccb4d20cb7fe52ed89300dcd665815}\label{tinfl_8c_a4cccb4d20cb7fe52ed89300dcd665815}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_GET\_BITS@{TINFL\_GET\_BITS}}
+\index{TINFL\_GET\_BITS@{TINFL\_GET\_BITS}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_GET\_BITS}{TINFL\_GET\_BITS}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+I\+TS(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{b,  }\item[{}]{n }\end{DoxyParamCaption})~do \{  if (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n)) \{ \mbox{\hyperlink{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}{T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS}}(state\+\_\+index, n); \} b = bit\+\_\+buf \& ((1 $<$$<$ (n)) -\/ 1); bit\+\_\+buf $>$$>$= (n); num\+\_\+bits -\/= (n); \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}}
+
+
+
+Definition at line 193 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a26b0de30f3238271922e55776feacb0f}\label{tinfl_8c_a26b0de30f3238271922e55776feacb0f}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_GET\_BYTE@{TINFL\_GET\_BYTE}}
+\index{TINFL\_GET\_BYTE@{TINFL\_GET\_BYTE}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_GET\_BYTE}{TINFL\_GET\_BYTE}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+Y\+TE(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{c }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{ \(\backslash\)}
+\DoxyCodeLine{  if (pIn\_buf\_cur >= pIn\_buf\_end) \{ \(\backslash\)}
+\DoxyCodeLine{    for ( ; ; ) \{ \(\backslash\)}
+\DoxyCodeLine{      if (decomp\_flags \& \mbox{\hyperlink{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba2eb96c68c6a8df342d8f12d7efcf96c1}{TINFL\_FLAG\_HAS\_MORE\_INPUT}}) \{ \(\backslash\)}
+\DoxyCodeLine{        TINFL\_CR\_RETURN(state\_index, \mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a4150e95aacd9bf414c6f9155263b60e8}{TINFL\_STATUS\_NEEDS\_MORE\_INPUT}}); \(\backslash\)}
+\DoxyCodeLine{        if (pIn\_buf\_cur < pIn\_buf\_end) \{ \(\backslash\)}
+\DoxyCodeLine{          c = *pIn\_buf\_cur++; \(\backslash\)}
+\DoxyCodeLine{          break; \(\backslash\)}
+\DoxyCodeLine{        \} \(\backslash\)}
+\DoxyCodeLine{      \} \textcolor{keywordflow}{else} \{ \(\backslash\)}
+\DoxyCodeLine{        c = 0; \(\backslash\)}
+\DoxyCodeLine{        break; \(\backslash\)}
+\DoxyCodeLine{      \} \(\backslash\)}
+\DoxyCodeLine{    \} \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{else} c = *pIn\_buf\_cur++; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{MZ\_MACRO\_END}}}
+
+\end{DoxyCode}
+
+
+Definition at line 175 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a2297d9004da52ae1dfdd7fd9cd053f7b}\label{tinfl_8c_a2297d9004da52ae1dfdd7fd9cd053f7b}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_HEADER\_INCLUDED@{TINFL\_HEADER\_INCLUDED}}
+\index{TINFL\_HEADER\_INCLUDED@{TINFL\_HEADER\_INCLUDED}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_HEADER\_INCLUDED}{TINFL\_HEADER\_INCLUDED}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+I\+N\+C\+L\+U\+D\+ED}
+
+
+
+Definition at line 9 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a134552e117c26b55d84ee80247828998}\label{tinfl_8c_a134552e117c26b55d84ee80247828998}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_HUFF\_BITBUF\_FILL@{TINFL\_HUFF\_BITBUF\_FILL}}
+\index{TINFL\_HUFF\_BITBUF\_FILL@{TINFL\_HUFF\_BITBUF\_FILL}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_HUFF\_BITBUF\_FILL}{TINFL\_HUFF\_BITBUF\_FILL}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+H\+U\+F\+F\+\_\+\+B\+I\+T\+B\+U\+F\+\_\+\+F\+I\+LL(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{p\+Huff }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{ \(\backslash\)}
+\DoxyCodeLine{    temp = (pHuff)->m\_look\_up[bit\_buf \& (\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a650112828c38f327bd914ec150855c87}{TINFL\_FAST\_LOOKUP\_SIZE}} - 1)]; \(\backslash\)}
+\DoxyCodeLine{    if (temp >= 0) \{ \(\backslash\)}
+\DoxyCodeLine{      code\_len = temp >> 9; \(\backslash\)}
+\DoxyCodeLine{      if ((code\_len) \&\& (num\_bits >= code\_len)) \(\backslash\)}
+\DoxyCodeLine{      break; \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (num\_bits > \mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}{TINFL\_FAST\_LOOKUP\_BITS}}) \{ \(\backslash\)}
+\DoxyCodeLine{       code\_len = \mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}{TINFL\_FAST\_LOOKUP\_BITS}}; \(\backslash\)}
+\DoxyCodeLine{       do \{ \(\backslash\)}
+\DoxyCodeLine{          temp = (pHuff)->m\_tree[~temp + ((bit\_buf >> code\_len++) \& 1)]; \(\backslash\)}
+\DoxyCodeLine{       \} \textcolor{keywordflow}{while} ((temp < 0) \&\& (num\_bits >= (code\_len + 1))); \textcolor{keywordflow}{if} (temp >= 0) \textcolor{keywordflow}{break}; \(\backslash\)}
+\DoxyCodeLine{    \} \mbox{\hyperlink{tinfl_8c_a26b0de30f3238271922e55776feacb0f}{TINFL\_GET\_BYTE}}(state\_index, c); bit\_buf |= (((\mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\_bit\_buf\_t}})c) << num\_bits); num\_bits += 8; \(\backslash\)}
+\DoxyCodeLine{  \} \textcolor{keywordflow}{while} (num\_bits < 15);}
+
+\end{DoxyCode}
+
+
+Definition at line 199 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a5b7562ec245b9e07daefeae07602d7ae}\label{tinfl_8c_a5b7562ec245b9e07daefeae07602d7ae}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_HUFF\_DECODE@{TINFL\_HUFF\_DECODE}}
+\index{TINFL\_HUFF\_DECODE@{TINFL\_HUFF\_DECODE}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_HUFF\_DECODE}{TINFL\_HUFF\_DECODE}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+H\+U\+F\+F\+\_\+\+D\+E\+C\+O\+DE(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{sym,  }\item[{}]{p\+Huff }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{ \(\backslash\)}
+\DoxyCodeLine{  int temp; \mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\_uint}} code\_len, c; \(\backslash\)}
+\DoxyCodeLine{  if (num\_bits < 15) \{ \(\backslash\)}
+\DoxyCodeLine{    if ((pIn\_buf\_end - pIn\_buf\_cur) < 2) \{ \(\backslash\)}
+\DoxyCodeLine{       TINFL\_HUFF\_BITBUF\_FILL(state\_index, pHuff); \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \{ \(\backslash\)}
+\DoxyCodeLine{       bit\_buf |= (((\mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\_bit\_buf\_t}})pIn\_buf\_cur[0]) << num\_bits) | (((\mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\_bit\_buf\_t}})pIn\_buf\_cur[1]) << (num\_bits + 8)); pIn\_buf\_cur += 2; num\_bits += 16; \(\backslash\)}
+\DoxyCodeLine{    \} \(\backslash\)}
+\DoxyCodeLine{  \} \(\backslash\)}
+\DoxyCodeLine{  if ((temp = (pHuff)->m\_look\_up[bit\_buf \& (\mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a650112828c38f327bd914ec150855c87}{TINFL\_FAST\_LOOKUP\_SIZE}} - 1)]) >= 0) \(\backslash\)}
+\DoxyCodeLine{    code\_len = temp >> 9, temp \&= 511; \(\backslash\)}
+\DoxyCodeLine{  else \{ \(\backslash\)}
+\DoxyCodeLine{    code\_len = \mbox{\hyperlink{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}{TINFL\_FAST\_LOOKUP\_BITS}}; \textcolor{keywordflow}{do} \{ temp = (pHuff)->m\_tree[~temp + ((bit\_buf >> code\_len++) \& 1)]; \} \textcolor{keywordflow}{while} (temp < 0); \(\backslash\)}
+\DoxyCodeLine{  \} sym = temp; bit\_buf >>= code\_len; num\_bits -= code\_len; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{MZ\_MACRO\_END}}}
+
+\end{DoxyCode}
+
+
+Definition at line 218 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a38425ff8609fe5fe5a9a48612e6f3e46}\label{tinfl_8c_a38425ff8609fe5fe5a9a48612e6f3e46}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_init@{tinfl\_init}}
+\index{tinfl\_init@{tinfl\_init}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_init}{tinfl\_init}}
+{\footnotesize\ttfamily \#define tinfl\+\_\+init(\begin{DoxyParamCaption}\item[{}]{r }\end{DoxyParamCaption})~do \{ (r)-\/$>$m\+\_\+state = 0; \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}}
+
+
+
+Definition at line 93 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a39dc152de3351183ff8af716f0c556cb}\label{tinfl_8c_a39dc152de3351183ff8af716f0c556cb}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_LZ\_DICT\_SIZE@{TINFL\_LZ\_DICT\_SIZE}}
+\index{TINFL\_LZ\_DICT\_SIZE@{TINFL\_LZ\_DICT\_SIZE}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_LZ\_DICT\_SIZE}{TINFL\_LZ\_DICT\_SIZE}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+L\+Z\+\_\+\+D\+I\+C\+T\+\_\+\+S\+I\+ZE~32768}
+
+
+
+Definition at line 79 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a4a70ebaf3e07c9f51d41ba0e552bad0a}\label{tinfl_8c_a4a70ebaf3e07c9f51d41ba0e552bad0a}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_MEMCPY@{TINFL\_MEMCPY}}
+\index{TINFL\_MEMCPY@{TINFL\_MEMCPY}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_MEMCPY}{TINFL\_MEMCPY}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+M\+E\+M\+C\+PY(\begin{DoxyParamCaption}\item[{}]{d,  }\item[{}]{s,  }\item[{}]{l }\end{DoxyParamCaption})~memcpy(d, s, l)}
+
+
+
+Definition at line 165 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a7dd776de8caf03a8e44e7f0329953b68}\label{tinfl_8c_a7dd776de8caf03a8e44e7f0329953b68}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_MEMSET@{TINFL\_MEMSET}}
+\index{TINFL\_MEMSET@{TINFL\_MEMSET}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_MEMSET}{TINFL\_MEMSET}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+M\+E\+M\+S\+ET(\begin{DoxyParamCaption}\item[{}]{p,  }\item[{}]{c,  }\item[{}]{l }\end{DoxyParamCaption})~memset(p, c, l)}
+
+
+
+Definition at line 166 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}\label{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_NEED\_BITS@{TINFL\_NEED\_BITS}}
+\index{TINFL\_NEED\_BITS@{TINFL\_NEED\_BITS}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_NEED\_BITS}{TINFL\_NEED\_BITS}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{n }\end{DoxyParamCaption})~do \{ \mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}} c; \mbox{\hyperlink{tinfl_8c_a26b0de30f3238271922e55776feacb0f}{T\+I\+N\+F\+L\+\_\+\+G\+E\+T\+\_\+\+B\+Y\+TE}}(state\+\_\+index, c); bit\+\_\+buf $\vert$= (((\mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\+\_\+bit\+\_\+buf\+\_\+t}})c) $<$$<$ num\+\_\+bits); num\+\_\+bits += 8; \} while (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n))}
+
+
+
+Definition at line 191 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_aed4ea8f4cdcf4ad4416419dab601e7f0}\label{tinfl_8c_aed4ea8f4cdcf4ad4416419dab601e7f0}} 
+\index{tinfl.c@{tinfl.c}!TINFL\_SKIP\_BITS@{TINFL\_SKIP\_BITS}}
+\index{TINFL\_SKIP\_BITS@{TINFL\_SKIP\_BITS}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{TINFL\_SKIP\_BITS}{TINFL\_SKIP\_BITS}}
+{\footnotesize\ttfamily \#define T\+I\+N\+F\+L\+\_\+\+S\+K\+I\+P\+\_\+\+B\+I\+TS(\begin{DoxyParamCaption}\item[{}]{state\+\_\+index,  }\item[{}]{n }\end{DoxyParamCaption})~do \{ if (num\+\_\+bits $<$ (\mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}})(n)) \{ \mbox{\hyperlink{tinfl_8c_a1f5388f745eea1a9297c8fb70277042d}{T\+I\+N\+F\+L\+\_\+\+N\+E\+E\+D\+\_\+\+B\+I\+TS}}(state\+\_\+index, n); \} bit\+\_\+buf $>$$>$= (n); num\+\_\+bits -\/= (n); \} \mbox{\hyperlink{tinfl_8c_a704d9384ffb047ede84426d173b656e8}{M\+Z\+\_\+\+M\+A\+C\+R\+O\+\_\+\+E\+ND}}}
+
+
+
+Definition at line 192 of file tinfl.\+c.
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{tinfl_8c_a5a94836eff2f4841bcdd2eb4ea3b8cc4}\label{tinfl_8c_a5a94836eff2f4841bcdd2eb4ea3b8cc4}} 
+\index{tinfl.c@{tinfl.c}!mz\_int16@{mz\_int16}}
+\index{mz\_int16@{mz\_int16}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_int16}{mz\_int16}}
+{\footnotesize\ttfamily typedef signed short \mbox{\hyperlink{tinfl_8c_a5a94836eff2f4841bcdd2eb4ea3b8cc4}{mz\+\_\+int16}}}
+
+
+
+Definition at line 15 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}\label{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}} 
+\index{tinfl.c@{tinfl.c}!mz\_uint@{mz\_uint}}
+\index{mz\_uint@{mz\_uint}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_uint}{mz\_uint}}
+{\footnotesize\ttfamily typedef unsigned int \mbox{\hyperlink{tinfl_8c_a4195703cf0ade709ddce7f8777fc0cc2}{mz\+\_\+uint}}}
+
+
+
+Definition at line 18 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ab88892139a542649bc9bbfa592a9d354}\label{tinfl_8c_ab88892139a542649bc9bbfa592a9d354}} 
+\index{tinfl.c@{tinfl.c}!mz\_uint16@{mz\_uint16}}
+\index{mz\_uint16@{mz\_uint16}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_uint16}{mz\_uint16}}
+{\footnotesize\ttfamily typedef unsigned short \mbox{\hyperlink{tinfl_8c_ab88892139a542649bc9bbfa592a9d354}{mz\+\_\+uint16}}}
+
+
+
+Definition at line 16 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}\label{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}} 
+\index{tinfl.c@{tinfl.c}!mz\_uint32@{mz\_uint32}}
+\index{mz\_uint32@{mz\_uint32}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_uint32}{mz\_uint32}}
+{\footnotesize\ttfamily typedef unsigned int \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}}}
+
+
+
+Definition at line 17 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_acfb8b4240861332ed19136ddd7a0bba2}\label{tinfl_8c_acfb8b4240861332ed19136ddd7a0bba2}} 
+\index{tinfl.c@{tinfl.c}!mz\_uint64@{mz\_uint64}}
+\index{mz\_uint64@{mz\_uint64}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_uint64}{mz\_uint64}}
+{\footnotesize\ttfamily typedef unsigned long \mbox{\hyperlink{tinfl_8c_acfb8b4240861332ed19136ddd7a0bba2}{mz\+\_\+uint64}}}
+
+
+
+Definition at line 19 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}\label{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}} 
+\index{tinfl.c@{tinfl.c}!mz\_uint8@{mz\_uint8}}
+\index{mz\_uint8@{mz\_uint8}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{mz\_uint8}{mz\_uint8}}
+{\footnotesize\ttfamily typedef unsigned char \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}}}
+
+
+
+Definition at line 14 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_af6af194c507342cda458498cd37ca418}\label{tinfl_8c_af6af194c507342cda458498cd37ca418}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_bit\_buf\_t@{tinfl\_bit\_buf\_t}}
+\index{tinfl\_bit\_buf\_t@{tinfl\_bit\_buf\_t}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_bit\_buf\_t}{tinfl\_bit\_buf\_t}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}} \mbox{\hyperlink{tinfl_8c_af6af194c507342cda458498cd37ca418}{tinfl\+\_\+bit\+\_\+buf\+\_\+t}}}
+
+
+
+Definition at line 121 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}\label{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_decompressor@{tinfl\_decompressor}}
+\index{tinfl\_decompressor@{tinfl\_decompressor}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_decompressor}{tinfl\_decompressor}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structtinfl__decompressor__tag}{tinfl\+\_\+decompressor\+\_\+tag}} \mbox{\hyperlink{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}{tinfl\+\_\+decompressor}}}
+
+
+
+Definition at line 76 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a4e4ea4a3376e8d2a996b848c8e4319df}\label{tinfl_8c_a4e4ea4a3376e8d2a996b848c8e4319df}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_put\_buf\_func\_ptr@{tinfl\_put\_buf\_func\_ptr}}
+\index{tinfl\_put\_buf\_func\_ptr@{tinfl\_put\_buf\_func\_ptr}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_put\_buf\_func\_ptr}{tinfl\_put\_buf\_func\_ptr}}
+{\footnotesize\ttfamily typedef int($\ast$ tinfl\+\_\+put\+\_\+buf\+\_\+func\+\_\+ptr) (const void $\ast$p\+Buf, int len, void $\ast$p\+User)}
+
+
+
+Definition at line 73 of file tinfl.\+c.
+
+
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55b}\label{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55b}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FLAG\_PARSE\_ZLIB\_HEADER@{TINFL\_FLAG\_PARSE\_ZLIB\_HEADER}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FLAG\_PARSE\_ZLIB\_HEADER@{TINFL\_FLAG\_PARSE\_ZLIB\_HEADER}}}\mbox{\Hypertarget{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55baf085740084ef23d974d043aeda6f2245}\label{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55baf085740084ef23d974d043aeda6f2245}} 
+T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+P\+A\+R\+S\+E\+\_\+\+Z\+L\+I\+B\+\_\+\+H\+E\+A\+D\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FLAG\_HAS\_MORE\_INPUT@{TINFL\_FLAG\_HAS\_MORE\_INPUT}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FLAG\_HAS\_MORE\_INPUT@{TINFL\_FLAG\_HAS\_MORE\_INPUT}}}\mbox{\Hypertarget{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba2eb96c68c6a8df342d8f12d7efcf96c1}\label{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba2eb96c68c6a8df342d8f12d7efcf96c1}} 
+T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+H\+A\+S\+\_\+\+M\+O\+R\+E\+\_\+\+I\+N\+P\+UT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FLAG\_USING\_NON\_WRAPPING\_OUTPUT\_BUF@{TINFL\_FLAG\_USING\_NON\_WRAPPING\_OUTPUT\_BUF}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FLAG\_USING\_NON\_WRAPPING\_OUTPUT\_BUF@{TINFL\_FLAG\_USING\_NON\_WRAPPING\_OUTPUT\_BUF}}}\mbox{\Hypertarget{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba086ec4df460b3a0c5085e22fd679b7d9}\label{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba086ec4df460b3a0c5085e22fd679b7d9}} 
+T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+U\+S\+I\+N\+G\+\_\+\+N\+O\+N\+\_\+\+W\+R\+A\+P\+P\+I\+N\+G\+\_\+\+O\+U\+T\+P\+U\+T\+\_\+\+B\+UF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FLAG\_COMPUTE\_ADLER32@{TINFL\_FLAG\_COMPUTE\_ADLER32}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FLAG\_COMPUTE\_ADLER32@{TINFL\_FLAG\_COMPUTE\_ADLER32}}}\mbox{\Hypertarget{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba9454c17ebc5717f8553d01ab99b8c1c9}\label{tinfl_8c_a06fc87d81c62e9abb8790b6e5713c55ba9454c17ebc5717f8553d01ab99b8c1c9}} 
+T\+I\+N\+F\+L\+\_\+\+F\+L\+A\+G\+\_\+\+C\+O\+M\+P\+U\+T\+E\+\_\+\+A\+D\+L\+E\+R32&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 45 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_MAX\_HUFF\_TABLES@{TINFL\_MAX\_HUFF\_TABLES}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_MAX\_HUFF\_TABLES@{TINFL\_MAX\_HUFF\_TABLES}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ad908ef7390a1643b0f0dece0d816bd64}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ad908ef7390a1643b0f0dece0d816bd64}} 
+T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+T\+A\+B\+L\+ES&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_MAX\_HUFF\_SYMBOLS\_0@{TINFL\_MAX\_HUFF\_SYMBOLS\_0}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_MAX\_HUFF\_SYMBOLS\_0@{TINFL\_MAX\_HUFF\_SYMBOLS\_0}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7abc60f0bf72551ed7cbbf1ed9b20752ba}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7abc60f0bf72551ed7cbbf1ed9b20752ba}} 
+T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_MAX\_HUFF\_SYMBOLS\_1@{TINFL\_MAX\_HUFF\_SYMBOLS\_1}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_MAX\_HUFF\_SYMBOLS\_1@{TINFL\_MAX\_HUFF\_SYMBOLS\_1}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ac44807ea07817afa2b5e97b5bfc204fb}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ac44807ea07817afa2b5e97b5bfc204fb}} 
+T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_MAX\_HUFF\_SYMBOLS\_2@{TINFL\_MAX\_HUFF\_SYMBOLS\_2}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_MAX\_HUFF\_SYMBOLS\_2@{TINFL\_MAX\_HUFF\_SYMBOLS\_2}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a534af4e11dc848dc29c16f276a6a428e}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a534af4e11dc848dc29c16f276a6a428e}} 
+T\+I\+N\+F\+L\+\_\+\+M\+A\+X\+\_\+\+H\+U\+F\+F\+\_\+\+S\+Y\+M\+B\+O\+L\+S\+\_\+2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FAST\_LOOKUP\_BITS@{TINFL\_FAST\_LOOKUP\_BITS}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FAST\_LOOKUP\_BITS@{TINFL\_FAST\_LOOKUP\_BITS}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7ae20e8613820bdf626439b9265dc5e4a1}} 
+T\+I\+N\+F\+L\+\_\+\+F\+A\+S\+T\+\_\+\+L\+O\+O\+K\+U\+P\+\_\+\+B\+I\+TS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_FAST\_LOOKUP\_SIZE@{TINFL\_FAST\_LOOKUP\_SIZE}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_FAST\_LOOKUP\_SIZE@{TINFL\_FAST\_LOOKUP\_SIZE}}}\mbox{\Hypertarget{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a650112828c38f327bd914ec150855c87}\label{tinfl_8c_adf764cbdea00d65edcd07bb9953ad2b7a650112828c38f327bd914ec150855c87}} 
+T\+I\+N\+F\+L\+\_\+\+F\+A\+S\+T\+\_\+\+L\+O\+O\+K\+U\+P\+\_\+\+S\+I\+ZE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 101 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_status@{tinfl\_status}}
+\index{tinfl\_status@{tinfl\_status}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_status}{tinfl\_status}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}{tinfl\+\_\+status}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_BAD\_PARAM@{TINFL\_STATUS\_BAD\_PARAM}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_BAD\_PARAM@{TINFL\_STATUS\_BAD\_PARAM}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a61c8d6dd2c312ee7a474ac6782e4bed9}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a61c8d6dd2c312ee7a474ac6782e4bed9}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+B\+A\+D\+\_\+\+P\+A\+R\+AM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_ADLER32\_MISMATCH@{TINFL\_STATUS\_ADLER32\_MISMATCH}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_ADLER32\_MISMATCH@{TINFL\_STATUS\_ADLER32\_MISMATCH}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3c0ca7cb0911c046d25e1ab3e525a3af}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3c0ca7cb0911c046d25e1ab3e525a3af}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+A\+D\+L\+E\+R32\+\_\+\+M\+I\+S\+M\+A\+T\+CH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_FAILED@{TINFL\_STATUS\_FAILED}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_FAILED@{TINFL\_STATUS\_FAILED}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3d9ecb5e7298395555ec061cda50644c}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a3d9ecb5e7298395555ec061cda50644c}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+F\+A\+I\+L\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_DONE@{TINFL\_STATUS\_DONE}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_DONE@{TINFL\_STATUS\_DONE}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4af9316c69027621352f435c9a343f1042}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4af9316c69027621352f435c9a343f1042}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+O\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_NEEDS\_MORE\_INPUT@{TINFL\_STATUS\_NEEDS\_MORE\_INPUT}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_NEEDS\_MORE\_INPUT@{TINFL\_STATUS\_NEEDS\_MORE\_INPUT}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a4150e95aacd9bf414c6f9155263b60e8}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a4150e95aacd9bf414c6f9155263b60e8}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+N\+E\+E\+D\+S\+\_\+\+M\+O\+R\+E\+\_\+\+I\+N\+P\+UT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TINFL\_STATUS\_HAS\_MORE\_OUTPUT@{TINFL\_STATUS\_HAS\_MORE\_OUTPUT}!tinfl.c@{tinfl.c}}\index{tinfl.c@{tinfl.c}!TINFL\_STATUS\_HAS\_MORE\_OUTPUT@{TINFL\_STATUS\_HAS\_MORE\_OUTPUT}}}\mbox{\Hypertarget{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a49583f3a8fa8eb17838e17f21c08be05}\label{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4a49583f3a8fa8eb17838e17f21c08be05}} 
+T\+I\+N\+F\+L\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+H\+A\+S\+\_\+\+M\+O\+R\+E\+\_\+\+O\+U\+T\+P\+UT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 82 of file tinfl.\+c.
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{tinfl_8c_ac4e4c006d234780922676ecc31fe1416}\label{tinfl_8c_ac4e4c006d234780922676ecc31fe1416}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_decompress@{tinfl\_decompress}}
+\index{tinfl\_decompress@{tinfl\_decompress}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_decompress()}{tinfl\_decompress()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{tinfl_8c_a387ccd3d7a7891c9e1d6ec4f4207c8d4}{tinfl\+\_\+status}} tinfl\+\_\+decompress (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{tinfl_8c_ad5308cf24962df49c8b6a5c91bbbe05e}{tinfl\+\_\+decompressor}} $\ast$}]{r,  }\item[{const \mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$}]{p\+In\+\_\+buf\+\_\+next,  }\item[{size\+\_\+t $\ast$}]{p\+In\+\_\+buf\+\_\+size,  }\item[{\mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$}]{p\+Out\+\_\+buf\+\_\+start,  }\item[{\mbox{\hyperlink{tinfl_8c_a9354eca32f90733aa9bb3738c92da596}{mz\+\_\+uint8}} $\ast$}]{p\+Out\+\_\+buf\+\_\+next,  }\item[{size\+\_\+t $\ast$}]{p\+Out\+\_\+buf\+\_\+size,  }\item[{const \mbox{\hyperlink{tinfl_8c_ab1a91818a39ac203d5d9f12a003e8557}{mz\+\_\+uint32}}}]{decomp\+\_\+flags }\end{DoxyParamCaption})}
+
+
+
+Definition at line 233 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a3e8087762c8423c4e48d1e5e01a243de}\label{tinfl_8c_a3e8087762c8423c4e48d1e5e01a243de}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_decompress\_mem\_to\_callback@{tinfl\_decompress\_mem\_to\_callback}}
+\index{tinfl\_decompress\_mem\_to\_callback@{tinfl\_decompress\_mem\_to\_callback}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_decompress\_mem\_to\_callback()}{tinfl\_decompress\_mem\_to\_callback()}}
+{\footnotesize\ttfamily int tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+callback (\begin{DoxyParamCaption}\item[{const void $\ast$}]{p\+In\+\_\+buf,  }\item[{size\+\_\+t $\ast$}]{p\+In\+\_\+buf\+\_\+size,  }\item[{\mbox{\hyperlink{tinfl_8c_a4e4ea4a3376e8d2a996b848c8e4319df}{tinfl\+\_\+put\+\_\+buf\+\_\+func\+\_\+ptr}}}]{p\+Put\+\_\+buf\+\_\+func,  }\item[{void $\ast$}]{p\+Put\+\_\+buf\+\_\+user,  }\item[{int}]{flags }\end{DoxyParamCaption})}
+
+
+
+Definition at line 555 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a4132a2c848f7a8b3db82735f0abb80f9}\label{tinfl_8c_a4132a2c848f7a8b3db82735f0abb80f9}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_decompress\_mem\_to\_heap@{tinfl\_decompress\_mem\_to\_heap}}
+\index{tinfl\_decompress\_mem\_to\_heap@{tinfl\_decompress\_mem\_to\_heap}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_decompress\_mem\_to\_heap()}{tinfl\_decompress\_mem\_to\_heap()}}
+{\footnotesize\ttfamily void $\ast$ tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+heap (\begin{DoxyParamCaption}\item[{const void $\ast$}]{p\+Src\+\_\+buf,  }\item[{size\+\_\+t}]{src\+\_\+buf\+\_\+len,  }\item[{size\+\_\+t $\ast$}]{p\+Out\+\_\+len,  }\item[{int}]{flags }\end{DoxyParamCaption})}
+
+
+
+Definition at line 519 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_ac4642bb91b5abc566c6b23c0658d6995}\label{tinfl_8c_ac4642bb91b5abc566c6b23c0658d6995}} 
+\index{tinfl.c@{tinfl.c}!tinfl\_decompress\_mem\_to\_mem@{tinfl\_decompress\_mem\_to\_mem}}
+\index{tinfl\_decompress\_mem\_to\_mem@{tinfl\_decompress\_mem\_to\_mem}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinfl\_decompress\_mem\_to\_mem()}{tinfl\_decompress\_mem\_to\_mem()}}
+{\footnotesize\ttfamily size\+\_\+t tinfl\+\_\+decompress\+\_\+mem\+\_\+to\+\_\+mem (\begin{DoxyParamCaption}\item[{void $\ast$}]{p\+Out\+\_\+buf,  }\item[{size\+\_\+t}]{out\+\_\+buf\+\_\+len,  }\item[{const void $\ast$}]{p\+Src\+\_\+buf,  }\item[{size\+\_\+t}]{src\+\_\+buf\+\_\+len,  }\item[{int}]{flags }\end{DoxyParamCaption})}
+
+
+
+Definition at line 547 of file tinfl.\+c.
+
+\mbox{\Hypertarget{tinfl_8c_a83ec49e8c7a33da568ebd226819bbb56}\label{tinfl_8c_a83ec49e8c7a33da568ebd226819bbb56}} 
+\index{tinfl.c@{tinfl.c}!tinflDiag@{tinflDiag}}
+\index{tinflDiag@{tinflDiag}!tinfl.c@{tinfl.c}}
+\subsubsection{\texorpdfstring{tinflDiag()}{tinflDiag()}}
+{\footnotesize\ttfamily void tinfl\+Diag (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 583 of file tinfl.\+c.
+

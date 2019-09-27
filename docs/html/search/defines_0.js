@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['false',['FALSE',['../utils_8h.html#aa93f0eb578d23995850d61f7d61c55c1',1,'utils.h']]],
-  ['fp_5fshft',['FP_SHFT',['../utils_8c.html#a1be71f5fbd8d94ae65f3569a44669eee',1,'utils.c']]]
+  ['_5fpointer_5fdata_5f',['_POINTER_DATA_',['../mouse__pointer__data_8h.html#a3b9307ed35c3c5bcdacccc2ffe8294eb',1,'mouse_pointer_data.h']]]
 ];

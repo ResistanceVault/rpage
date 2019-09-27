@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['wait_5fpointer',['wait_pointer',['../mouse__pointer__data_8h.html#a01f1e87b39bce355cf6630aece73436b',1,'mouse_pointer_data.h']]]
+  ['sintab32',['sintab32',['../easing_8c.html#a4dd1f664665fd45071fead361afd3a89',1,'sintab32():&#160;easing.c'],['../easing_8h.html#ac2b36c48b42f331b2d7a69cd1b7487ad',1,'sintab32():&#160;easing.c']]],
+  ['sx',['sx',['../structrect.html#ad412d3c503fde76edb4b79e9bb5bdee4',1,'rect']]],
+  ['sy',['sy',['../structrect.html#a0153fced86e1addd87ec429590e82741',1,'rect']]]
 ];

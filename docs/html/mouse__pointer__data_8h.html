@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>R-PAGE: amiga/mouse_pointer_data.h File Reference</title>
+<title>R-PAGE: rpage/amiga/mouse_pointer_data.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_48c5fc9edaeb105c803e22ca5fa2d632.html">amiga</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_ec2befdadc43a78ded871f241574b99d.html">rpage</a></li><li class="navelem"><a class="el" href="dir_479d091091c724f3dc1f48bd2370ebd8.html">amiga</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,11 +74,14 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;exec/types.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="utils_8h_source.html">rpage/utils.h</a>&quot;</code><br />
 </div>
 <p><a href="mouse__pointer__data_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a3b9307ed35c3c5bcdacccc2ffe8294eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mouse__pointer__data_8h.html#a3b9307ed35c3c5bcdacccc2ffe8294eb">_POINTER_DATA_</a></td></tr>
+<tr class="separator:a3b9307ed35c3c5bcdacccc2ffe8294eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22aa33281c71d0eb26f71bb4fee66e1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mouse__pointer__data_8h.html#a22aa33281c71d0eb26f71bb4fee66e1d">WAIT_POINTER_HEIGHT</a>&#160;&#160;&#160;22L</td></tr>
 <tr class="separator:a22aa33281c71d0eb26f71bb4fee66e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -88,8 +91,28 @@ Variables</h2></td></tr>
 <tr class="separator:a3875d8d92fad43e0f4d7220b6fc33b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01f1e87b39bce355cf6630aece73436b"><td class="memItemLeft" align="right" valign="top">USHORT chip&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mouse__pointer__data_8h.html#a01f1e87b39bce355cf6630aece73436b">wait_pointer</a> [(<a class="el" href="mouse__pointer__data_8h.html#a22aa33281c71d0eb26f71bb4fee66e1d">WAIT_POINTER_HEIGHT</a> *2)+4]</td></tr>
 <tr class="separator:a01f1e87b39bce355cf6630aece73436b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae71f53b74c175a4785c0f162118a7a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structvec2.html">vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mouse__pointer__data_8h.html#ae71f53b74c175a4785c0f162118a7a3c">mouse_cursors_hotspot</a> [4]</td></tr>
+<tr class="separator:ae71f53b74c175a4785c0f162118a7a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ef632e44a109a9ecd9afa8daefc5cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#aefbb6ca39ebcf009709e607d159766d5">UWORD</a> chip&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mouse__pointer__data_8h.html#aa3ef632e44a109a9ecd9afa8daefc5cb">mouse_cursors_img</a> [4][36]</td></tr>
+<tr class="separator:aa3ef632e44a109a9ecd9afa8daefc5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a3b9307ed35c3c5bcdacccc2ffe8294eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b9307ed35c3c5bcdacccc2ffe8294eb">&#9670;&nbsp;</a></span>_POINTER_DATA_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _POINTER_DATA_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mouse__pointer__data_8h_source.html#l00009">9</a> of file <a class="el" href="mouse__pointer__data_8h_source.html">mouse_pointer_data.h</a>.</p>
+
+</div>
+</div>
 <a id="a22aa33281c71d0eb26f71bb4fee66e1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22aa33281c71d0eb26f71bb4fee66e1d">&#9670;&nbsp;</a></span>WAIT_POINTER_HEIGHT</h2>
 
@@ -102,11 +125,39 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mouse__pointer__data_8h_source.html#l00010">10</a> of file <a class="el" href="mouse__pointer__data_8h_source.html">mouse_pointer_data.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mouse__pointer__data_8h_source.html#l00011">11</a> of file <a class="el" href="mouse__pointer__data_8h_source.html">mouse_pointer_data.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ae71f53b74c175a4785c0f162118a7a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71f53b74c175a4785c0f162118a7a3c">&#9670;&nbsp;</a></span>mouse_cursors_hotspot</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structvec2.html">vec2</a> mouse_cursors_hotspot[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa3ef632e44a109a9ecd9afa8daefc5cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3ef632e44a109a9ecd9afa8daefc5cb">&#9670;&nbsp;</a></span>mouse_cursors_img</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils_8h.html#aefbb6ca39ebcf009709e607d159766d5">UWORD</a> chip mouse_cursors_img[4][36]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3875d8d92fad43e0f4d7220b6fc33b18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3875d8d92fad43e0f4d7220b6fc33b18">&#9670;&nbsp;</a></span>pointer_normal_data</h2>
 

@@ -1,0 +1,251 @@
+\hypertarget{coroutine_8h}{}\section{rpage/coroutine.h File Reference}
+\label{coroutine_8h}\index{rpage/coroutine.h@{rpage/coroutine.h}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a13dcbf2741ff9b023f4edf677ee0575b}{scr\+Begin}}~static int scr\+Line = 0; switch(scr\+Line) \{ case 0\+:;
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_af0f6e53f38baa56c96d593b0273908dd}{scr\+Finish}}(z)~\} return (z)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a60d7509511800372ac2cc15313c5c75f}{scr\+FinishV}}~\} return
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_ae6d4798ccbd6693792e17c04608f7fd0}{scr\+Return}}(z)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a7d97def2ae95f41cb2982308c49d81f3}{scr\+ReturnV}}
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_aacba28138922ae36d8f2d06b01621c39}{ccr\+Cont\+Param}}~void $\ast$$\ast$ccr\+Param
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a88098698ae99595b83369f5c77dda8f5}{ccr\+Begin\+Context}}~struct ccr\+Context\+Tag \{ int ccr\+Line
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a88ce6006364f41f335e683a208e44af9}{ccr\+End\+Context}}(x)~\} $\ast$x = (struct ccr\+Context\+Tag $\ast$)$\ast$ccr\+Param
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a26574e59b581a7afd634e9a2ed69f1a5}{ccr\+Begin}}(x)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a4099f4e5c7c78edd98b315503abd6c69}{ccr\+Finish}}(z)~\} free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return (z)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a7657c63a3a724b4fca0552e784d9bc35}{ccr\+FinishV}}~\} free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_aecdb0270b57ca5c5a0b33543446eeba1}{ccr\+Return}}(z)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a49e4dfd5117e0fc382533a9c7dec54fd}{ccr\+ReturnV}}
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a5d108ee08e6e9cfb9e7ac3ce0a23d050}{ccr\+Stop}}(z)~do\{ free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return (z); \}while(0)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_af7ad1750303f45d1e8715bb55f3dc2fe}{ccr\+StopV}}~do\{ free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return; \}while(0)
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a5d9948a6f8cee486947b92a347b8610c}{ccr\+Context}}~void $\ast$
+\item 
+\#define \mbox{\hyperlink{coroutine_8h_a9c3c1ab8129ecaa83c84be0b81db2a22}{ccr\+Abort}}(ctx)~do \{ free (ctx); ctx = 0; \} while (0)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{coroutine_8h_a9c3c1ab8129ecaa83c84be0b81db2a22}\label{coroutine_8h_a9c3c1ab8129ecaa83c84be0b81db2a22}} 
+\index{coroutine.h@{coroutine.h}!ccrAbort@{ccrAbort}}
+\index{ccrAbort@{ccrAbort}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrAbort}{ccrAbort}}
+{\footnotesize\ttfamily \#define ccr\+Abort(\begin{DoxyParamCaption}\item[{}]{ctx }\end{DoxyParamCaption})~do \{ free (ctx); ctx = 0; \} while (0)}
+
+
+
+Definition at line 179 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a26574e59b581a7afd634e9a2ed69f1a5}\label{coroutine_8h_a26574e59b581a7afd634e9a2ed69f1a5}} 
+\index{coroutine.h@{coroutine.h}!ccrBegin@{ccrBegin}}
+\index{ccrBegin@{ccrBegin}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrBegin}{ccrBegin}}
+{\footnotesize\ttfamily \#define ccr\+Begin(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(!x) \{x= *ccrParam=malloc(\textcolor{keyword}{sizeof}(*x)); x->ccrLine=0;\}\(\backslash\)}
+\DoxyCodeLine{                         if (x) \textcolor{keywordflow}{switch}(x->ccrLine) \{ \textcolor{keywordflow}{case} 0:;}
+
+\end{DoxyCode}
+
+
+Definition at line 159 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a88098698ae99595b83369f5c77dda8f5}\label{coroutine_8h_a88098698ae99595b83369f5c77dda8f5}} 
+\index{coroutine.h@{coroutine.h}!ccrBeginContext@{ccrBeginContext}}
+\index{ccrBeginContext@{ccrBeginContext}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrBeginContext}{ccrBeginContext}}
+{\footnotesize\ttfamily \#define ccr\+Begin\+Context~struct ccr\+Context\+Tag \{ int ccr\+Line}
+
+
+
+Definition at line 156 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a5d9948a6f8cee486947b92a347b8610c}\label{coroutine_8h_a5d9948a6f8cee486947b92a347b8610c}} 
+\index{coroutine.h@{coroutine.h}!ccrContext@{ccrContext}}
+\index{ccrContext@{ccrContext}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrContext}{ccrContext}}
+{\footnotesize\ttfamily \#define ccr\+Context~void $\ast$}
+
+
+
+Definition at line 178 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_aacba28138922ae36d8f2d06b01621c39}\label{coroutine_8h_aacba28138922ae36d8f2d06b01621c39}} 
+\index{coroutine.h@{coroutine.h}!ccrContParam@{ccrContParam}}
+\index{ccrContParam@{ccrContParam}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrContParam}{ccrContParam}}
+{\footnotesize\ttfamily \#define ccr\+Cont\+Param~void $\ast$$\ast$ccr\+Param}
+
+
+
+Definition at line 154 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a88ce6006364f41f335e683a208e44af9}\label{coroutine_8h_a88ce6006364f41f335e683a208e44af9}} 
+\index{coroutine.h@{coroutine.h}!ccrEndContext@{ccrEndContext}}
+\index{ccrEndContext@{ccrEndContext}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrEndContext}{ccrEndContext}}
+{\footnotesize\ttfamily \#define ccr\+End\+Context(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~\} $\ast$x = (struct ccr\+Context\+Tag $\ast$)$\ast$ccr\+Param}
+
+
+
+Definition at line 157 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a4099f4e5c7c78edd98b315503abd6c69}\label{coroutine_8h_a4099f4e5c7c78edd98b315503abd6c69}} 
+\index{coroutine.h@{coroutine.h}!ccrFinish@{ccrFinish}}
+\index{ccrFinish@{ccrFinish}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrFinish}{ccrFinish}}
+{\footnotesize\ttfamily \#define ccr\+Finish(\begin{DoxyParamCaption}\item[{}]{z }\end{DoxyParamCaption})~\} free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return (z)}
+
+
+
+Definition at line 161 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a7657c63a3a724b4fca0552e784d9bc35}\label{coroutine_8h_a7657c63a3a724b4fca0552e784d9bc35}} 
+\index{coroutine.h@{coroutine.h}!ccrFinishV@{ccrFinishV}}
+\index{ccrFinishV@{ccrFinishV}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrFinishV}{ccrFinishV}}
+{\footnotesize\ttfamily \#define ccr\+FinishV~\} free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return}
+
+
+
+Definition at line 162 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_aecdb0270b57ca5c5a0b33543446eeba1}\label{coroutine_8h_aecdb0270b57ca5c5a0b33543446eeba1}} 
+\index{coroutine.h@{coroutine.h}!ccrReturn@{ccrReturn}}
+\index{ccrReturn@{ccrReturn}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrReturn}{ccrReturn}}
+{\footnotesize\ttfamily \#define ccr\+Return(\begin{DoxyParamCaption}\item[{}]{z }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{            ((\textcolor{keyword}{struct }ccrContextTag *)*ccrParam)->ccrLine=\_\_LINE\_\_;\(\backslash\)}
+\DoxyCodeLine{            return (z); \textcolor{keywordflow}{case} \_\_LINE\_\_:;\(\backslash\)}
+\DoxyCodeLine{        \} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Definition at line 164 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a49e4dfd5117e0fc382533a9c7dec54fd}\label{coroutine_8h_a49e4dfd5117e0fc382533a9c7dec54fd}} 
+\index{coroutine.h@{coroutine.h}!ccrReturnV@{ccrReturnV}}
+\index{ccrReturnV@{ccrReturnV}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrReturnV}{ccrReturnV}}
+{\footnotesize\ttfamily \#define ccr\+ReturnV}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{            ((\textcolor{keyword}{struct }ccrContextTag *)*ccrParam)->ccrLine=\_\_LINE\_\_;\(\backslash\)}
+\DoxyCodeLine{            return; \textcolor{keywordflow}{case} \_\_LINE\_\_:;\(\backslash\)}
+\DoxyCodeLine{        \} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Definition at line 169 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a5d108ee08e6e9cfb9e7ac3ce0a23d050}\label{coroutine_8h_a5d108ee08e6e9cfb9e7ac3ce0a23d050}} 
+\index{coroutine.h@{coroutine.h}!ccrStop@{ccrStop}}
+\index{ccrStop@{ccrStop}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrStop}{ccrStop}}
+{\footnotesize\ttfamily \#define ccr\+Stop(\begin{DoxyParamCaption}\item[{}]{z }\end{DoxyParamCaption})~do\{ free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return (z); \}while(0)}
+
+
+
+Definition at line 175 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_af7ad1750303f45d1e8715bb55f3dc2fe}\label{coroutine_8h_af7ad1750303f45d1e8715bb55f3dc2fe}} 
+\index{coroutine.h@{coroutine.h}!ccrStopV@{ccrStopV}}
+\index{ccrStopV@{ccrStopV}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{ccrStopV}{ccrStopV}}
+{\footnotesize\ttfamily \#define ccr\+StopV~do\{ free($\ast$ccr\+Param); $\ast$ccr\+Param=0; return; \}while(0)}
+
+
+
+Definition at line 176 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a13dcbf2741ff9b023f4edf677ee0575b}\label{coroutine_8h_a13dcbf2741ff9b023f4edf677ee0575b}} 
+\index{coroutine.h@{coroutine.h}!scrBegin@{scrBegin}}
+\index{scrBegin@{scrBegin}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{scrBegin}{scrBegin}}
+{\footnotesize\ttfamily \#define scr\+Begin~static int scr\+Line = 0; switch(scr\+Line) \{ case 0\+:;}
+
+
+
+Definition at line 135 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_af0f6e53f38baa56c96d593b0273908dd}\label{coroutine_8h_af0f6e53f38baa56c96d593b0273908dd}} 
+\index{coroutine.h@{coroutine.h}!scrFinish@{scrFinish}}
+\index{scrFinish@{scrFinish}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{scrFinish}{scrFinish}}
+{\footnotesize\ttfamily \#define scr\+Finish(\begin{DoxyParamCaption}\item[{}]{z }\end{DoxyParamCaption})~\} return (z)}
+
+
+
+Definition at line 136 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a60d7509511800372ac2cc15313c5c75f}\label{coroutine_8h_a60d7509511800372ac2cc15313c5c75f}} 
+\index{coroutine.h@{coroutine.h}!scrFinishV@{scrFinishV}}
+\index{scrFinishV@{scrFinishV}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{scrFinishV}{scrFinishV}}
+{\footnotesize\ttfamily \#define scr\+FinishV~\} return}
+
+
+
+Definition at line 137 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_ae6d4798ccbd6693792e17c04608f7fd0}\label{coroutine_8h_ae6d4798ccbd6693792e17c04608f7fd0}} 
+\index{coroutine.h@{coroutine.h}!scrReturn@{scrReturn}}
+\index{scrReturn@{scrReturn}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{scrReturn}{scrReturn}}
+{\footnotesize\ttfamily \#define scr\+Return(\begin{DoxyParamCaption}\item[{}]{z }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{            scrLine=\_\_LINE\_\_;\(\backslash\)}
+\DoxyCodeLine{            return (z); \textcolor{keywordflow}{case} \_\_LINE\_\_:;\(\backslash\)}
+\DoxyCodeLine{        \} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Definition at line 139 of file coroutine.\+h.
+
+\mbox{\Hypertarget{coroutine_8h_a7d97def2ae95f41cb2982308c49d81f3}\label{coroutine_8h_a7d97def2ae95f41cb2982308c49d81f3}} 
+\index{coroutine.h@{coroutine.h}!scrReturnV@{scrReturnV}}
+\index{scrReturnV@{scrReturnV}!coroutine.h@{coroutine.h}}
+\subsubsection{\texorpdfstring{scrReturnV}{scrReturnV}}
+{\footnotesize\ttfamily \#define scr\+ReturnV}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{do} \{\(\backslash\)}
+\DoxyCodeLine{            scrLine=\_\_LINE\_\_;\(\backslash\)}
+\DoxyCodeLine{            return; \textcolor{keywordflow}{case} \_\_LINE\_\_:;\(\backslash\)}
+\DoxyCodeLine{        \} \textcolor{keywordflow}{while} (0)}
+
+\end{DoxyCode}
+
+
+Definition at line 144 of file coroutine.\+h.
+
