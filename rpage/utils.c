@@ -114,6 +114,8 @@ BOOL point_within_rect(vec2 *pt, rect *r)
     return FALSE;
 }
 
+/*  Point VS Polygon test, works in integer.
+    Routine by By https://github.com/JustasB */
 BOOL point_within_polygon(vec2 *pt, vec2 *pt_list[], unsigned short n_pt)
 {
     short i, j;
