@@ -14,7 +14,7 @@ R-PAGE is brought to you by the **demoscene** group [RESISTANCE](https://resista
 At the moment, R-PAGE is more a framework than a full feature engine. Feel free to use it as a boostrap for your own adventure project. The roadmap, however, includes a very basic adventure game to showcase the features of this framework.
 
 ### Where is the API ?
-You should start looking for [frwk.h](frwk.h)
+You should start looking for [frwk.h](rpage/frwk.h)
 
 ### Actual games based on R-PAGE:
 * Athanor 2 by www.safargames.fr
