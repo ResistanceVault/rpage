@@ -6,7 +6,7 @@
 #ifndef SCREEN_ROUTINES
 #define SCREEN_ROUTINES
 
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
 
@@ -19,14 +19,13 @@ typedef struct{
 
 typedef struct{
 	struct BitMap *bitmaps[2];
-	PALETTEPTR palettes[2];
+	amiga_color *palettes[2];
 	struct Screen *screen;
 	struct Window *window;
 	BOOL double_buffer_enabled;
 	USHORT physical;
 } buffered_screen;
 
-#define DBUFFER_DISABLED FALSE
 #define DBUFFER_ENABLED TRUE
 
 /* Prototypes for our functions */
@@ -47,6 +46,7 @@ void flipBuffers(buffered_screen *screen);
 void presentPalette(buffered_screen *screen);
 void presentScreen(buffered_screen *screen);
 void synchronizeBuffers(buffered_screen *screen);
+UWORD screenGetDepth(void);
 
 #endif
 #endif

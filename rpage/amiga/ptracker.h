@@ -12,9 +12,13 @@
 
 BOOL init_protracker_player(void);
 void uninit_protracker_player(void);
-void load_protacker_music(char *filename, ULONG filesize);
+void load_packed_protacker_music(char *filename);
+void load_protacker_music(char *filename, int filesize);
 void unload_protacker_music(void);
 void play_protracker_music(void);
+void protracker_set_fade_speed(short fade_speed);
+void protracker_update_state(void);
+
 
 #endif // #ifndef AUDIO_ROUTINES
 #endif

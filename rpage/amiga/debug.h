@@ -2,7 +2,7 @@
     Released under MIT License, see license.txt for details.
 */
 
-#ifdef LATTICE
+// #ifdef LATTICE
 // #ifndef DEBUG_MACROS
 // #define DEBUG_MACROS
 
@@ -10,4 +10,4 @@
 // */
 
 // #endif
-#endif
+// #endif

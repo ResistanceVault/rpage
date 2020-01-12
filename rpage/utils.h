@@ -33,10 +33,6 @@ typedef int BOOL;
 #endif
 #endif
 
-#ifndef PALETTEPTR
-typedef unsigned short* PALETTEPTR;
-#endif
-
 #ifndef TRUE
 #define TRUE 1
 #endif
@@ -63,6 +59,10 @@ typedef struct
     int x, y;
 } vec2fp;
 
+typedef struct
+{
+    vec2 p0, p1, p2, p3;
+} poly;
 
 typedef struct
 {
@@ -72,7 +72,8 @@ typedef struct
 int range_adjust(int val, int in_lower, int in_upper, int out_lower, int out_upper);
 int clamp(int x, int in_lower, int in_upper);
 BOOL point_within_rect(vec2 *pt, rect *r);
-BOOL point_within_polygon(vec2 *pt, vec2 *pt_list[], unsigned short n_pt);
+BOOL point_within_quad(vec2 *pt, poly *pl);
+BOOL point_within_polygon(vec2 *pt, vec2 *pt_list, unsigned short n_pt);
 char* citoa(int num, char* str, int base);
 short str_find_delimiter(short start, char *str);
 int qsqr(int i);

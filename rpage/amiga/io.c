@@ -23,6 +23,29 @@ struct Window *mouse_window = NULL;
 struct IntuiMessage *window_message = NULL;
 static char str_diskname[256];
 
+int file_get_size(char *filename)
+{
+  struct FileLock *lock;
+  struct FileInfoBlock *fib_ptr;
+  int filesize = -1;
+
+  memset(str_diskname, 0, 255);
+  fib_ptr = (struct FileInfoBlock *)AllocMem( sizeof( struct FileInfoBlock ), MEMF_PUBLIC | MEMF_CLEAR );
+  lock = (struct FileLock *)Lock(filename, SHARED_LOCK);
+
+  if(lock != NULL)
+  {
+    if(Examine((BPTR)lock, fib_ptr) != NULL)
+      filesize = fib_ptr->fib_Size;
+
+    UnLock((BPTR)lock);  
+  }
+
+  FreeMem(fib_ptr, sizeof(struct FileInfoBlock));
+
+  return filesize;
+}
+
 char *disk_get_logical_name(char *device_physical_name)
 {
   short disk_idx;
@@ -32,7 +55,7 @@ char *disk_get_logical_name(char *device_physical_name)
   struct FileLock *lock;
   struct FileInfoBlock *fib_ptr;
 
-#ifdef DEBUG_MACTROS
+#ifdef DEBUG_MACROS
   printf("disk_get_logical_name(%s), ", device_physical_name);
 #endif
 
@@ -69,7 +92,7 @@ char *disk_get_logical_name(char *device_physical_name)
         else
           printf("BeginIO() error!\n");
       }
-#ifdef DEBUG_MACTROS
+#ifdef DEBUG_MACROS
       else
         printf("%s did not open\n", TD_NAME);
 #endif
@@ -93,13 +116,13 @@ char *disk_get_logical_name(char *device_physical_name)
     FreeMem(fib_ptr, sizeof(struct FileInfoBlock));
 
     strcat(str_diskname, ":");
-#ifdef DEBUG_MACTROS
+#ifdef DEBUG_MACROS
     printf("%s\n", str_diskname);
 #endif
     return str_diskname;
   }
 
-#ifdef DEBUG_MACTROS
+#ifdef DEBUG_MACROS
   printf("no disk in drive!\n");
 #endif
   return NULL; // device_physical_name;
@@ -131,6 +154,8 @@ void input_update(short *button, short *x, short *y, unsigned short *rawkey)
       *y = window_message->MouseY; /* Y position of the mouse. */
       ReplyMsg((struct Message *)window_message);
     }
+
+    *rawkey = 0x0;
    
     switch(class)
     {

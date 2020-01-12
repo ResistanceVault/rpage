@@ -37,9 +37,9 @@ extern struct SoundInfo *PrepareSound(STRPTR file);
 extern BOOL PlaySound(struct SoundInfo *info, UWORD volume, UBYTE channel, WORD delta_rate, UWORD repeat);
 extern void StopSound(UBYTE channel);
 extern void RemoveSound(struct SoundInfo *info);
-
-void initDecode68000(void);
-void decode68000(CodecState* state, UBYTE* input, int numSamples, short* output);
+extern struct SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block);
+void adpcm_decoder_init(void);
+void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output);
 
 #endif
 #endif

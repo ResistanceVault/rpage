@@ -12,6 +12,7 @@
 #define PLATFORM_MOUSE_RIGHT_BUTTON (1 << 1)
 
 UBYTE Keyboard(void);
+int file_get_size(char *filename);
 void input_window_init(struct Window *window);
 void input_update(short *button, short *x, short *y, unsigned short *rawkey);
 

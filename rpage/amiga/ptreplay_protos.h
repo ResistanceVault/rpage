@@ -1,4 +1,3 @@
-#ifdef LATTICE
 /*** PROTOS FOR PTREPLAY.LIBRARY ***/
 
 struct Module *PTLoadModule(STRPTR);
@@ -21,4 +20,12 @@ void PTInstallBits(struct Module *, BYTE, BYTE, BYTE, BYTE);
 struct Module *PTSetupMod(APTR);
 void PTFreeMod(struct Module *);
 void PTStartFade(struct Module *, UBYTE);
-#endif
+/* New in V5 */
+void PTOnChannel(struct Module *, BYTE);
+void PTOffChannel(struct Module *, BYTE);
+void PTSetPos(struct Module *,UBYTE);
+void PTSetPri(BYTE);
+BYTE PTGetPri(void);
+/* New in V6 */
+BYTE PTGetChan(void);
+struct PTSample *PTGetSample(struct Module *,WORD);

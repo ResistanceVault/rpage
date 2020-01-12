@@ -6,7 +6,7 @@
 #ifndef HELPER_ROUTINES
 #define HELPER_ROUTINES
 
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 
 UBYTE is_cpu_a_020(void);
 

@@ -114,9 +114,25 @@ BOOL point_within_rect(vec2 *pt, rect *r)
     return FALSE;
 }
 
+BOOL point_within_quad(vec2 *pt, poly *pl)
+{
+    vec2 pt_list[4];
+
+    pt_list[0].x = pl->p0.x;
+    pt_list[0].y = pl->p0.y;
+    pt_list[1].x = pl->p1.x;
+    pt_list[1].y = pl->p1.y;
+    pt_list[2].x = pl->p2.x;
+    pt_list[2].y = pl->p2.y;
+    pt_list[3].x = pl->p3.x;
+    pt_list[3].y = pl->p3.y;
+
+    return point_within_polygon(pt, pt_list, 4);
+}
+
 /*  Point VS Polygon test, works in integer.
     Routine by By https://github.com/JustasB */
-BOOL point_within_polygon(vec2 *pt, vec2 *pt_list[], unsigned short n_pt)
+BOOL point_within_polygon(vec2 *pt, vec2 *pt_list, unsigned short n_pt)
 {
     short i, j;
     short pos = 0, neg = 0;
@@ -124,7 +140,7 @@ BOOL point_within_polygon(vec2 *pt, vec2 *pt_list[], unsigned short n_pt)
    //Check if a triangle or higher n-gon
     if (n_pt < 3)
     {
-        printf("point_within_polygon(), n_pt < 3 !\n");
+        // printf("point_within_polygon(), n_pt < 3 !\n");
         return FALSE;
     }
 
@@ -133,18 +149,18 @@ BOOL point_within_polygon(vec2 *pt, vec2 *pt_list[], unsigned short n_pt)
     for (i = 0; i < n_pt; i++)
     {
         //If point is in the polygon
-        if (pt_list[i]->x == pt->x && pt_list[i]->y == pt->y)
+        if (pt_list[i].x == pt->x && pt_list[i].y == pt->y)
             return TRUE;
 
         //Form a segment between the i'th point
-        x1 = pt_list[i]->x;
-        y1 = pt_list[i]->y;
+        x1 = pt_list[i].x;
+        y1 = pt_list[i].y;
 
         //And the i+1'th, or if i is the last, with the first point
         j = i < (n_pt - 1) ? i + 1 : 0;
 
-        x2 = pt_list[j]->x;
-        y2 = pt_list[j]->y;
+        x2 = pt_list[j].x;
+        y2 = pt_list[j].y;
 
         x = pt->x;
         y = pt->y;

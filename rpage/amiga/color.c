@@ -3,7 +3,7 @@
 */
 
 #ifdef LATTICE
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 #include "rpage/amiga/color.h"
 #include "rpage/utils.h"
 #include <intuition/intuition.h>
@@ -11,7 +11,27 @@
 #include <graphics/gfxmacros.h>
 #include <hardware/custom.h>
 
+#include "rpage/amiga/color.h"
+#include "rpage/utils.h"
+
 extern struct GfxBase *GfxBase;
+
+UWORD __inline components_to_rgb8(UWORD r, UWORD g, UWORD b)
+{
+	if (r > 0xff)
+		r = 0xff;
+	if (g > 0xff)
+		g = 0xff;
+	if (b > 0xff)
+		b = 0xff;
+
+	r = r & 0xff;
+	g = g & 0xff;
+	b = b & 0xff;
+
+	return (UWORD)((r << 16) | (g << 8) | b);
+}
+
 
 UWORD __inline components_to_rgb4(UWORD r, UWORD g, UWORD b)
 {
@@ -206,19 +226,19 @@ ULONG mix_rgb8_colors(ULONG A, ULONG B, UWORD n)
 	return (r << 16) | (g << 8) | b;
 }
 
-void mix_rgb4_palettes(struct ViewPort *vp, PALETTEPTR source_palette, PALETTEPTR dest_palette, UWORD pal_size,
-					   UWORD fade)
-{
-	UBYTE i;
+// void mix_rgb4_palettes(struct ViewPort *vp, amiga_color *source_palette, amiga_color *dest_palette, UWORD pal_size,
+// 					   UWORD fade)
+// {
+// 	UBYTE i;
 
-	for (i = 0; i < pal_size; i++)
-	{
-		UWORD col = mix_rgb4_colors(source_palette[i], dest_palette[i], fade);
-		SetRGB4(vp, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
-	}
-}
+// 	for (i = 0; i < pal_size; i++)
+// 	{
+// 		UWORD col = mix_rgb4_colors(source_palette[i], dest_palette[i], fade);
+// 		SetRGB4(vp, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
+// 	}
+// }
 
-void mix_rgb4_palette_to_black(struct ViewPort *vp, UWORD *pal, UWORD pal_size,
+void mix_rgb4_palette_to_black(struct ViewPort *vp, color444 *pal, UWORD pal_size,
 							   UWORD fade)
 {
 	UBYTE i;
@@ -230,18 +250,18 @@ void mix_rgb4_palette_to_black(struct ViewPort *vp, UWORD *pal, UWORD pal_size,
 	}
 }
 
-void mix_rgb4_palette_to_black_as_rgb8(struct ViewPort *vp, UWORD *pal, UWORD pal_size,
-									   ULONG rgb8color, UWORD fade)
-{
-	UBYTE i;
+// void mix_rgb4_palette_to_black_as_rgb8(struct ViewPort *vp, UWORD *pal, UWORD pal_size,
+// 									   ULONG rgb8color, UWORD fade)
+// {
+// 	UBYTE i;
 
-	for (i = 0; i < pal_size; i++)
-	{
-		UWORD col = mix_rgb8_colors(rgb4_to_rgb8(pal[i]), rgb8color, fade);
-		col = rgb8_to_rgb4(col);
-		SetRGB4(vp, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
-	}
-}
+// 	for (i = 0; i < pal_size; i++)
+// 	{
+// 		UWORD col = mix_rgb8_colors(rgb4_to_rgb8(pal[i]), rgb8color, fade);
+// 		col = rgb8_to_rgb4(col);
+// 		SetRGB4(vp, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
+// 	}
+// }
 
 void set_palette_to_black(struct ViewPort *vp, UWORD first_color, UWORD last_color)
 {
@@ -255,57 +275,84 @@ void set_palette_to_grey(struct ViewPort *vp, UWORD first_color, UWORD last_colo
 	int loop;
 	for (loop = first_color; loop <= last_color; loop++)
 	{
-		int luma = range_adjust(loop, first_color, last_color, 0, 15);
+		unsigned int luma;
+#ifdef VGA_CAPABLE
+		luma = range_adjust(loop, first_color, last_color, 0, 255);
+		SetRGB32(vp, loop, luma << 24, luma << 24, luma << 24);
+#else
+		luma = range_adjust(loop, first_color, last_color, 0, 15);
 		SetRGB4(vp, loop, luma, luma, luma);
+#endif
 	}
 }
 
 void set_palette(struct ViewPort *vp, UWORD **palette, UWORD first_color, UWORD last_color)
 {
-	short loop;
-	for (loop = first_color; loop <= last_color; loop++)
+	if (first_color > 0)
 	{
-		short r, g, b;
-		r = ((*palette)[loop] >> 8) & 0xf;
-		g = ((*palette)[loop] >> 4) & 0xf;
-		b = (*palette)[loop] & 0xf;
-		SetRGB4(vp, loop, r, g, b);
-	}
-}
-
-void fadein_rgb4_palette(struct ViewPort *current_viewport, PALETTEPTR current_palette, UWORD pal_size, unsigned short steps)
-{
-	unsigned short j;
-	for (j = 0; j < steps; j++)
-	{ /* fade in */
-		WaitTOF();
-		mix_rgb4_palette_to_black(current_viewport, current_palette, pal_size, ((steps - 1 - j) * 255) / steps);
-	}
-}
-
-void fadeout_rgb4_palette(struct ViewPort *current_viewport, PALETTEPTR current_palette, UWORD pal_size, unsigned short steps)
-{
-	unsigned short j;
-	for (j = 0; j < steps; j++)
-	{ /* fade out */
-		WaitTOF();
-		mix_rgb4_palette_to_black(current_viewport, current_palette, pal_size, 255 - (((steps - 1 - j) * 255) / steps));
-	}
-}
-
-void fade_rgb4_palettes(struct ViewPort *current_viewport, PALETTEPTR source_palette, PALETTEPTR dest_palette, UWORD pal_size, unsigned short steps)
-{
-	unsigned short i, j;
-	UWORD col;
-
-	for (j = 0; j < steps; j++)
-	{ /* fade step by step */
-		WaitTOF();
-		for (i = 0; i < pal_size; i++)
+		// Slow mode
+		short loop;
+		for (loop = first_color; loop <= last_color; loop++)
 		{
-			col = mix_rgb4_colors(dest_palette[i], source_palette[i], ((steps - 1 - j) * 255) / steps);
-			SetRGB4(current_viewport, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
+	#ifdef VGA_CAPABLE
+			unsigned int r, g, b;
+			r = ((*palette)[loop] >> 16) & 0xff;
+			g = ((*palette)[loop] >> 8) & 0xff;
+			b = (*palette)[loop] & 0xff;
+			SetRGB32(vp, loop, r << 24, g << 24, b << 24);
+	#else
+			UWORD r, g, b;
+			r = ((*palette)[loop] >> 8) & 0xf;
+			g = ((*palette)[loop] >> 4) & 0xf;
+			b = (*palette)[loop] & 0xf;
+			SetRGB4(vp, loop, r, g, b);
+	#endif
 		}
 	}
+	else
+	{
+		// Fast mode
+	#ifdef VGA_CAPABLE
+		LoadRGB32(vp, (ULONG *)*palette, last_color);
+	#else
+		LoadRGB4(vp, (UWORD *)*palette, last_color);
+	#endif
+	}
 }
+
+// void fadein_rgb4_palette(struct ViewPort *current_viewport, color444 *current_palette, UWORD pal_size, unsigned short steps)
+// {
+// 	unsigned short j;
+// 	for (j = 0; j < steps; j++)
+// 	{ /* fade in */
+// 		WaitTOF();
+// 		mix_rgb4_palette_to_black(current_viewport, current_palette, pal_size, ((steps - 1 - j) * 255) / steps);
+// 	}
+// }
+
+// void fadeout_rgb4_palette(struct ViewPort *current_viewport, color444 *current_palette, UWORD pal_size, unsigned short steps)
+// {
+// 	unsigned short j;
+// 	for (j = 0; j < steps; j++)
+// 	{ /* fade out */
+// 		WaitTOF();
+// 		mix_rgb4_palette_to_black(current_viewport, current_palette, pal_size, 255 - (((steps - 1 - j) * 255) / steps));
+// 	}
+// }
+
+// void fade_rgb4_palettes(struct ViewPort *current_viewport, color444 *source_palette, color444 *dest_palette, UWORD pal_size, unsigned short steps)
+// {
+// 	unsigned short i, j;
+// 	UWORD col;
+
+// 	for (j = 0; j < steps; j++)
+// 	{ /* fade step by step */
+// 		WaitTOF();
+// 		for (i = 0; i < pal_size; i++)
+// 		{
+// 			col = mix_rgb4_colors(dest_palette[i], source_palette[i], ((steps - 1 - j) * 255) / steps);
+// 			SetRGB4(current_viewport, i, (col & 0x0f00) >> 8, (col & 0x00f0) >> 4, col & 0x000f);
+// 		}
+// 	}
+// }
 #endif

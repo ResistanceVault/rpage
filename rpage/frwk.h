@@ -12,9 +12,15 @@
 #include <exec/types.h>
 #include <graphics/gfx.h>
 #include "rpage/amiga/color.h"
+#include "rpage/amiga/screen_size.h"
 
+typedef BPTR rpage_file;
 typedef struct BitMap rpage_bitmap;
+#ifdef VGA_ENABLED
+typedef unsigned long rpage_palette;
+#else
 typedef unsigned short rpage_palette;
+#endif
 typedef struct SimpleSprite rpage_hardware_sprite;
 
 #define MAX_HARDWARE_SPRITES 8
@@ -59,6 +65,10 @@ void rpage_system_flash(void);
 void rpage_free_memory_block(BYTE *block_ptr, UWORD block_size);
 /// Return how many free memory is available to store the graphics data (aka Chipram on the Amiga side).
 ULONG  rpage_get_avail_video_memory(void);
+/// Return the largest free memory block available to store the graphics data (aka Chipram on the Amiga side).
+ULONG  rpage_get_avail_largest_video_memory(void);
+/// Return how many general purpose free memory is available (aka Fastram/Slowram on the Amiga side).
+ULONG  rpage_get_avail_non_video_memory(void);
 
 /// Get the elapsed time, in milliseconds, since ::rpage_init was invoked.
 ULONG rpage_get_clock(void);
@@ -68,6 +78,8 @@ ULONG rpage_get_clock(void);
 void rpage_video_open(int screen_mode);
 /// Close the video output, deallocate the screen framebuffer.
 void rpage_video_close(void);
+/// Get bit depth of the screen
+UWORD rpage_video_get_depth(void);
 /// Clear the screen.
 void rpage_video_clear(void);
 /// Set the default font file/size for every next call to ::rpage_video_draw_text
@@ -82,8 +94,14 @@ void rpage_video_wait_dma(void);
 void rpage_video_flip_buffers(void);
 /// Tell R-PAGE to swap the logical and the physical buffers. Everything that was drawn into the logical buffer will become visible.
 void rpage_video_present_screen(void);
+/// Swap logical & physical palettes
+void rpage_video_present_palette(void);
 /// Hard copy the content of the physical buffer to the logical buffer. On the Amiga side This function may use the Blitter.
 void rpage_video_sync_buffers(void);
+/// Bring the game screen to top (Amiga only)
+void rpage_video_screen_to_front(void);
+/// Send the game screen to the back (Amiga only)
+void rpage_video_screen_to_back(void);
 
 /// Blit a bitmap into the screen.
 void rpage_video_blt_bmp(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y);
@@ -106,6 +124,9 @@ void rpage_video_blt_bmp_clip_mask_bt(rpage_bitmap *source_bitmap, short source_
 void rpage_video_set_palette(rpage_palette *palette, short palette_size);
 void rpage_video_set_palette_to_black(short first_color, short last_color);
 void rpage_video_set_palette_to_grey(short first_color, short last_color);
+/// Draw an empty polygon (quad only) to the screen.<br>
+/// * Color index range is (0,31) on the Amiga side.
+void rpage_video_draw_polygon(poly *p, short color);
 /// Draw an empty rect to the screen.<br>
 /// * Color index range is (0,31) on the Amiga side.
 void rpage_video_draw_rect(rect *r, short color_index);
@@ -116,9 +137,13 @@ void rpage_video_fill_rect(rect *r, short color);
 void rpage_video_fill_rect_clip(rect *r, short color, rect *clipping_rect);
 /// Draw a pixel to the screen.
 void rpage_video_set_pixel(short x, short y, short color_index);
+/// Get the color of a pixel on screen
+short rpage_video_get_pixel(short x, short y);
 /// Draw a text string to the screen.<br>
 /// * The font must be defined prior to this operation, see ::rpage_video_set_font
 void rpage_video_draw_text(char *str, short x, short y, short color_index);
+/// Get text width in pixels
+short rpage_video_get_text_width(char *str);
 /// Draw a tileset-based image to the current screen.
 void rpage_video_draw_tileset(rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width);
 void rpage_video_save_to_bitmap(rpage_bitmap *dest_bitmap, short source_x, short source_y, short width, short height);
@@ -162,6 +187,8 @@ BOOL rpage_sprite_is_enabled(short sprite_index);
 BOOL rpage_input_init(void);
 /// Pull the mouse/keyboard update from the input system.
 void rpage_input_update(void);
+/// Enable or disable the input pooling (Enabled by default)
+void rpage_input_enable(BOOL enabled);
 /// Flush the latest mouse update from the input system.<br>
 /// This maybe required on a multitasking system.
 void rpage_mouse_button_flush(void);

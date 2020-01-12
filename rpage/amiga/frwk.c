@@ -5,7 +5,7 @@
 #ifdef LATTICE
 #include "rpage/frwk.h"
 
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 #include <time.h>
 #include <intuition/intuition.h>
 #include <graphics/gfxbase.h>
@@ -42,7 +42,7 @@ Routines
 Graphic assets
 */
 #include "rpage/amiga/screen_size.h"
-#include "rpage/amiga/mouse_pointer_data.h"
+#include "rpage/amiga/mouse_ptr.h"
 #include "rpage/amiga/debug.h"
 
 struct IntuitionBase *IntuitionBase = NULL;
@@ -74,6 +74,8 @@ short prev_input_mouse_button;
 
 vec2 input_mouse_position;
 vec2 prev_input_mouse_position;
+
+BOOL input_enabled = FALSE;
 
 unsigned short input_rawkey;
 
@@ -134,6 +136,8 @@ void rpage_init(void)
     for(i = 1; i < MAX_HARDWARE_SPRITES; i++)
         sprites_enabled[i] = FALSE;
 
+    input_enabled = TRUE;
+
     main_screen = NULL;
 }
 
@@ -181,6 +185,16 @@ BYTE rpage_set_process_priority(BYTE new_priority)
 ULONG  rpage_get_avail_video_memory(void)
 {
     return AvailMem(MEMF_CHIP);
+}
+
+ULONG  rpage_get_avail_largest_video_memory(void)
+{
+    return AvailMem(MEMF_CHIP|MEMF_LARGEST);
+}
+
+ULONG  rpage_get_avail_non_video_memory(void)
+{
+    return AvailMem(MEMF_FAST);
 }
 
 void rpage_free_memory_block(BYTE *block_ptr, UWORD block_size)
@@ -248,6 +262,23 @@ void rpage_video_open(int rpage_video_open)
     }
 }
 
+void rpage_video_screen_to_front(void)
+{
+    ScreenToFront(main_screen->screen);
+    // WindowToFront(main_screen->window);
+}
+
+void rpage_video_screen_to_back(void)
+{
+    ScreenToBack(main_screen->screen);
+    // WindowToFront(main_screen->window);
+}
+
+UWORD __inline rpage_video_get_depth(void)
+{
+    return screenGetDepth();
+}
+
 void __inline rpage_video_wait_dma(void)
 {
     WaitBlit();
@@ -266,6 +297,11 @@ void __inline rpage_video_flip_buffers(void)
 void __inline rpage_video_present_screen(void)
 {
     presentScreen(main_screen);
+}
+
+void __inline rpage_video_present_palette(void)
+{
+    presentPalette(main_screen);
 }
 
 void rpage_video_sync_buffers(void)
@@ -437,7 +473,7 @@ void __inline rpage_video_blt_bmp_clip_mask_bt(rpage_bitmap *source_bitmap, shor
     // WaitBlit();
 }
 
-void __inline rpage_video_set_palette(PALETTEPTR palette, short palette_size)
+void __inline rpage_video_set_palette(rpage_palette *palette, short palette_size)
 {
     short i;
     for(i = 0; i < palette_size; i++)
@@ -459,8 +495,11 @@ void __inline rpage_video_set_palette_to_grey(short first_color, short last_colo
 	for (loop = first_color; loop <= last_color; loop++)
 	{
 		int luma = range_adjust(loop, first_color, last_color, 0, 255);
+#ifdef VGA_ENABLED
+		main_screen->palettes[main_screen->physical][loop] = components_to_rgb8(luma, luma, luma);
+#else        
 		main_screen->palettes[main_screen->physical][loop] = components_to_rgb4(luma, luma, luma);
-        printf("luma = %x\n", luma);
+#endif
 	}
 }
 
@@ -563,6 +602,18 @@ void __inline rpage_video_fill_rect_clip(rect *r, short color, rect *clipping_re
     main_screen->screen->RastPort.Mask = tmp_mask;
 }
 
+void rpage_video_draw_polygon(poly *p, short color)
+{
+    if (color < 0)
+        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+    SetAPen(&(main_screen->screen->RastPort), color);
+    Move(&(main_screen->screen->RastPort), p->p0.x, p->p0.y);
+    Draw(&(main_screen->screen->RastPort), p->p1.x, p->p1.y);          
+    Draw(&(main_screen->screen->RastPort), p->p2.x, p->p2.y);          
+    Draw(&(main_screen->screen->RastPort), p->p3.x, p->p3.y);          
+    Draw(&(main_screen->screen->RastPort), p->p0.x, p->p0.y);          
+}
+
 void rpage_video_draw_rect(rect *r, short color)
 {
     rect video_rect;
@@ -590,6 +641,11 @@ void __inline rpage_video_set_pixel(short x, short y, short color)
     WritePixel(&(main_screen->screen->RastPort), x, y);
 }
 
+short __inline rpage_video_get_pixel(short x, short y)
+{
+    return ReadPixel(&(main_screen->screen->RastPort), x, y);
+}
+
 void rpage_video_set_font(char *font_filename, short font_size)
 {
     struct TextAttr ta;
@@ -607,9 +663,16 @@ void rpage_video_set_font(char *font_filename, short font_size)
         SetFont(&(main_screen->screen->RastPort), main_font);
     else
     {
+#ifdef DEBUG_MACROS        
         printf("Cannot open font %s!", font_filename);
+#endif
         main_font = NULL;
     }
+}
+
+short rpage_video_get_text_width(char *str)
+{
+    return  (short)TextLength(&(main_screen->screen->RastPort), str, strlen(str));
 }
 
 void rpage_video_draw_text(char *str, short x, short y, short color)
@@ -764,11 +827,19 @@ BOOL rpage_input_init(void)
     input_window_init(main_screen->window);
 }
 
+void rpage_input_enable(BOOL enabled)
+{
+    input_enabled = enabled;
+}
+
 void rpage_input_update(void)
 {
-    prev_input_mouse_button = input_mouse_button;
-    prev_input_mouse_position = input_mouse_position;
-    input_update(&input_mouse_button, &(input_mouse_position.x), &(input_mouse_position.y), &input_rawkey);
+    if (input_enabled)
+    {
+        prev_input_mouse_button = input_mouse_button;
+        prev_input_mouse_position = input_mouse_position;
+        input_update(&input_mouse_button, &(input_mouse_position.x), &(input_mouse_position.y), &input_rawkey);
+    }
 }
 
 void rpage_mouse_button_flush(void)
@@ -847,7 +918,7 @@ void rpage_mouse_show(void)
 #ifdef DEBUG_MACROS
         printf("rpage_mouse_show()\n");
 #endif
-        // ClearPointer(main_screen->FirstWindow);
+        // main_screen->window->Flags = main_screen->window->Flags | WFLG_WINDOWACTIVE;
         SetPointer(main_screen->screen->FirstWindow, pointer_normal_data, 16, 16, -1, -1);
     }
     else
@@ -861,7 +932,7 @@ void rpage_mouse_wait(void)
 #ifdef DEBUG_MACROS
         printf("rpage_mouse_wait()\n");
 #endif
-        // ClearPointer(main_screen->FirstWindow);
+        // ClearPointer(main_screen->screen->FirstWindow);
         SetPointer(main_screen->screen->FirstWindow, wait_pointer, WAIT_POINTER_HEIGHT, 16, -1, -1);
     }
     else

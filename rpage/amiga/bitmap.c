@@ -7,8 +7,9 @@
 		Misc bitmap routines
 */
 
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 #include "rpage/amiga/debug.h"
+#include "rpage/amiga/color.h"
 #include "ext/tinfl.h"
 #include "rpage/amiga/shrinkler.h"
 #include "rpage/amiga/doynax.h"
@@ -39,7 +40,7 @@ struct BitMap *allocate_new_bitmap(short width, short height, short depth)
 	return new_bitmap;
 }
 
-BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packed_block, UBYTE *name)
+BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, amiga_color **palette, BYTE *packed_block, UBYTE *name)
 {
 	BPTR fileHandle;
 	char tag[4];
@@ -57,7 +58,7 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packe
 		Read(fileHandle, &tag, 4);
 		if (strncmp(tag, "IMPK", 4) != 0)
 		{
-			//printf("cannot found tag 'IMPK'!\n");
+			printf("cannot found tag 'IMPK'!\n");
 		}
 		else
 		{
@@ -73,20 +74,60 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packe
 #endif
 			/* Read color palette (if available) */
 			Read(fileHandle, &tag, 4);
-			if (strncmp(tag, "PAL4", 4) != 0)
+			if (strncmp(tag, "PAL4", 4) == 0)
 			{
-				// printf("cannot found tag 'PAL4'!\n");
-			}
-			else
-			{
+#ifdef DEBUG_MACROS
+				printf("PAL4\n");
+#endif
 				if (palette != NULL)
 				{
+					color444 fcolor; // Color from file
 					for (i = 0; i < pal_size; i++)
-						Read(fileHandle, &((*palette)[i]), 2);
+					{
+						Read(fileHandle, &fcolor, 2);
+#ifdef DEBUG_MACROS
+						printf("%X,", fcolor);
+#endif
+					#ifdef VGA_CAPABLE
+						(*palette)[i] = rgb4_to_rgb8(fcolor); // from RGB444 to RGB888
+					#else
+						(*palette)[i] = fcolor; // from RGB444 to RGB444
+					#endif
+					}
+					// printf("\n");
 				}
 				else
 					Seek(fileHandle, pal_size * 2, OFFSET_CURRENT);
 				
+			}
+			else
+			{
+				if (strncmp(tag, "PAL8", 4) == 0)
+				{
+#ifdef DEBUG_MACROS
+					printf("PAL8\n");
+#endif
+					if (palette != NULL)
+					{
+						color888 fcolor; // Color from file
+						for (i = 0; i < pal_size; i++)
+						{
+							Read(fileHandle, &fcolor, 4);
+#ifdef DEBUG_MACROS
+							printf("%X,", fcolor);
+#endif
+						#ifdef VGA_CAPABLE
+							(*palette)[i] = fcolor; // from RGB888 to RGB888
+						#else
+							(*palette)[i] = rgb8_to_rgb4(fcolor); // from RGB888to RGB444
+						#endif
+						}
+						// printf("\n");
+					}
+					else
+						Seek(fileHandle, pal_size * 4, OFFSET_CURRENT);
+					
+				}				
 			}
 
 			Read(fileHandle, &tag, 4);
@@ -113,7 +154,7 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packe
 					printf(", MINIZ block size: %d", packed_block_size);
 #endif
 					Read(fileHandle, packed_block, packed_block_size);
-					printf("!!!!MINIZ block size: %d", packed_block_size);
+					// printf("!!!!MINIZ block size: %d\n", packed_block_size);
 					tinfl_decompress_mem_to_mem((**bitmap).Planes[0], size * d, packed_block, packed_block_size, 1);
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
@@ -187,7 +228,7 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, UWORD **palette, BYTE *packe
 	return TRUE;
 }
 
-BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, UWORD **new_palette, BYTE *packed_block, UBYTE *name)
+BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_palette, BYTE *packed_block, UBYTE *name)
 {
 	BPTR fileHandle;
 	char tag[4];
@@ -226,21 +267,48 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, UWORD **new_palette,
 #endif
 			/* Read color palette (if available) */
 			Read(fileHandle, &tag, 4);
-			if (strncmp(tag, "PAL4", 4) != 0)
-			{
-				// printf("cannot found tag 'PAL4'!\n");
-			}
-			else
+			if (strncmp(tag, "PAL4", 4) == 0)
 			{
 				if (new_palette != NULL)
 				{
-					*new_palette = (UWORD *)AllocMem(pal_size * sizeof(UWORD), 0L);
+					color444 fcolor; // Color from file
+					*new_palette = (amiga_color *)AllocMem(pal_size * sizeof(amiga_color), 0L);
 					for (i = 0; i < pal_size; i++)
-						Read(fileHandle, &((*new_palette)[i]), 2);
+					{
+						Read(fileHandle, &fcolor, 2);
+					#ifdef VGA_CAPABLE
+						(*new_palette)[i] = rgb4_to_rgb8(fcolor); // from RGB444 to RGB888
+					#else
+						(*new_palette)[i] = fcolor; // from RGB444 to RGB444
+					#endif						
+					}
 				}
 				else
 					Seek(fileHandle, pal_size * 2, OFFSET_CURRENT);
 			}
+			else
+			{
+				if (strncmp(tag, "PAL8", 4) == 0)
+				{
+					if (new_palette != NULL)
+					{
+						color888 fcolor; // Color from file
+						*new_palette = (amiga_color *)AllocMem(pal_size * sizeof(amiga_color), 0L);
+						for (i = 0; i < pal_size; i++)
+						{
+							Read(fileHandle, &fcolor, 4);
+						#ifdef VGA_CAPABLE
+							(*new_palette)[i] = fcolor; // from RGB888 to RGB888
+						#else
+							(*new_palette)[i] = rgb8_to_rgb4(fcolor); // from RGB888to RGB444
+						#endif
+						}
+					}
+					else
+						Seek(fileHandle, pal_size * 4, OFFSET_CURRENT);
+				}
+			}
+			
 
 			/* Allocate each plane */
 			*new_bitmap = allocate_new_bitmap(w, h, d);
@@ -271,7 +339,7 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, UWORD **new_palette,
 					printf(", MINIZ block size: %d", packed_block_size);
 #endif
 					Read(fileHandle, packed_block, packed_block_size);
-					printf("!!!!MINIZ block size: %d", packed_block_size);
+					// printf("!!!!MINIZ block size: %d\n", packed_block_size);
 					tinfl_decompress_mem_to_mem((**new_bitmap).Planes[0], size * d, packed_block, packed_block_size, 1);
 					if (self_alloc_unpack_buffer)
 						FreeMem(packed_block, packed_block_size);

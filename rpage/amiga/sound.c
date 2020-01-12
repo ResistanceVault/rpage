@@ -5,17 +5,23 @@
 */
 
 /* Include some important header files: */
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 #include <exec/types.h>
 #include <exec/memory.h>
 #include <devices/audio.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "ext/tinfl.h"
+#include "rpage/amiga/shrinkler.h"
+#include "rpage/amiga/doynax.h"
+
 #include "rpage/amiga/sound.h"
 
 #define CLOCK_CONSTANT 3579545
 #define MUSIC_PRIORITY 0
+
+extern struct DosLibrary *DOSBase;
 
 /* Structure containing all necessary information about the sound: */
 struct SoundInfo
@@ -74,6 +80,184 @@ static int stepsizeTable[89] = {
 static int indexTable68000[16];
 static int stepsizeTable68000[89 * 16];
 
+/// Load a packer sound file. <br>
+/// The sound is encoded either in raw or mdpcm. <br>
+/// The file is compressed either in tinfl, doynamite68k or shrinkler.
+/// File structure:
+/// SMPK (4 bytes) 'Sample Packer' Header
+/// SIZE (4 bytes) 'Size information block' header
+/// ____ (4 bytes) Size of the original uncompressed & decoded sample
+/// ADPC|GLI2|8SVX (4 bytes) Encoder type. ADPC = ADPCM, GLI2 = MDPCM, 8SVX = Amiga 8bits IFF sample.
+/// SIZE (4 bytes) 'Size information block' header
+/// ____ (4 bytes) Size of the encoded sample
+/// MINZ|SHRK|D68K (4 bytes) Compressor type. MINZ = Tinfl Miniz, SHRK = Shrinkler, D68K = Doynamite68k
+/// SIZE (4 bytes) 'Size information block' header
+/// ____ (4 bytes) Size of the compressed block
+struct SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block)
+{
+	ULONG encoded_block_size = 0, unpacked_block_size = 0, packed_block_size = 0;
+  ULONG frequency = 8000;
+	BPTR fileHandle;
+	char encoder_tag[4], compressor_tag[4], tag[4];
+	UWORD mod_size;
+	BYTE *unpacked_block, *encoded_block;
+  struct SoundInfo *sound;
+
+  // printf("LoadPackedSound(%s)\n", filename);
+
+	if ((fileHandle = Open(filename, MODE_OLDFILE)))
+	{
+		Read(fileHandle, &tag, 4);
+		if (strncmp(tag, "SMPK", 4) == 0)
+		{
+		  // read the sample length
+      Read(fileHandle, &tag, 4); // SIZE
+      if (strncmp(tag, "SIZE", 4) == 0)
+      {
+        Read(fileHandle, &unpacked_block_size, 4);
+        // printf("unpacked_block_size = %d\n", unpacked_block_size);
+
+        // read the replay frequency
+        Read(fileHandle, &tag, 4); // FREQ
+        Read(fileHandle, &frequency, 4);
+
+        // read the encoder name
+        Read(fileHandle, &encoder_tag, 4);
+        // printf("encoder found : %c%c%c%c.\n", encoder_tag[0],encoder_tag[1],encoder_tag[2],encoder_tag[3]);
+
+        Read(fileHandle, &tag, 4);
+        if (strncmp(tag, "SIZE", 4) == 0)
+        {
+          Read(fileHandle, &encoded_block_size, 4);
+          // printf("encoded_block_size = %d\n", encoded_block_size);
+
+          // read the compressor name
+          Read(fileHandle, &compressor_tag, 4);
+          // printf("compressor found : %c%c%c%c.\n", compressor_tag[0],compressor_tag[1],compressor_tag[2],compressor_tag[3]);
+          Read(fileHandle, &tag, 4);
+          if (strncmp(tag, "SIZE", 4) == 0)
+          {
+            Read(fileHandle, &packed_block_size, 4);
+            // printf("packed_block_size = %d\n", packed_block_size);
+            Read(fileHandle, packed_block, packed_block_size);
+          }
+          else
+            printf("No 'SIZE' tag found for compressor!\n");
+        }
+        else
+          printf("No 'SIZE' tag found for encoder!\n");
+	    }
+      else
+        printf("No 'SIZE' tag found for the original sample!\n");
+
+      if ((encoded_block_size > 0) && (unpacked_block_size > 0) && (packed_block_size > 0))
+      {
+        unpacked_block = AllocMem(unpacked_block_size, MEMF_CHIP);
+        encoded_block = (UBYTE *)malloc(sizeof (UBYTE) * encoded_block_size);
+ 
+        if (strncmp(compressor_tag, "MINZ", 4) == 0)
+          tinfl_decompress_mem_to_mem(encoded_block, encoded_block_size, packed_block, packed_block_size, 1);
+        else if (strncmp(compressor_tag, "SHRK", 4) == 0)
+          ShrinklerDecompress(packed_block, encoded_block, NULL, NULL);
+        else if (strncmp(compressor_tag, "D68K", 4) == 0)
+          doynaxdepack(packed_block, encoded_block);
+
+        if (strncmp(encoder_tag, "ADPC", 4) == 0)
+        {
+          CodecState c_st;
+          adpcm_decode(&c_st, encoded_block, unpacked_block_size, unpacked_block);
+        }
+        else if (strncmp(encoder_tag, "GLI2", 4) == 0)
+        {
+          printf("Gligli MDPCM not supported yet!\n");
+        }
+        else if (strncmp(encoder_tag, "8SVX", 4) == 0)
+        {
+          memcpy(unpacked_block, encoded_block, unpacked_block_size);
+        }
+
+        sound = (struct SoundInfo*)malloc(sizeof(struct SoundInfo));
+        sound->SoundBuffer = unpacked_block;
+        sound->FileLength = unpacked_block_size;
+        sound->RecordRate = frequency;
+
+        free(encoded_block);
+
+        return sound;
+      }
+
+			// if (strncmp(tag, "MINZ", 4) == 0)
+			// {
+			// 	Read(fileHandle, &tag, 4);
+			// 	if (strncmp(tag, "SIZE", 4) == 0)
+			// 	{
+			// 		Read(fileHandle, &packed_block_size, 4);
+			// 		Read(fileHandle, packed_block, packed_block_size);
+			// 		printf("!!!!MINIZ block size: %d\n", packed_block_size);
+			// 		tinfl_decompress_mem_to_mem(unpacked_block, unpacked_block_size, packed_block, packed_block_size, 1);
+			// 	}
+			// 	else
+			// 		printf(", no 'SIZE' tag found!");
+			// }
+			// else if (strncmp(tag, "SHRK", 4) == 0)
+			// {
+			// 	Read(fileHandle, &tag, 4);
+			// 	if (strncmp(tag, "SIZE", 4) == 0)
+			// 	{
+			// 		Read(fileHandle, &packed_block_size, 4);
+			// 		Read(fileHandle, packed_block, packed_block_size);
+			// 		printf("!!!!SHRK block size: %d\n", packed_block_size);
+			// 		ShrinklerDecompress(packed_block, unpacked_block, NULL, NULL);
+			// 	}
+			// 	else
+			// 		printf(", no 'SIZE' tag found!");
+			// }
+			// else if (strncmp(tag, "D68K", 4) == 0)
+			// {
+			// 	Read(fileHandle, &tag, 4);
+			// 	if (strncmp(tag, "SIZE", 4) == 0)
+			// 	{
+			// 		Read(fileHandle, &packed_block_size, 4);
+			// 		Read(fileHandle, packed_block, packed_block_size);
+			// 		printf("!!!!D68K block size: %d\n", packed_block_size);
+			// 		doynaxdepack(packed_block, unpacked_block);
+			// 	}
+			// 	else
+			// 		printf(", no 'SIZE' tag found!");
+			// }
+			// else
+			// {
+			// 	printf("!Unknown tag: %s\n", tag);
+			// 	FreeMem(unpacked_block, unpacked_block_size);
+			// 	unpacked_block = NULL;
+			// 	unpacked_block_size = 0;
+			// }
+		}
+		else
+		{
+			printf("!Not a SMPK File!\n");
+		}
+		
+	}
+
+  return NULL;
+
+  // if (unpacked_block != NULL)
+  // {
+  //   sound = (struct SoundInfo*)malloc(sizeof(struct SoundInfo));
+  //   sound->SoundBuffer = unpacked_block;
+  //   sound->FileLength = unpacked_block_size;
+  //   sound->RecordRate = 8000;
+
+  //   return sound;
+  // }
+  // else
+  // {
+  //   return NULL;
+  // }
+  
+}
+
 /* Declare the functions we are going to use: */
 struct SoundInfo *PrepareSound(STRPTR file);
 BOOL PlaySound(struct SoundInfo *info, UWORD volume, UBYTE channel,
@@ -89,20 +273,19 @@ ULONG SizeIFF(STRPTR filename);
 UWORD ReadIFF(STRPTR filename, struct SoundInfo *info);
 BOOL MoveTo(STRPTR check_string, FILE *file_ptr);
 
-/* PrepareSound()                                                       */
-/* PrepareSound() loads a sampled sound file (IFF or FutureSound) into  */
-/* a buffer that is automatically allocated. All information about the  */
-/* sound (record rate, length, buffersize etc) is put into an SoundInfo */
-/* structure. If PrepareSound() has successfully prepared the sound it  */
-/* returns a pointer to a SoundInfo structure, otherwise it returns     */
-/* NULL.                                                                */
-/*                                                                      */
-/* Synopsis: pointer = PrepareSound( filename );                        */
-/* pointer:  (CPTR) Actually a pointer to a SoundInfo structure, but    */
-/*           since we do not want to confuse the user, we simply use a  */
-/*           normal memory pointer.                                     */
-/* filename: (STRPTR) Pointer to a string containing the name of the    */
-/*           sound file. For example�"df0:Explosion.snd".               */
+/// PrepareSound() loads a sampled sound file (IFF or FutureSound) into  <br>
+/// a buffer that is automatically allocated. All information about the  <br>
+/// sound (record rate, length, buffersize etc) is put into an SoundInfo <br>
+/// structure. If PrepareSound() has successfully prepared the sound it  <br>
+/// returns a pointer to a SoundInfo structure, otherwise it returns     <br>
+/// NULL.                                                                <br>
+///                                                                      <br>
+/// Synopsis: pointer = PrepareSound( filename );                        <br>
+/// pointer:  (CPTR) Actually a pointer to a SoundInfo structure, but    <br>
+///           since we do not want to confuse the user, we simply use a  <br>
+///           normal memory pointer.                                     <br>
+/// filename: (STRPTR) Pointer to a string containing the name of the    <br>
+///           sound file. For example�"df0:Explosion.snd".               <br>
 
 struct SoundInfo *PrepareSound(STRPTR file)
 {
@@ -613,14 +796,15 @@ BOOL MoveTo(STRPTR check_string, FILE *file_ptr)
 ** Version 1.2, 18-Dec-92.
 */
 
-void initDecode68000(void)
+void adpcm_decoder_init(void)
 {
-  for (int i = 0; i < 16; i++)
+  int i, delta;
+  for (i = 0; i < 16; i++)
     indexTable68000[i] = indexTable[i] << 4;
 
-  for (int i = 0; i < 89; i++)
+  for (i = 0; i < 89; i++)
   {
-    for (int delta = 0; delta < 16; delta++)
+    for (delta = 0; delta < 16; delta++)
     {
       int origPredictor = stepsizeTable[i];
       int predictor = origPredictor >> 3;
@@ -637,10 +821,10 @@ void initDecode68000(void)
   }
 }
 
-void decode68000(CodecState *state, UBYTE *input, int numSamples, short *output)
+void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output)
 {
   UBYTE *inp;      /* Input buffer pointer */
-  short *outp;     /* output buffer pointer */
+  UBYTE *outp;     /* output buffer pointer */
   int delta;       /* Current adpcm output value */
   int valpred;     /* Predicted value */
   int vpdiff;      /* Current change to valpred */
@@ -650,6 +834,7 @@ void decode68000(CodecState *state, UBYTE *input, int numSamples, short *output)
 
   outp = output;
   inp = input;
+  inputbuffer = *inp;
 
   valpred = state->valprev;
   index = state->index;
@@ -684,7 +869,7 @@ void decode68000(CodecState *state, UBYTE *input, int numSamples, short *output)
     else if (valpred < -32768)
       valpred = -32768;
 
-    *outp++ = valpred;
+    *outp++ = (valpred >> 8);
   }
 
   state->valprev = valpred;

@@ -30,7 +30,10 @@ void __inline WaitVBL(buffered_screen *screen)
 
 USHORT getLogicalBitmapIndex(buffered_screen *screen)
 {
-	return (USHORT)((screen->physical)^1);
+	if (screen->double_buffer_enabled)
+		return (USHORT)((screen->physical)^1);
+	else
+		return 0;	
 }
 
 USHORT getPhysicalBitmapIndex(buffered_screen *screen)
@@ -40,10 +43,13 @@ USHORT getPhysicalBitmapIndex(buffered_screen *screen)
 
 void flipBuffers(buffered_screen *screen)
 {
-	/* Swap the physical and logical bitmaps */
-	screen->physical = (USHORT)(screen->physical)^1;
-	screen->screen->RastPort.BitMap	= screen->bitmaps[screen->physical];
-	screen->screen->ViewPort.RasInfo->BitMap = screen->bitmaps[screen->physical];
+	if (screen->double_buffer_enabled)
+	{
+		/* Swap the physical and logical bitmaps */
+		screen->physical = (USHORT)(screen->physical)^1;
+		screen->screen->RastPort.BitMap	= screen->bitmaps[screen->physical];
+		screen->screen->ViewPort.RasInfo->BitMap = screen->bitmaps[screen->physical];
+	}
 #ifdef DEBUG_MACROS	
 	printf("flipBuffers() : physical screen: %d\n", screen->physical);
 	printf("flipBuffers() : logical screen: %d\n", getLogicalBitmapIndex(screen));
@@ -58,8 +64,8 @@ void presentPalette(buffered_screen *screen)
 void presentScreen(buffered_screen *screen)
 {
 	/* Update the physical display to match the recently updated bitmap. */
-	presentPalette(screen);
 	MakeScreen(screen->screen);
+	presentPalette(screen);
 	RethinkDisplay();
 #ifdef DEBUG_MACROS	
 	printf("presentScreen()\n");
@@ -68,16 +74,24 @@ void presentScreen(buffered_screen *screen)
 
 void synchronizeBuffers(buffered_screen *screen)
 {
-	short i;
-	for(i = 0; i < (1 << screen->screen->BitMap.Depth); i++)
-		screen->palettes[getLogicalBitmapIndex(screen)][i] = screen->palettes[getPhysicalBitmapIndex(screen)][i];
-	BltBitMap(screen->bitmaps[screen->physical], 0, 0, screen->bitmaps[getLogicalBitmapIndex(screen)], 0, 0, WIDTH, HEIGHT, 0xC0, 0xFF, NULL);
-	WaitBlit();
+	if (screen->double_buffer_enabled)
+	{
+		short i;
+		for(i = 0; i < (1 << screen->screen->BitMap.Depth); i++)
+			screen->palettes[getLogicalBitmapIndex(screen)][i] = screen->palettes[getPhysicalBitmapIndex(screen)][i];
+		BltBitMap(screen->bitmaps[screen->physical], 0, 0, screen->bitmaps[getLogicalBitmapIndex(screen)], 0, 0, WIDTH, HEIGHT, 0xC0, 0xFF, NULL);
+		WaitBlit();
+	}
 }
 
 buffered_screen *openMainScreen(void)
 {
-	return openMainScreenCustom(WIDTH, HEIGHT, 32, DBUFFER_ENABLED);
+	return openMainScreenCustom(WIDTH, HEIGHT, 1 << DEPTH, DBUFFER_ENABLED);
+}
+
+UWORD screenGetDepth(void)
+{
+	return DEPTH;
 }
 
 buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _colors, BOOL _dbuffer)
@@ -98,12 +112,13 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 	printf("openMainScreenCustom(%d, %d, %d, %d), depth = %d\n", _width, _height, _colors, _dbuffer, this_screen.depth);
 #endif
 
+	bscreen.double_buffer_enabled = _dbuffer;
 	bscreen.physical = 0; /* the physical screen (front buffer) has index 0. */
 
 	for(i = 0; i < (_dbuffer?2:1); i++)
 	{
 		bscreen.bitmaps[i] = setupBitMap(this_screen.depth, this_screen.width, this_screen.height);
-		bscreen.palettes[i] = (PALETTEPTR)malloc(sizeof(unsigned short) * _colors);
+		bscreen.palettes[i] = (amiga_color *)malloc(sizeof(amiga_color) * _colors);
 		memset(bscreen.palettes[i], 0x000, _colors);
 	}
 
@@ -217,7 +232,7 @@ void closeMainScreen(buffered_screen *screen)
 		int i;
 		struct BitMap *_bmp[2];
 		for(i = 0; i  < ((!(screen->double_buffer_enabled))?1:2); i++)
-			_bmp[i] = &(screen->screen->BitMap);
+			_bmp[i] = screen->bitmaps[i];
 
 		WaitBlit();
 		CloseScreen(screen->screen);

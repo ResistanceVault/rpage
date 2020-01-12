@@ -10,7 +10,7 @@
 		Misc bitmap routines headers
 */
 
-#include "rpage/amiga/includes.prl"
+#include "rpage/amiga/inc.prl"
 
 #include <stdio.h>
 #include <string.h>
