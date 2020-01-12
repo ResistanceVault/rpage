@@ -27,7 +27,9 @@ int \mbox{\hyperlink{utils_8c_aae80c335ae5abd347322bef225b2dc3a}{clamp}} (int x,
 \item 
 \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_a6bc8e36b6f11878c721a878697b69b10}{point\+\_\+within\+\_\+rect}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structrect}{rect}} $\ast$r)
 \item 
-\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list\mbox{[}$\,$\mbox{]}, unsigned short n\+\_\+pt)
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_ab22ddf1182af9f3bc862370f51794aeb}{point\+\_\+within\+\_\+quad}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structpoly}{poly}} $\ast$pl)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8c_ac70760dc50584287905fb90525be7651}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list, unsigned short n\+\_\+pt)
 \end{DoxyCompactItemize}
 
 
@@ -65,11 +67,21 @@ Definition at line 57 of file utils.\+c.
 
 Definition at line 104 of file utils.\+c.
 
-\mbox{\Hypertarget{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}\label{utils_8c_afd88e9fbba1a5b69687288e629c37ce5}} 
+\mbox{\Hypertarget{utils_8c_ac70760dc50584287905fb90525be7651}\label{utils_8c_ac70760dc50584287905fb90525be7651}} 
 \index{utils.c@{utils.c}!point\_within\_polygon@{point\_within\_polygon}}
 \index{point\_within\_polygon@{point\_within\_polygon}!utils.c@{utils.c}}
 \subsubsection{\texorpdfstring{point\_within\_polygon()}{point\_within\_polygon()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list\mbox{[}$\,$\mbox{]},  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list,  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 135 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8c_ab22ddf1182af9f3bc862370f51794aeb}\label{utils_8c_ab22ddf1182af9f3bc862370f51794aeb}} 
+\index{utils.c@{utils.c}!point\_within\_quad@{point\_within\_quad}}
+\index{point\_within\_quad@{point\_within\_quad}!utils.c@{utils.c}}
+\subsubsection{\texorpdfstring{point\_within\_quad()}{point\_within\_quad()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+quad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structpoly}{poly}} $\ast$}]{pl }\end{DoxyParamCaption})}
 
 
 

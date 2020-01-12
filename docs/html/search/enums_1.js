@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tinfl_5fstatus',['tinfl_status',['../tinfl_8c.html#a387ccd3d7a7891c9e1d6ec4f4207c8d4',1,'tinfl.c']]]
+  ['rpage_5fscreen_5fmodes',['rpage_screen_modes',['../frwk_8h.html#ac894e2ed3c9023e9211f80ff287b6f12',1,'frwk.h']]]
 ];

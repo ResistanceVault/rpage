@@ -102,8 +102,10 @@ Functions</h2></td></tr>
 <tr class="separator:aae80c335ae5abd347322bef225b2dc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bc8e36b6f11878c721a878697b69b10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#a6bc8e36b6f11878c721a878697b69b10">point_within_rect</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structrect.html">rect</a> *r)</td></tr>
 <tr class="separator:a6bc8e36b6f11878c721a878697b69b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd88e9fbba1a5b69687288e629c37ce5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#afd88e9fbba1a5b69687288e629c37ce5">point_within_polygon</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structvec2.html">vec2</a> *pt_list[], unsigned short n_pt)</td></tr>
-<tr class="separator:afd88e9fbba1a5b69687288e629c37ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab22ddf1182af9f3bc862370f51794aeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ab22ddf1182af9f3bc862370f51794aeb">point_within_quad</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structpoly.html">poly</a> *pl)</td></tr>
+<tr class="separator:ab22ddf1182af9f3bc862370f51794aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac70760dc50584287905fb90525be7651"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8c.html#ac70760dc50584287905fb90525be7651">point_within_polygon</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structvec2.html">vec2</a> *pt_list, unsigned short n_pt)</td></tr>
+<tr class="separator:ac70760dc50584287905fb90525be7651"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a1be71f5fbd8d94ae65f3569a44669eee"></a>
@@ -195,8 +197,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afd88e9fbba1a5b69687288e629c37ce5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd88e9fbba1a5b69687288e629c37ce5">&#9670;&nbsp;</a></span>point_within_polygon()</h2>
+<a id="ac70760dc50584287905fb90525be7651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac70760dc50584287905fb90525be7651">&#9670;&nbsp;</a></span>point_within_polygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,13 +213,43 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structvec2.html">vec2</a> *&#160;</td>
-          <td class="paramname"><em>pt_list</em>[], </td>
+          <td class="paramname"><em>pt_list</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned short&#160;</td>
           <td class="paramname"><em>n_pt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8c_source.html#l00135">135</a> of file <a class="el" href="utils_8c_source.html">utils.c</a>.</p>
+
+</div>
+</div>
+<a id="ab22ddf1182af9f3bc862370f51794aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab22ddf1182af9f3bc862370f51794aeb">&#9670;&nbsp;</a></span>point_within_quad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a> point_within_quad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structvec2.html">vec2</a> *&#160;</td>
+          <td class="paramname"><em>pt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpoly.html">poly</a> *&#160;</td>
+          <td class="paramname"><em>pl</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

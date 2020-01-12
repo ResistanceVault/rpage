@@ -1,2 +1,200 @@
 \hypertarget{ptreplay__protos_8h}{}\section{rpage/amiga/ptreplay\+\_\+protos.h File Reference}
 \label{ptreplay__protos_8h}\index{rpage/amiga/ptreplay\_protos.h@{rpage/amiga/ptreplay\_protos.h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_module}{Module}} $\ast$ \mbox{\hyperlink{ptreplay__protos_8h_a8bc1ecde54baef9b39845839be04aff7}{P\+T\+Load\+Module}} (S\+T\+R\+P\+TR)
+\item 
+V\+O\+ID \mbox{\hyperlink{ptreplay__protos_8h_a1dd34fed4a371de429960b3c70a11b05}{P\+T\+Unload\+Module}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{ptreplay__protos_8h_a63db910a59ca57dc09266e64ebbc5ae2}{P\+T\+Play}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{ptreplay__protos_8h_a3567fb1f95bf776834c29e459b9f8459}{P\+T\+Stop}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{ptreplay__protos_8h_a027b03ed3b23a3790130c3c1e679b146}{P\+T\+Pause}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{ptreplay__protos_8h_aa850ac58a2b3ad446872174221326460}{P\+T\+Resume}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+V\+O\+ID \mbox{\hyperlink{ptreplay__protos_8h_a66fd88b60cbb4a7021f9a7014b7dbc2f}{P\+T\+Fade}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}})
+\item 
+V\+O\+ID \mbox{\hyperlink{ptreplay__protos_8h_a3505cc4f9d1daed7cc9555d56ade31c4}{P\+T\+Set\+Volume}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}})
+\item 
+\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_a234b8a1d3b116465235f1b4ada64f50a}{P\+T\+Song\+Pos}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_a4dbc69714841615c48d26cf249c2ecae}{P\+T\+Song\+Len}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_a119cfea7d701315c7ea46aa947702ca3}{P\+T\+Song\+Pattern}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}})
+\item 
+\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_a0b8058470bb5d9c40f6e752320153079}{P\+T\+Pattern\+Pos}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+A\+P\+TR \mbox{\hyperlink{ptreplay__protos_8h_ace8f70bb67e8aac4e8e0c2c0da5b51c4}{P\+T\+Pattern\+Data}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}})
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a2c29b9447c713114b708aecaa3284eea}{P\+T\+Install\+Bits}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}})
+\item 
+struct \mbox{\hyperlink{struct_module}{Module}} $\ast$ \mbox{\hyperlink{ptreplay__protos_8h_a411b650e81a4af5471b0d700f749914c}{P\+T\+Setup\+Mod}} (A\+P\+TR)
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a07c7fa1b70120ec670ffbcafbb15f858}{P\+T\+Free\+Mod}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$)
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a43d7438a0bd486d168b65256be6b7e7a}{P\+T\+Start\+Fade}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}})
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_aa11efc10b0f7e9dd67b2c461056f3829}{P\+T\+On\+Channel}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}})
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a546f910727dcdf5fc43b0a7f247a70cb}{P\+T\+Off\+Channel}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}})
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a4ca1f3ff3aae8f166db62effd85ecfae}{P\+T\+Set\+Pos}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}})
+\item 
+void \mbox{\hyperlink{ptreplay__protos_8h_a8812ea0d266b84de882457216cd98600}{P\+T\+Set\+Pri}} (\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}})
+\item 
+\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_a21f79e90ad6f3e642a81b40342dcebc9}{P\+T\+Get\+Pri}} (void)
+\item 
+\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}} \mbox{\hyperlink{ptreplay__protos_8h_aa50dcaf1ea2201cc85b4be0336478d0f}{P\+T\+Get\+Chan}} (void)
+\item 
+struct \mbox{\hyperlink{struct_p_t_sample}{P\+T\+Sample}} $\ast$ \mbox{\hyperlink{ptreplay__protos_8h_a4b5e8fd62b2091d6c2668514a6d12848}{P\+T\+Get\+Sample}} (struct \mbox{\hyperlink{struct_module}{Module}} $\ast$, W\+O\+RD)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{ptreplay__protos_8h_a66fd88b60cbb4a7021f9a7014b7dbc2f}\label{ptreplay__protos_8h_a66fd88b60cbb4a7021f9a7014b7dbc2f}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTFade@{PTFade}}
+\index{PTFade@{PTFade}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTFade()}{PTFade()}}
+{\footnotesize\ttfamily V\+O\+ID P\+T\+Fade (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a07c7fa1b70120ec670ffbcafbb15f858}\label{ptreplay__protos_8h_a07c7fa1b70120ec670ffbcafbb15f858}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTFreeMod@{PTFreeMod}}
+\index{PTFreeMod@{PTFreeMod}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTFreeMod()}{PTFreeMod()}}
+{\footnotesize\ttfamily void P\+T\+Free\+Mod (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_aa50dcaf1ea2201cc85b4be0336478d0f}\label{ptreplay__protos_8h_aa50dcaf1ea2201cc85b4be0336478d0f}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTGetChan@{PTGetChan}}
+\index{PTGetChan@{PTGetChan}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTGetChan()}{PTGetChan()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}} P\+T\+Get\+Chan (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a21f79e90ad6f3e642a81b40342dcebc9}\label{ptreplay__protos_8h_a21f79e90ad6f3e642a81b40342dcebc9}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTGetPri@{PTGetPri}}
+\index{PTGetPri@{PTGetPri}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTGetPri()}{PTGetPri()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}} P\+T\+Get\+Pri (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a4b5e8fd62b2091d6c2668514a6d12848}\label{ptreplay__protos_8h_a4b5e8fd62b2091d6c2668514a6d12848}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTGetSample@{PTGetSample}}
+\index{PTGetSample@{PTGetSample}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTGetSample()}{PTGetSample()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_p_t_sample}{P\+T\+Sample}}$\ast$ P\+T\+Get\+Sample (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{W\+O\+RD}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a2c29b9447c713114b708aecaa3284eea}\label{ptreplay__protos_8h_a2c29b9447c713114b708aecaa3284eea}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTInstallBits@{PTInstallBits}}
+\index{PTInstallBits@{PTInstallBits}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTInstallBits()}{PTInstallBits()}}
+{\footnotesize\ttfamily void P\+T\+Install\+Bits (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a8bc1ecde54baef9b39845839be04aff7}\label{ptreplay__protos_8h_a8bc1ecde54baef9b39845839be04aff7}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTLoadModule@{PTLoadModule}}
+\index{PTLoadModule@{PTLoadModule}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTLoadModule()}{PTLoadModule()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_module}{Module}}$\ast$ P\+T\+Load\+Module (\begin{DoxyParamCaption}\item[{S\+T\+R\+P\+TR}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a546f910727dcdf5fc43b0a7f247a70cb}\label{ptreplay__protos_8h_a546f910727dcdf5fc43b0a7f247a70cb}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTOffChannel@{PTOffChannel}}
+\index{PTOffChannel@{PTOffChannel}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTOffChannel()}{PTOffChannel()}}
+{\footnotesize\ttfamily void P\+T\+Off\+Channel (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_aa11efc10b0f7e9dd67b2c461056f3829}\label{ptreplay__protos_8h_aa11efc10b0f7e9dd67b2c461056f3829}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTOnChannel@{PTOnChannel}}
+\index{PTOnChannel@{PTOnChannel}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTOnChannel()}{PTOnChannel()}}
+{\footnotesize\ttfamily void P\+T\+On\+Channel (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_ace8f70bb67e8aac4e8e0c2c0da5b51c4}\label{ptreplay__protos_8h_ace8f70bb67e8aac4e8e0c2c0da5b51c4}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTPatternData@{PTPatternData}}
+\index{PTPatternData@{PTPatternData}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTPatternData()}{PTPatternData()}}
+{\footnotesize\ttfamily A\+P\+TR P\+T\+Pattern\+Data (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a0b8058470bb5d9c40f6e752320153079}\label{ptreplay__protos_8h_a0b8058470bb5d9c40f6e752320153079}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTPatternPos@{PTPatternPos}}
+\index{PTPatternPos@{PTPatternPos}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTPatternPos()}{PTPatternPos()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} P\+T\+Pattern\+Pos (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a027b03ed3b23a3790130c3c1e679b146}\label{ptreplay__protos_8h_a027b03ed3b23a3790130c3c1e679b146}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTPause@{PTPause}}
+\index{PTPause@{PTPause}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTPause()}{PTPause()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} P\+T\+Pause (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a63db910a59ca57dc09266e64ebbc5ae2}\label{ptreplay__protos_8h_a63db910a59ca57dc09266e64ebbc5ae2}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTPlay@{PTPlay}}
+\index{PTPlay@{PTPlay}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTPlay()}{PTPlay()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} P\+T\+Play (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_aa850ac58a2b3ad446872174221326460}\label{ptreplay__protos_8h_aa850ac58a2b3ad446872174221326460}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTResume@{PTResume}}
+\index{PTResume@{PTResume}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTResume()}{PTResume()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} P\+T\+Resume (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a4ca1f3ff3aae8f166db62effd85ecfae}\label{ptreplay__protos_8h_a4ca1f3ff3aae8f166db62effd85ecfae}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSetPos@{PTSetPos}}
+\index{PTSetPos@{PTSetPos}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSetPos()}{PTSetPos()}}
+{\footnotesize\ttfamily void P\+T\+Set\+Pos (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a8812ea0d266b84de882457216cd98600}\label{ptreplay__protos_8h_a8812ea0d266b84de882457216cd98600}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSetPri@{PTSetPri}}
+\index{PTSetPri@{PTSetPri}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSetPri()}{PTSetPri()}}
+{\footnotesize\ttfamily void P\+T\+Set\+Pri (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{utils_8h_a4ae1dab0fb4b072a66584546209e7d58}{B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a411b650e81a4af5471b0d700f749914c}\label{ptreplay__protos_8h_a411b650e81a4af5471b0d700f749914c}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSetupMod@{PTSetupMod}}
+\index{PTSetupMod@{PTSetupMod}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSetupMod()}{PTSetupMod()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_module}{Module}}$\ast$ P\+T\+Setup\+Mod (\begin{DoxyParamCaption}\item[{A\+P\+TR}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a3505cc4f9d1daed7cc9555d56ade31c4}\label{ptreplay__protos_8h_a3505cc4f9d1daed7cc9555d56ade31c4}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSetVolume@{PTSetVolume}}
+\index{PTSetVolume@{PTSetVolume}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSetVolume()}{PTSetVolume()}}
+{\footnotesize\ttfamily V\+O\+ID P\+T\+Set\+Volume (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a4dbc69714841615c48d26cf249c2ecae}\label{ptreplay__protos_8h_a4dbc69714841615c48d26cf249c2ecae}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSongLen@{PTSongLen}}
+\index{PTSongLen@{PTSongLen}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSongLen()}{PTSongLen()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} P\+T\+Song\+Len (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a119cfea7d701315c7ea46aa947702ca3}\label{ptreplay__protos_8h_a119cfea7d701315c7ea46aa947702ca3}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSongPattern@{PTSongPattern}}
+\index{PTSongPattern@{PTSongPattern}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSongPattern()}{PTSongPattern()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} P\+T\+Song\+Pattern (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a234b8a1d3b116465235f1b4ada64f50a}\label{ptreplay__protos_8h_a234b8a1d3b116465235f1b4ada64f50a}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTSongPos@{PTSongPos}}
+\index{PTSongPos@{PTSongPos}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTSongPos()}{PTSongPos()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} P\+T\+Song\+Pos (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a43d7438a0bd486d168b65256be6b7e7a}\label{ptreplay__protos_8h_a43d7438a0bd486d168b65256be6b7e7a}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTStartFade@{PTStartFade}}
+\index{PTStartFade@{PTStartFade}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTStartFade()}{PTStartFade()}}
+{\footnotesize\ttfamily void P\+T\+Start\+Fade (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a3567fb1f95bf776834c29e459b9f8459}\label{ptreplay__protos_8h_a3567fb1f95bf776834c29e459b9f8459}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTStop@{PTStop}}
+\index{PTStop@{PTStop}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTStop()}{PTStop()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} P\+T\+Stop (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{ptreplay__protos_8h_a1dd34fed4a371de429960b3c70a11b05}\label{ptreplay__protos_8h_a1dd34fed4a371de429960b3c70a11b05}} 
+\index{ptreplay\_protos.h@{ptreplay\_protos.h}!PTUnloadModule@{PTUnloadModule}}
+\index{PTUnloadModule@{PTUnloadModule}!ptreplay\_protos.h@{ptreplay\_protos.h}}
+\subsubsection{\texorpdfstring{PTUnloadModule()}{PTUnloadModule()}}
+{\footnotesize\ttfamily V\+O\+ID P\+T\+Unload\+Module (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_module}{Module}} $\ast$}]{ }\end{DoxyParamCaption})}
+

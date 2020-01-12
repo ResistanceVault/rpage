@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rpage_5fscreen_5fmodes',['rpage_screen_modes',['../frwk_8h.html#ac894e2ed3c9023e9211f80ff287b6f12',1,'frwk.h']]]
+  ['locale',['locale',['../locale_8h.html#a2287aeb3140dc753df7c798eb8f978a6',1,'locale.h']]]
 ];

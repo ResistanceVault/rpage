@@ -10,6 +10,8 @@ struct \mbox{\hyperlink{structvec2}{vec2}}
 \item 
 struct \mbox{\hyperlink{structvec2fp}{vec2fp}}
 \item 
+struct \mbox{\hyperlink{structpoly}{poly}}
+\item 
 struct \mbox{\hyperlink{structrect}{rect}}
 \end{DoxyCompactItemize}
 \subsection*{Macros}
@@ -35,8 +37,6 @@ typedef unsigned long \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa
 typedef unsigned short \mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}}
 \item 
 typedef int \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}}
-\item 
-typedef unsigned short $\ast$ \mbox{\hyperlink{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}{P\+A\+L\+E\+T\+T\+E\+P\+TR}}
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -47,7 +47,9 @@ int \mbox{\hyperlink{utils_8h_aae80c335ae5abd347322bef225b2dc3a}{clamp}} (int x,
 \item 
 \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_a6bc8e36b6f11878c721a878697b69b10}{point\+\_\+within\+\_\+rect}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structrect}{rect}} $\ast$r)
 \item 
-\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list\mbox{[}$\,$\mbox{]}, unsigned short n\+\_\+pt)
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_ab22ddf1182af9f3bc862370f51794aeb}{point\+\_\+within\+\_\+quad}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structpoly}{poly}} $\ast$pl)
+\item 
+\mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{utils_8h_ac70760dc50584287905fb90525be7651}{point\+\_\+within\+\_\+polygon}} (\mbox{\hyperlink{structvec2}{vec2}} $\ast$pt, \mbox{\hyperlink{structvec2}{vec2}} $\ast$pt\+\_\+list, unsigned short n\+\_\+pt)
 \item 
 char $\ast$ \mbox{\hyperlink{utils_8h_a76b1908972999895e55d11e3460160fb}{citoa}} (int num, char $\ast$str, int base)
 \item 
@@ -66,7 +68,7 @@ int \mbox{\hyperlink{utils_8h_ad028eaad8ad3fa754b4b2032a2276fcb}{qsqr}} (int i)
 
 
 
-Definition at line 45 of file utils.\+h.
+Definition at line 41 of file utils.\+h.
 
 \mbox{\Hypertarget{utils_8h_ac39d9cef6a5e030ba8d9e11121054268}\label{utils_8h_ac39d9cef6a5e030ba8d9e11121054268}} 
 \index{utils.h@{utils.h}!max@{max}}
@@ -76,7 +78,7 @@ Definition at line 45 of file utils.\+h.
 
 
 
-Definition at line 53 of file utils.\+h.
+Definition at line 49 of file utils.\+h.
 
 \mbox{\Hypertarget{utils_8h_abb702d8b501669a23aa0ab3b281b9384}\label{utils_8h_abb702d8b501669a23aa0ab3b281b9384}} 
 \index{utils.h@{utils.h}!min@{min}}
@@ -86,7 +88,7 @@ Definition at line 53 of file utils.\+h.
 
 
 
-Definition at line 49 of file utils.\+h.
+Definition at line 45 of file utils.\+h.
 
 \mbox{\Hypertarget{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}\label{utils_8h_aa8cecfc5c5c054d2875c03e77b7be15d}} 
 \index{utils.h@{utils.h}!TRUE@{TRUE}}
@@ -96,7 +98,7 @@ Definition at line 49 of file utils.\+h.
 
 
 
-Definition at line 41 of file utils.\+h.
+Definition at line 37 of file utils.\+h.
 
 
 
@@ -120,16 +122,6 @@ Definition at line 32 of file utils.\+h.
 
 
 Definition at line 16 of file utils.\+h.
-
-\mbox{\Hypertarget{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}\label{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}} 
-\index{utils.h@{utils.h}!PALETTEPTR@{PALETTEPTR}}
-\index{PALETTEPTR@{PALETTEPTR}!utils.h@{utils.h}}
-\subsubsection{\texorpdfstring{PALETTEPTR}{PALETTEPTR}}
-{\footnotesize\ttfamily typedef unsigned short$\ast$ \mbox{\hyperlink{utils_8h_a5f12c342d23f5f2cfe0e0b4b90aba547}{P\+A\+L\+E\+T\+T\+E\+P\+TR}}}
-
-
-
-Definition at line 37 of file utils.\+h.
 
 \mbox{\Hypertarget{utils_8h_a122c4acf389c050379f00341fdcd5812}\label{utils_8h_a122c4acf389c050379f00341fdcd5812}} 
 \index{utils.h@{utils.h}!UBYTE@{UBYTE}}
@@ -184,11 +176,21 @@ Definition at line 57 of file utils.\+c.
 
 Definition at line 104 of file utils.\+c.
 
-\mbox{\Hypertarget{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}\label{utils_8h_afd88e9fbba1a5b69687288e629c37ce5}} 
+\mbox{\Hypertarget{utils_8h_ac70760dc50584287905fb90525be7651}\label{utils_8h_ac70760dc50584287905fb90525be7651}} 
 \index{utils.h@{utils.h}!point\_within\_polygon@{point\_within\_polygon}}
 \index{point\_within\_polygon@{point\_within\_polygon}!utils.h@{utils.h}}
 \subsubsection{\texorpdfstring{point\_within\_polygon()}{point\_within\_polygon()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list\mbox{[}$\,$\mbox{]},  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt\+\_\+list,  }\item[{unsigned short}]{n\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 135 of file utils.\+c.
+
+\mbox{\Hypertarget{utils_8h_ab22ddf1182af9f3bc862370f51794aeb}\label{utils_8h_ab22ddf1182af9f3bc862370f51794aeb}} 
+\index{utils.h@{utils.h}!point\_within\_quad@{point\_within\_quad}}
+\index{point\_within\_quad@{point\_within\_quad}!utils.h@{utils.h}}
+\subsubsection{\texorpdfstring{point\_within\_quad()}{point\_within\_quad()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} point\+\_\+within\+\_\+quad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{pt,  }\item[{\mbox{\hyperlink{structpoly}{poly}} $\ast$}]{pl }\end{DoxyParamCaption})}
 
 
 

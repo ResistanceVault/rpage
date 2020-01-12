@@ -87,6 +87,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvec2fp.html">vec2fp</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpoly.html">poly</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrect.html">rect</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -113,8 +115,6 @@ Typedefs</h2></td></tr>
 <tr class="separator:aefbb6ca39ebcf009709e607d159766d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a050c65e107f0c828f856a231f4b4e788"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a></td></tr>
 <tr class="separator:a050c65e107f0c828f856a231f4b4e788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f12c342d23f5f2cfe0e0b4b90aba547"><td class="memItemLeft" align="right" valign="top">typedef unsigned short *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a5f12c342d23f5f2cfe0e0b4b90aba547">PALETTEPTR</a></td></tr>
-<tr class="separator:a5f12c342d23f5f2cfe0e0b4b90aba547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -124,8 +124,10 @@ Functions</h2></td></tr>
 <tr class="separator:aae80c335ae5abd347322bef225b2dc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bc8e36b6f11878c721a878697b69b10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a6bc8e36b6f11878c721a878697b69b10">point_within_rect</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structrect.html">rect</a> *r)</td></tr>
 <tr class="separator:a6bc8e36b6f11878c721a878697b69b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd88e9fbba1a5b69687288e629c37ce5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#afd88e9fbba1a5b69687288e629c37ce5">point_within_polygon</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structvec2.html">vec2</a> *pt_list[], unsigned short n_pt)</td></tr>
-<tr class="separator:afd88e9fbba1a5b69687288e629c37ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab22ddf1182af9f3bc862370f51794aeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ab22ddf1182af9f3bc862370f51794aeb">point_within_quad</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structpoly.html">poly</a> *pl)</td></tr>
+<tr class="separator:ab22ddf1182af9f3bc862370f51794aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac70760dc50584287905fb90525be7651"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ac70760dc50584287905fb90525be7651">point_within_polygon</a> (<a class="el" href="structvec2.html">vec2</a> *pt, <a class="el" href="structvec2.html">vec2</a> *pt_list, unsigned short n_pt)</td></tr>
+<tr class="separator:ac70760dc50584287905fb90525be7651"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76b1908972999895e55d11e3460160fb"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a76b1908972999895e55d11e3460160fb">citoa</a> (int num, char *str, int base)</td></tr>
 <tr class="separator:a76b1908972999895e55d11e3460160fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab75b77f16137397e444e7d9a82b00c82"><td class="memItemLeft" align="right" valign="top">short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ab75b77f16137397e444e7d9a82b00c82">str_find_delimiter</a> (short start, char *str)</td></tr>
@@ -146,7 +148,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00045">45</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00041">41</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>
@@ -176,7 +178,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00053">53</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00049">49</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>
@@ -206,7 +208,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00049">49</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00045">45</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>
@@ -222,7 +224,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00041">41</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00037">37</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>
@@ -256,22 +258,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00016">16</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
-
-</div>
-</div>
-<a id="a5f12c342d23f5f2cfe0e0b4b90aba547"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f12c342d23f5f2cfe0e0b4b90aba547">&#9670;&nbsp;</a></span>PALETTEPTR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef unsigned short* <a class="el" href="utils_8h.html#a5f12c342d23f5f2cfe0e0b4b90aba547">PALETTEPTR</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00037">37</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>
@@ -396,8 +382,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afd88e9fbba1a5b69687288e629c37ce5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd88e9fbba1a5b69687288e629c37ce5">&#9670;&nbsp;</a></span>point_within_polygon()</h2>
+<a id="ac70760dc50584287905fb90525be7651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac70760dc50584287905fb90525be7651">&#9670;&nbsp;</a></span>point_within_polygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -412,13 +398,43 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structvec2.html">vec2</a> *&#160;</td>
-          <td class="paramname"><em>pt_list</em>[], </td>
+          <td class="paramname"><em>pt_list</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">unsigned short&#160;</td>
           <td class="paramname"><em>n_pt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="utils_8c_source.html#l00135">135</a> of file <a class="el" href="utils_8c_source.html">utils.c</a>.</p>
+
+</div>
+</div>
+<a id="ab22ddf1182af9f3bc862370f51794aeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab22ddf1182af9f3bc862370f51794aeb">&#9670;&nbsp;</a></span>point_within_quad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a> point_within_quad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structvec2.html">vec2</a> *&#160;</td>
+          <td class="paramname"><em>pt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpoly.html">poly</a> *&#160;</td>
+          <td class="paramname"><em>pl</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

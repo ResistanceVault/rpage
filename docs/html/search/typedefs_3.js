@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tinfl_5fbit_5fbuf_5ft',['tinfl_bit_buf_t',['../tinfl_8c.html#af6af194c507342cda458498cd37ca418',1,'tinfl.c']]],
-  ['tinfl_5fdecompressor',['tinfl_decompressor',['../tinfl_8c.html#ad5308cf24962df49c8b6a5c91bbbe05e',1,'tinfl.c']]],
-  ['tinfl_5fput_5fbuf_5ffunc_5fptr',['tinfl_put_buf_func_ptr',['../tinfl_8c.html#a4e4ea4a3376e8d2a996b848c8e4319df',1,'tinfl.c']]]
+  ['ubyte',['UBYTE',['../utils_8h.html#a122c4acf389c050379f00341fdcd5812',1,'utils.h']]],
+  ['ulong',['ULONG',['../utils_8h.html#af632da489ebc3708ec3ab6791ee53fa4',1,'utils.h']]],
+  ['uword',['UWORD',['../utils_8h.html#aefbb6ca39ebcf009709e607d159766d5',1,'utils.h']]]
 ];

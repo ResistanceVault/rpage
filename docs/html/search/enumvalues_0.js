@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['mode_5fhires',['mode_hires',['../frwk_8h.html#ac894e2ed3c9023e9211f80ff287b6f12ac7e37ccf3ef71a4e14f5d9f18fae1a0e',1,'frwk.h']]],
-  ['mode_5flowres',['mode_lowres',['../frwk_8h.html#ac894e2ed3c9023e9211f80ff287b6f12aad0f0026ff9ca889b291d8e2a747aa19',1,'frwk.h']]],
-  ['mode_5fmedres',['mode_medres',['../frwk_8h.html#ac894e2ed3c9023e9211f80ff287b6f12a17680c75beaf1e2cb5d437d2f9a47005',1,'frwk.h']]]
+  ['locale_5fen',['locale_en',['../locale_8h.html#a2287aeb3140dc753df7c798eb8f978a6adfaf46c260a972147e55a2e0c5b31f13',1,'locale.h']]],
+  ['locale_5fes',['locale_es',['../locale_8h.html#a2287aeb3140dc753df7c798eb8f978a6a21abe81c8f9ebc756ed42e3a4344ab25',1,'locale.h']]],
+  ['locale_5ffr',['locale_fr',['../locale_8h.html#a2287aeb3140dc753df7c798eb8f978a6ae959a439c6f7d999f16b9ccb8d7f6547',1,'locale.h']]]
 ];

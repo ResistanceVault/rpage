@@ -1,0 +1,57 @@
+\hypertarget{locale_8c}{}\section{rpage/amiga/locale.c File Reference}
+\label{locale_8c}\index{rpage/amiga/locale.c@{rpage/amiga/locale.c}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}rpage/amiga/inc.\+prl\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rpage/frwk.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ext/tinfl.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rpage/amiga/locale.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rpage/amiga/shrinkler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}rpage/amiga/doynax.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{locale_8c_a8e979e8dfdc3e1fb5039532ca30df87b}{load\+\_\+pak\+\_\+locale\+\_\+to\+\_\+array}} (char $\ast$text\+\_\+array\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}} array\+\_\+size, char $\ast$filename)
+\begin{DoxyCompactList}\small\item\em Compressed Text loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct Dos\+Library $\ast$ \mbox{\hyperlink{locale_8c_a3538f18ec56e5b27b66d823e618bcbf4}{D\+O\+S\+Base}}
+\item 
+char $\ast$ \mbox{\hyperlink{locale_8c_a4b6b50127b90d87adee184075965e463}{locale\+\_\+ext}} \mbox{[}3\mbox{]} = \{\char`\"{}\+\_\+fr.\+pak\char`\"{}, \char`\"{}\+\_\+en.\+pak\char`\"{}, \char`\"{}\+\_\+es.\+pak\char`\"{}\}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{locale_8c_a8e979e8dfdc3e1fb5039532ca30df87b}\label{locale_8c_a8e979e8dfdc3e1fb5039532ca30df87b}} 
+\index{locale.c@{locale.c}!load\_pak\_locale\_to\_array@{load\_pak\_locale\_to\_array}}
+\index{load\_pak\_locale\_to\_array@{load\_pak\_locale\_to\_array}!locale.c@{locale.c}}
+\subsubsection{\texorpdfstring{load\_pak\_locale\_to\_array()}{load\_pak\_locale\_to\_array()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}$\ast$ load\+\_\+pak\+\_\+locale\+\_\+to\+\_\+array (\begin{DoxyParamCaption}\item[{char $\ast$}]{text\+\_\+array\mbox{[}$\,$\mbox{]},  }\item[{\mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}}}]{array\+\_\+size,  }\item[{char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+Compressed Text loading. 
+
+
+
+Definition at line 23 of file locale.\+c.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{locale_8c_a3538f18ec56e5b27b66d823e618bcbf4}\label{locale_8c_a3538f18ec56e5b27b66d823e618bcbf4}} 
+\index{locale.c@{locale.c}!DOSBase@{DOSBase}}
+\index{DOSBase@{DOSBase}!locale.c@{locale.c}}
+\subsubsection{\texorpdfstring{DOSBase}{DOSBase}}
+{\footnotesize\ttfamily struct Dos\+Library$\ast$ D\+O\+S\+Base}
+
+\mbox{\Hypertarget{locale_8c_a4b6b50127b90d87adee184075965e463}\label{locale_8c_a4b6b50127b90d87adee184075965e463}} 
+\index{locale.c@{locale.c}!locale\_ext@{locale\_ext}}
+\index{locale\_ext@{locale\_ext}!locale.c@{locale.c}}
+\subsubsection{\texorpdfstring{locale\_ext}{locale\_ext}}
+{\footnotesize\ttfamily char$\ast$ locale\+\_\+ext\mbox{[}3\mbox{]} = \{\char`\"{}\+\_\+fr.\+pak\char`\"{}, \char`\"{}\+\_\+en.\+pak\char`\"{}, \char`\"{}\+\_\+es.\+pak\char`\"{}\}}
+
+
+
+Definition at line 18 of file locale.\+c.
+
