@@ -1,4 +1,4 @@
-# R-PAGE
+![](docs/img/rpage_logo.png)
 ## Resistance's Portable-Adventure-Game-Engine
 
 **R-PAGE** (pronounced 'arpège') is a **C framework** meant to accelerate the creation of **adventure games** for the Amiga OCS/ECS range of computers. It is designed with portability in mind, speed performance being a lesser concern.<br>
