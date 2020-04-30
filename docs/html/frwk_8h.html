@@ -112,9 +112,26 @@ Functions</h2></td></tr>
 <tr class="memitem:a98b1aba9b086ffe8519872651423e68c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#af632da489ebc3708ec3ab6791ee53fa4">ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a98b1aba9b086ffe8519872651423e68c">rpage_get_avail_non_video_memory</a> (void)</td></tr>
 <tr class="memdesc:a98b1aba9b086ffe8519872651423e68c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return how many general purpose free memory is available (aka Fastram/Slowram on the Amiga side).  <a href="#a98b1aba9b086ffe8519872651423e68c">More...</a><br /></td></tr>
 <tr class="separator:a98b1aba9b086ffe8519872651423e68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed0638a46c0f689f257c94d3892a654a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#af632da489ebc3708ec3ab6791ee53fa4">ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#aed0638a46c0f689f257c94d3892a654a">rpage_get_avail_memory</a> (void)</td></tr>
+<tr class="memdesc:aed0638a46c0f689f257c94d3892a654a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the total of available memory.  <a href="#aed0638a46c0f689f257c94d3892a654a">More...</a><br /></td></tr>
+<tr class="separator:aed0638a46c0f689f257c94d3892a654a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd0721afa031a9909c338a7fc005289"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#aefd0721afa031a9909c338a7fc005289">rpage_reclaim_system_memory</a> (void)</td></tr>
+<tr class="memdesc:aefd0721afa031a9909c338a7fc005289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to deallocate as many system resources as possible.  <a href="#aefd0721afa031a9909c338a7fc005289">More...</a><br /></td></tr>
+<tr class="separator:aefd0721afa031a9909c338a7fc005289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ae68d607229daf83141cea13c0381bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#af632da489ebc3708ec3ab6791ee53fa4">ULONG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a1ae68d607229daf83141cea13c0381bf">rpage_get_clock</a> (void)</td></tr>
 <tr class="memdesc:a1ae68d607229daf83141cea13c0381bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the elapsed time, in milliseconds, since <a class="el" href="frwk_8h.html#a95179d5a4cf253e7c5fb8190c123adfd">rpage_init</a> was invoked.  <a href="#a1ae68d607229daf83141cea13c0381bf">More...</a><br /></td></tr>
 <tr class="separator:a1ae68d607229daf83141cea13c0381bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ebe2620c3a5a3423de3cd83f974bea"><td class="memItemLeft" align="right" valign="top">rpage_file&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ab3ebe2620c3a5a3423de3cd83f974bea">rpage_file_open</a> (char *filename, long mode)</td></tr>
+<tr class="separator:ab3ebe2620c3a5a3423de3cd83f974bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82e7217c612ffbb7aa972a56093e89fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a82e7217c612ffbb7aa972a56093e89fe">rpage_file_close</a> (rpage_file file)</td></tr>
+<tr class="memdesc:a82e7217c612ffbb7aa972a56093e89fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close a current file.  <a href="#a82e7217c612ffbb7aa972a56093e89fe">More...</a><br /></td></tr>
+<tr class="separator:a82e7217c612ffbb7aa972a56093e89fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0682d7341f2692c0766de0bfdad214c3"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a0682d7341f2692c0766de0bfdad214c3">rpage_file_read</a> (rpage_file file, void *buffer, long len)</td></tr>
+<tr class="memdesc:a0682d7341f2692c0766de0bfdad214c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from file into a buffer.  <a href="#a0682d7341f2692c0766de0bfdad214c3">More...</a><br /></td></tr>
+<tr class="separator:a0682d7341f2692c0766de0bfdad214c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6816fd38b2e5e02ca475fdf8679da700"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a6816fd38b2e5e02ca475fdf8679da700">rpage_file_write</a> (rpage_file file, void *buffer, long len)</td></tr>
+<tr class="memdesc:a6816fd38b2e5e02ca475fdf8679da700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a data buffer into the file.  <a href="#a6816fd38b2e5e02ca475fdf8679da700">More...</a><br /></td></tr>
+<tr class="separator:a6816fd38b2e5e02ca475fdf8679da700"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb84e504a84358cde6a93844d2b6e816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#acb84e504a84358cde6a93844d2b6e816">rpage_video_open</a> (int screen_mode)</td></tr>
 <tr class="separator:acb84e504a84358cde6a93844d2b6e816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c190b451701765ed645730b986c9aff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a3c190b451701765ed645730b986c9aff">rpage_video_close</a> (void)</td></tr>
@@ -126,8 +143,10 @@ Functions</h2></td></tr>
 <tr class="memitem:adea3f286ab31aa700ef0ed3eddf11ee9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#adea3f286ab31aa700ef0ed3eddf11ee9">rpage_video_clear</a> (void)</td></tr>
 <tr class="memdesc:adea3f286ab31aa700ef0ed3eddf11ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the screen.  <a href="#adea3f286ab31aa700ef0ed3eddf11ee9">More...</a><br /></td></tr>
 <tr class="separator:adea3f286ab31aa700ef0ed3eddf11ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28c95fd158ea9befbd98c34503dc2985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a28c95fd158ea9befbd98c34503dc2985">rpage_video_clear_bit_mask</a> (<a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a> bit_mask)</td></tr>
+<tr class="memdesc:a28c95fd158ea9befbd98c34503dc2985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default font file/size for every next call to <a class="el" href="frwk_8h.html#a3fecfe974de2a1c49de1dad70c3934a5">rpage_video_draw_text</a>.  <a href="#a28c95fd158ea9befbd98c34503dc2985">More...</a><br /></td></tr>
+<tr class="separator:a28c95fd158ea9befbd98c34503dc2985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09345e03dcc61f74d14eccf236978655"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a09345e03dcc61f74d14eccf236978655">rpage_video_set_font</a> (char *font_filename, short font_size)</td></tr>
-<tr class="memdesc:a09345e03dcc61f74d14eccf236978655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default font file/size for every next call to <a class="el" href="frwk_8h.html#a3fecfe974de2a1c49de1dad70c3934a5">rpage_video_draw_text</a>.  <a href="#a09345e03dcc61f74d14eccf236978655">More...</a><br /></td></tr>
 <tr class="separator:a09345e03dcc61f74d14eccf236978655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acace53db7119ee7b065c870072c92c2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#acace53db7119ee7b065c870072c92c2c">rpage_video_vsync</a> (void)</td></tr>
 <tr class="memdesc:acace53db7119ee7b065c870072c92c2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for the vertical blank.  <a href="#acace53db7119ee7b065c870072c92c2c">More...</a><br /></td></tr>
@@ -152,9 +171,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a333cd9f8a5a0a74c1f8638a70ae590d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a333cd9f8a5a0a74c1f8638a70ae590d6">rpage_video_screen_to_back</a> (void)</td></tr>
 <tr class="memdesc:a333cd9f8a5a0a74c1f8638a70ae590d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the game screen to the back (Amiga only)  <a href="#a333cd9f8a5a0a74c1f8638a70ae590d6">More...</a><br /></td></tr>
 <tr class="separator:a333cd9f8a5a0a74c1f8638a70ae590d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c32473e1444c0d97ee1c38737d25c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ad3c32473e1444c0d97ee1c38737d25c3">rpage_video_scroll</a> (short x, short y)</td></tr>
+<tr class="memdesc:ad3c32473e1444c0d97ee1c38737d25c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware scrolling.  <a href="#ad3c32473e1444c0d97ee1c38737d25c3">More...</a><br /></td></tr>
+<tr class="separator:ad3c32473e1444c0d97ee1c38737d25c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2535dac9d8c166554e19655056876ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ad2535dac9d8c166554e19655056876ac">rpage_video_scroll_bit_mask</a> (short x, short y, <a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a> bit_mask)</td></tr>
+<tr class="memdesc:ad2535dac9d8c166554e19655056876ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIXME!  <a href="#ad2535dac9d8c166554e19655056876ac">More...</a><br /></td></tr>
+<tr class="separator:ad2535dac9d8c166554e19655056876ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36f0711ce4460a84fb6fc483d606c05b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a36f0711ce4460a84fb6fc483d606c05b">rpage_video_blt_bmp</a> (rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y)</td></tr>
 <tr class="memdesc:a36f0711ce4460a84fb6fc483d606c05b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blit a bitmap into the screen.  <a href="#a36f0711ce4460a84fb6fc483d606c05b">More...</a><br /></td></tr>
 <tr class="separator:a36f0711ce4460a84fb6fc483d606c05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4201efbab9208a8e4de29adb1d9a713f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a4201efbab9208a8e4de29adb1d9a713f">rpage_video_blt_bmp_bt</a> (rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, <a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a> bit_mask)</td></tr>
+<tr class="memdesc:a4201efbab9208a8e4de29adb1d9a713f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blit a bitmap into the screen using a bitplan mask, each bit of the 'bt' parameter being the mask for each bitplan.  <a href="#a4201efbab9208a8e4de29adb1d9a713f">More...</a><br /></td></tr>
+<tr class="separator:a4201efbab9208a8e4de29adb1d9a713f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42d45eb35521b2b551c82ce226ffea3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a42d45eb35521b2b551c82ce226ffea3d">rpage_video_blt_bmp_mask</a> (rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, rpage_bitmap *mask_bitmap)</td></tr>
 <tr class="separator:a42d45eb35521b2b551c82ce226ffea3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19c11fb41b80075438fe2ea58ac53af4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a19c11fb41b80075438fe2ea58ac53af4">rpage_video_blt_bmp_clip</a> (rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, <a class="el" href="structrect.html">rect</a> *clipping_rect)</td></tr>
@@ -166,8 +194,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ad2dc983ed7bd3e4c37640135f5142d23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ad2dc983ed7bd3e4c37640135f5142d23">rpage_video_set_palette</a> (rpage_palette *palette, short palette_size)</td></tr>
 <tr class="separator:ad2dc983ed7bd3e4c37640135f5142d23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeca7b933639ba5ad8db2707820f24897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#aeca7b933639ba5ad8db2707820f24897">rpage_video_set_palette_to_black</a> (short first_color, short last_color)</td></tr>
+<tr class="memdesc:aeca7b933639ba5ad8db2707820f24897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blacken the current palette of the screen.<br />
+  <a href="#aeca7b933639ba5ad8db2707820f24897">More...</a><br /></td></tr>
 <tr class="separator:aeca7b933639ba5ad8db2707820f24897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab741b11bf55e077990d9ba8188dae6bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ab741b11bf55e077990d9ba8188dae6bb">rpage_video_set_palette_to_grey</a> (short first_color, short last_color)</td></tr>
+<tr class="memdesc:ab741b11bf55e077990d9ba8188dae6bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current palette of the screen to a gradient of greys.<br />
+  <a href="#ab741b11bf55e077990d9ba8188dae6bb">More...</a><br /></td></tr>
 <tr class="separator:ab741b11bf55e077990d9ba8188dae6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7efa9ea9eeda87f0ab4a2a6f8a8510a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a7efa9ea9eeda87f0ab4a2a6f8a8510a6">rpage_video_draw_polygon</a> (<a class="el" href="structpoly.html">poly</a> *p, short color)</td></tr>
 <tr class="separator:a7efa9ea9eeda87f0ab4a2a6f8a8510a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,6 +217,8 @@ Functions</h2></td></tr>
 <tr class="separator:a4047388f90c29f74fdaa15903bb9451d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fecfe974de2a1c49de1dad70c3934a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a3fecfe974de2a1c49de1dad70c3934a5">rpage_video_draw_text</a> (char *str, short x, short y, short color_index)</td></tr>
 <tr class="separator:a3fecfe974de2a1c49de1dad70c3934a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f306d1fcf659ce546a9530675982049"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a7f306d1fcf659ce546a9530675982049">rpage_video_draw_text_bit_mask</a> (char *str, short x, short y, short color_index, <a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a> bit_mask)</td></tr>
+<tr class="separator:a7f306d1fcf659ce546a9530675982049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15dc1bbb28686c3250729f4ddd94c623"><td class="memItemLeft" align="right" valign="top">short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a15dc1bbb28686c3250729f4ddd94c623">rpage_video_get_text_width</a> (char *str)</td></tr>
 <tr class="memdesc:a15dc1bbb28686c3250729f4ddd94c623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get text width in pixels.  <a href="#a15dc1bbb28686c3250729f4ddd94c623">More...</a><br /></td></tr>
 <tr class="separator:a15dc1bbb28686c3250729f4ddd94c623"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,7 +226,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:a45dc096b0a7d32b3e12b29efcba1bba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a tileset-based image to the current screen.  <a href="#a45dc096b0a7d32b3e12b29efcba1bba6">More...</a><br /></td></tr>
 <tr class="separator:a45dc096b0a7d32b3e12b29efcba1bba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ac610e0160eb66dcd0770d3de31024a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a9ac610e0160eb66dcd0770d3de31024a">rpage_video_save_to_bitmap</a> (rpage_bitmap *dest_bitmap, short source_x, short source_y, short width, short height)</td></tr>
+<tr class="memdesc:a9ac610e0160eb66dcd0770d3de31024a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a part of the current screen into a bitmap.  <a href="#a9ac610e0160eb66dcd0770d3de31024a">More...</a><br /></td></tr>
 <tr class="separator:a9ac610e0160eb66dcd0770d3de31024a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e5f69b04d9e71002789d2094c694a4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a8e5f69b04d9e71002789d2094c694a4f">rpage_video_show_freemem</a> (short x, short y, short width, short height)</td></tr>
+<tr class="memdesc:a8e5f69b04d9e71002789d2094c694a4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display the amount of free memory (DEBUG ONLY)  <a href="#a8e5f69b04d9e71002789d2094c694a4f">More...</a><br /></td></tr>
+<tr class="separator:a8e5f69b04d9e71002789d2094c694a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a847f5ddcf266dda300684309c4cc2b63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a847f5ddcf266dda300684309c4cc2b63">rpage_bitmap_draw_tileset</a> (rpage_bitmap *dest_bitmap, rpage_bitmap *tileset_bitmap, <a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a> *tileset, <a class="el" href="structrect.html">rect</a> *tile_rect, short tileset_width)</td></tr>
 <tr class="memdesc:a847f5ddcf266dda300684309c4cc2b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a tileset-based image into a bitmap.  <a href="#a847f5ddcf266dda300684309c4cc2b63">More...</a><br /></td></tr>
 <tr class="separator:a847f5ddcf266dda300684309c4cc2b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,8 +265,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:a8eb1071d247e755f955d1f5e1798d3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refresh the image/position of an hardware sprite.  <a href="#a8eb1071d247e755f955d1f5e1798d3b9">More...</a><br /></td></tr>
 <tr class="separator:a8eb1071d247e755f955d1f5e1798d3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2c043de588e0562c82bdbab56e87b1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#af2c043de588e0562c82bdbab56e87b1d">rpage_remove_sprite</a> (short sprite_index)</td></tr>
+<tr class="memdesc:af2c043de588e0562c82bdbab56e87b1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the sprite based on his index.  <a href="#af2c043de588e0562c82bdbab56e87b1d">More...</a><br /></td></tr>
 <tr class="separator:af2c043de588e0562c82bdbab56e87b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac111675a349bf9377d277c3e4083731a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#ac111675a349bf9377d277c3e4083731a">rpage_sprite_is_enabled</a> (short sprite_index)</td></tr>
+<tr class="memdesc:ac111675a349bf9377d277c3e4083731a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns TRUE is the sprite with this index is currently enabled.  <a href="#ac111675a349bf9377d277c3e4083731a">More...</a><br /></td></tr>
 <tr class="separator:ac111675a349bf9377d277c3e4083731a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ca62b383518672c065560ec827b3460"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils_8h.html#a050c65e107f0c828f856a231f4b4e788">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a2ca62b383518672c065560ec827b3460">rpage_input_init</a> (void)</td></tr>
 <tr class="separator:a2ca62b383518672c065560ec827b3460"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -250,6 +290,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:aa39c6d14e8e8a4f2959342a276d37bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hide the mouse cursor.  <a href="#aa39c6d14e8e8a4f2959342a276d37bbb">More...</a><br /></td></tr>
 <tr class="separator:aa39c6d14e8e8a4f2959342a276d37bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d8086960a2b21702d8ceb3bef3ff3d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a1d8086960a2b21702d8ceb3bef3ff3d6">rpage_mouse_set_bitmap</a> (<a class="el" href="utils_8h.html#aefbb6ca39ebcf009709e607d159766d5">UWORD</a> *sprite_data, <a class="el" href="structvec2.html">vec2</a> *hotspot)</td></tr>
+<tr class="memdesc:a1d8086960a2b21702d8ceb3bef3ff3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format.  <a href="#a1d8086960a2b21702d8ceb3bef3ff3d6">More...</a><br /></td></tr>
 <tr class="separator:a1d8086960a2b21702d8ceb3bef3ff3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6597108fe658949b24bb65ca96e9a4fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a6597108fe658949b24bb65ca96e9a4fc">rpage_mouse_get_values</a> (short *button, <a class="el" href="structvec2.html">vec2</a> *mouse_coords)</td></tr>
 <tr class="memdesc:a6597108fe658949b24bb65ca96e9a4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the current mouse coordinates and button states.  <a href="#a6597108fe658949b24bb65ca96e9a4fc">More...</a><br /></td></tr>
@@ -269,6 +310,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab44e02bdcf2bf01b68a014f521d6a62d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if the right mouse button was pressed but isn't anymore.  <a href="#ab44e02bdcf2bf01b68a014f521d6a62d">More...</a><br /></td></tr>
 <tr class="separator:ab44e02bdcf2bf01b68a014f521d6a62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a714850bf2131602d9d2e2e38c79c7241"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frwk_8h.html#a714850bf2131602d9d2e2e38c79c7241">rpage_keyboard_rawkey</a> (void)</td></tr>
+<tr class="memdesc:a714850bf2131602d9d2e2e38c79c7241"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw read the keyboard input.  <a href="#a714850bf2131602d9d2e2e38c79c7241">More...</a><br /></td></tr>
 <tr class="separator:a714850bf2131602d9d2e2e38c79c7241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -289,7 +331,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ac894e2ed3c9023e9211f80ff287b6f12ac7e37ccf3ef71a4e14f5d9f18fae1a0e"></a>mode_hires&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="frwk_8h_source.html#l00044">44</a> of file <a class="el" href="frwk_8h_source.html">frwk.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="frwk_8h_source.html#l00051">51</a> of file <a class="el" href="frwk_8h_source.html">frwk.h</a>.</p>
 
 </div>
 </div>
@@ -580,6 +622,135 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a82e7217c612ffbb7aa972a56093e89fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82e7217c612ffbb7aa972a56093e89fe">&#9670;&nbsp;</a></span>rpage_file_close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_file_close </td>
+          <td>(</td>
+          <td class="paramtype">rpage_file&#160;</td>
+          <td class="paramname"><em>file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close a current file. </p>
+
+</div>
+</div>
+<a id="ab3ebe2620c3a5a3423de3cd83f974bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3ebe2620c3a5a3423de3cd83f974bea">&#9670;&nbsp;</a></span>rpage_file_open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rpage_file rpage_file_open </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Standard file open, using the OS layer. 'mode' can be set to:<br />
+</p><ul>
+<li>MODE_OPEN_FILE: an existing file is opened for reading or writing<br />
+</li>
+<li>MODE_CREATE_FILE: a new file is created for writing<br />
+</li>
+<li>MODE_OPEN_OR_CREATE: opens a file with an shared lock, but creates it if it didn't exist<br />
+ </li>
+</ul>
+
+</div>
+</div>
+<a id="a0682d7341f2692c0766de0bfdad214c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0682d7341f2692c0766de0bfdad214c3">&#9670;&nbsp;</a></span>rpage_file_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long rpage_file_read </td>
+          <td>(</td>
+          <td class="paramtype">rpage_file&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read data from file into a buffer. </p>
+
+</div>
+</div>
+<a id="a6816fd38b2e5e02ca475fdf8679da700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6816fd38b2e5e02ca475fdf8679da700">&#9670;&nbsp;</a></span>rpage_file_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long rpage_file_write </td>
+          <td>(</td>
+          <td class="paramtype">rpage_file&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a data buffer into the file. </p>
+
+</div>
+</div>
 <a id="a10700c3294fbabbce76c4b3b485978c6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10700c3294fbabbce76c4b3b485978c6">&#9670;&nbsp;</a></span>rpage_free_memory_block()</h2>
 
@@ -627,6 +798,26 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the largest free memory block available to store the graphics data (aka Chipram on the Amiga side). </p>
+
+</div>
+</div>
+<a id="aed0638a46c0f689f257c94d3892a654a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed0638a46c0f689f257c94d3892a654a">&#9670;&nbsp;</a></span>rpage_get_avail_memory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils_8h.html#af632da489ebc3708ec3ab6791ee53fa4">ULONG</a> rpage_get_avail_memory </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the total of available memory. </p>
 
 </div>
 </div>
@@ -785,6 +976,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Raw read the keyboard input. </p>
 
 </div>
 </div>
@@ -1088,6 +1281,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format. </p>
+
 </div>
 </div>
 <a id="afbea9a3d5660c37d6bbf468bb1d65de4"></a>
@@ -1166,6 +1361,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aefd0721afa031a9909c338a7fc005289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd0721afa031a9909c338a7fc005289">&#9670;&nbsp;</a></span>rpage_reclaim_system_memory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_reclaim_system_memory </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Try to deallocate as many system resources as possible. </p>
+
+</div>
+</div>
 <a id="af2c043de588e0562c82bdbab56e87b1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af2c043de588e0562c82bdbab56e87b1d">&#9670;&nbsp;</a></span>rpage_remove_sprite()</h2>
 
@@ -1181,6 +1396,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Remove the sprite based on his index. </p>
 
 </div>
 </div>
@@ -1219,6 +1436,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns TRUE is the sprite with this index is currently enabled. </p>
 
 </div>
 </div>
@@ -1339,6 +1558,72 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Blit a bitmap into the screen. </p>
+
+</div>
+</div>
+<a id="a4201efbab9208a8e4de29adb1d9a713f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4201efbab9208a8e4de29adb1d9a713f">&#9670;&nbsp;</a></span>rpage_video_blt_bmp_bt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_blt_bmp_bt </td>
+          <td>(</td>
+          <td class="paramtype">rpage_bitmap *&#160;</td>
+          <td class="paramname"><em>source_bitmap</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>source_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>source_y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a>&#160;</td>
+          <td class="paramname"><em>bit_mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Blit a bitmap into the screen using a bitplan mask, each bit of the 'bt' parameter being the mask for each bitplan. </p>
 
 </div>
 </div>
@@ -1653,6 +1938,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a28c95fd158ea9befbd98c34503dc2985"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28c95fd158ea9befbd98c34503dc2985">&#9670;&nbsp;</a></span>rpage_video_clear_bit_mask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_clear_bit_mask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a>&#160;</td>
+          <td class="paramname"><em>bit_mask</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the default font file/size for every next call to <a class="el" href="frwk_8h.html#a3fecfe974de2a1c49de1dad70c3934a5">rpage_video_draw_text</a>. </p>
+
+</div>
+</div>
 <a id="a3c190b451701765ed645730b986c9aff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c190b451701765ed645730b986c9aff">&#9670;&nbsp;</a></span>rpage_video_close()</h2>
 
@@ -1776,8 +2081,54 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Draw a text string to the screen.<br />
 </p><ul>
-<li>The font must be defined prior to this operation, see <a class="el" href="frwk_8h.html#a09345e03dcc61f74d14eccf236978655" title="Set the default font file/size for every next call to rpage_video_draw_text.">rpage_video_set_font</a> </li>
+<li>The font must be defined prior to this operation, see <a class="el" href="frwk_8h.html#a09345e03dcc61f74d14eccf236978655">rpage_video_set_font</a> </li>
 </ul>
+
+</div>
+</div>
+<a id="a7f306d1fcf659ce546a9530675982049"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f306d1fcf659ce546a9530675982049">&#9670;&nbsp;</a></span>rpage_video_draw_text_bit_mask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_draw_text_bit_mask </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>color_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a>&#160;</td>
+          <td class="paramname"><em>bit_mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -2085,6 +2436,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Store a part of the current screen into a bitmap. </p>
+
 </div>
 </div>
 <a id="a333cd9f8a5a0a74c1f8638a70ae590d6"></a>
@@ -2127,6 +2480,72 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ad3c32473e1444c0d97ee1c38737d25c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3c32473e1444c0d97ee1c38737d25c3">&#9670;&nbsp;</a></span>rpage_video_scroll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_scroll </td>
+          <td>(</td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Hardware scrolling. </p>
+
+</div>
+</div>
+<a id="ad2535dac9d8c166554e19655056876ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2535dac9d8c166554e19655056876ac">&#9670;&nbsp;</a></span>rpage_video_scroll_bit_mask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_scroll_bit_mask </td>
+          <td>(</td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="utils_8h.html#a122c4acf389c050379f00341fdcd5812">UBYTE</a>&#160;</td>
+          <td class="paramname"><em>bit_mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>FIXME! </p>
+
+</div>
+</div>
 <a id="a09345e03dcc61f74d14eccf236978655"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a09345e03dcc61f74d14eccf236978655">&#9670;&nbsp;</a></span>rpage_video_set_font()</h2>
 
@@ -2152,8 +2571,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Set the default font file/size for every next call to <a class="el" href="frwk_8h.html#a3fecfe974de2a1c49de1dad70c3934a5">rpage_video_draw_text</a>. </p>
 
 </div>
 </div>
@@ -2213,6 +2630,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Blacken the current palette of the screen.<br />
+ </p>
+
 </div>
 </div>
 <a id="ab741b11bf55e077990d9ba8188dae6bb"></a>
@@ -2240,6 +2660,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Set the current palette of the screen to a gradient of greys.<br />
+ </p>
 
 </div>
 </div>
@@ -2276,6 +2699,48 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Draw a pixel to the screen. </p>
+
+</div>
+</div>
+<a id="a8e5f69b04d9e71002789d2094c694a4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e5f69b04d9e71002789d2094c694a4f">&#9670;&nbsp;</a></span>rpage_video_show_freemem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rpage_video_show_freemem </td>
+          <td>(</td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Display the amount of free memory (DEBUG ONLY) </p>
 
 </div>
 </div>

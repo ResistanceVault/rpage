@@ -70,7 +70,7 @@ const UWORD easing_table[] =
 	1023, 	1023, 	1023,  
 };
 
-const int sintab32[1024] =
+const short sintab32[1024] =
 {
     0, 6, 13, 19, 25, 31, 38, 44,
     50, 57, 63, 69, 75, 82, 88, 94,

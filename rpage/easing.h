@@ -6,6 +6,6 @@
 #define TABLE_LEN 1024
 
 extern const UWORD easing_table[TABLE_LEN + 16];
-extern const int sintab32[TABLE_LEN];
+extern const short sintab32[TABLE_LEN];
 
 #endif

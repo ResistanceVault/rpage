@@ -30,8 +30,20 @@ void \mbox{\hyperlink{frwk_8h_a10700c3294fbabbce76c4b3b485978c6}{rpage\+\_\+free
 \begin{DoxyCompactList}\small\item\em Return the largest free memory block available to store the graphics data (aka Chipram on the Amiga side). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{frwk_8h_a98b1aba9b086ffe8519872651423e68c}{rpage\+\_\+get\+\_\+avail\+\_\+non\+\_\+video\+\_\+memory}} (void)
 \begin{DoxyCompactList}\small\item\em Return how many general purpose free memory is available (aka Fastram/\+Slowram on the Amiga side). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{frwk_8h_aed0638a46c0f689f257c94d3892a654a}{rpage\+\_\+get\+\_\+avail\+\_\+memory}} (void)
+\begin{DoxyCompactList}\small\item\em Return the total of available memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_aefd0721afa031a9909c338a7fc005289}{rpage\+\_\+reclaim\+\_\+system\+\_\+memory}} (void)
+\begin{DoxyCompactList}\small\item\em Try to deallocate as many system resources as possible. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} \mbox{\hyperlink{frwk_8h_a1ae68d607229daf83141cea13c0381bf}{rpage\+\_\+get\+\_\+clock}} (void)
 \begin{DoxyCompactList}\small\item\em Get the elapsed time, in milliseconds, since \mbox{\hyperlink{frwk_8h_a95179d5a4cf253e7c5fb8190c123adfd}{rpage\+\_\+init}} was invoked. \end{DoxyCompactList}\item 
+rpage\+\_\+file \mbox{\hyperlink{frwk_8h_ab3ebe2620c3a5a3423de3cd83f974bea}{rpage\+\_\+file\+\_\+open}} (char $\ast$filename, long mode)
+\item 
+void \mbox{\hyperlink{frwk_8h_a82e7217c612ffbb7aa972a56093e89fe}{rpage\+\_\+file\+\_\+close}} (rpage\+\_\+file file)
+\begin{DoxyCompactList}\small\item\em Close a current file. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{frwk_8h_a0682d7341f2692c0766de0bfdad214c3}{rpage\+\_\+file\+\_\+read}} (rpage\+\_\+file file, void $\ast$buffer, long len)
+\begin{DoxyCompactList}\small\item\em Read data from file into a buffer. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{frwk_8h_a6816fd38b2e5e02ca475fdf8679da700}{rpage\+\_\+file\+\_\+write}} (rpage\+\_\+file file, void $\ast$buffer, long len)
+\begin{DoxyCompactList}\small\item\em Write a data buffer into the file. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_acb84e504a84358cde6a93844d2b6e816}{rpage\+\_\+video\+\_\+open}} (int screen\+\_\+mode)
 \item 
 void \mbox{\hyperlink{frwk_8h_a3c190b451701765ed645730b986c9aff}{rpage\+\_\+video\+\_\+close}} (void)
@@ -40,8 +52,10 @@ void \mbox{\hyperlink{frwk_8h_a3c190b451701765ed645730b986c9aff}{rpage\+\_\+vide
 \begin{DoxyCompactList}\small\item\em Get bit depth of the screen. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_adea3f286ab31aa700ef0ed3eddf11ee9}{rpage\+\_\+video\+\_\+clear}} (void)
 \begin{DoxyCompactList}\small\item\em Clear the screen. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{frwk_8h_a09345e03dcc61f74d14eccf236978655}{rpage\+\_\+video\+\_\+set\+\_\+font}} (char $\ast$font\+\_\+filename, short font\+\_\+size)
+void \mbox{\hyperlink{frwk_8h_a28c95fd158ea9befbd98c34503dc2985}{rpage\+\_\+video\+\_\+clear\+\_\+bit\+\_\+mask}} (\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} bit\+\_\+mask)
 \begin{DoxyCompactList}\small\item\em Set the default font file/size for every next call to \mbox{\hyperlink{frwk_8h_a3fecfe974de2a1c49de1dad70c3934a5}{rpage\+\_\+video\+\_\+draw\+\_\+text}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_a09345e03dcc61f74d14eccf236978655}{rpage\+\_\+video\+\_\+set\+\_\+font}} (char $\ast$font\+\_\+filename, short font\+\_\+size)
+\item 
 void \mbox{\hyperlink{frwk_8h_acace53db7119ee7b065c870072c92c2c}{rpage\+\_\+video\+\_\+vsync}} (void)
 \begin{DoxyCompactList}\small\item\em Wait for the vertical blank. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_acd80f2c8983f3c0fbebc7f7777fdd386}{rpage\+\_\+video\+\_\+wait\+\_\+dma}} (void)
@@ -58,8 +72,14 @@ void \mbox{\hyperlink{frwk_8h_ab7d7a08374b056b99d7a03f8f86aa356}{rpage\+\_\+vide
 \begin{DoxyCompactList}\small\item\em Bring the game screen to top (Amiga only) \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a333cd9f8a5a0a74c1f8638a70ae590d6}{rpage\+\_\+video\+\_\+screen\+\_\+to\+\_\+back}} (void)
 \begin{DoxyCompactList}\small\item\em Send the game screen to the back (Amiga only) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_ad3c32473e1444c0d97ee1c38737d25c3}{rpage\+\_\+video\+\_\+scroll}} (short x, short y)
+\begin{DoxyCompactList}\small\item\em Hardware scrolling. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_ad2535dac9d8c166554e19655056876ac}{rpage\+\_\+video\+\_\+scroll\+\_\+bit\+\_\+mask}} (short x, short y, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} bit\+\_\+mask)
+\begin{DoxyCompactList}\small\item\em F\+I\+X\+M\+E! \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a36f0711ce4460a84fb6fc483d606c05b}{rpage\+\_\+video\+\_\+blt\+\_\+bmp}} (rpage\+\_\+bitmap $\ast$source\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height, short x, short y)
 \begin{DoxyCompactList}\small\item\em Blit a bitmap into the screen. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_a4201efbab9208a8e4de29adb1d9a713f}{rpage\+\_\+video\+\_\+blt\+\_\+bmp\+\_\+bt}} (rpage\+\_\+bitmap $\ast$source\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height, short x, short y, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} bit\+\_\+mask)
+\begin{DoxyCompactList}\small\item\em Blit a bitmap into the screen using a bitplan mask, each bit of the \textquotesingle{}bt\textquotesingle{} parameter being the mask for each bitplan. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a42d45eb35521b2b551c82ce226ffea3d}{rpage\+\_\+video\+\_\+blt\+\_\+bmp\+\_\+mask}} (rpage\+\_\+bitmap $\ast$source\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height, short x, short y, rpage\+\_\+bitmap $\ast$mask\+\_\+bitmap)
 \item 
 void \mbox{\hyperlink{frwk_8h_a19c11fb41b80075438fe2ea58ac53af4}{rpage\+\_\+video\+\_\+blt\+\_\+bmp\+\_\+clip}} (rpage\+\_\+bitmap $\ast$source\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height, short x, short y, \mbox{\hyperlink{structrect}{rect}} $\ast$clipping\+\_\+rect)
@@ -71,9 +91,11 @@ void \mbox{\hyperlink{frwk_8h_aeccf363c16db36069bc7a67c3732da9b}{rpage\+\_\+vide
 void \mbox{\hyperlink{frwk_8h_ad2dc983ed7bd3e4c37640135f5142d23}{rpage\+\_\+video\+\_\+set\+\_\+palette}} (rpage\+\_\+palette $\ast$palette, short palette\+\_\+size)
 \item 
 void \mbox{\hyperlink{frwk_8h_aeca7b933639ba5ad8db2707820f24897}{rpage\+\_\+video\+\_\+set\+\_\+palette\+\_\+to\+\_\+black}} (short first\+\_\+color, short last\+\_\+color)
-\item 
+\begin{DoxyCompactList}\small\item\em Blacken the current palette of the screen.~\newline
+ \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_ab741b11bf55e077990d9ba8188dae6bb}{rpage\+\_\+video\+\_\+set\+\_\+palette\+\_\+to\+\_\+grey}} (short first\+\_\+color, short last\+\_\+color)
-\item 
+\begin{DoxyCompactList}\small\item\em Set the current palette of the screen to a gradient of greys.~\newline
+ \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a7efa9ea9eeda87f0ab4a2a6f8a8510a6}{rpage\+\_\+video\+\_\+draw\+\_\+polygon}} (\mbox{\hyperlink{structpoly}{poly}} $\ast$p, short color)
 \item 
 void \mbox{\hyperlink{frwk_8h_addfd66bda067fa763e2fe3f2e2ea3890}{rpage\+\_\+video\+\_\+draw\+\_\+rect}} (\mbox{\hyperlink{structrect}{rect}} $\ast$r, short color\+\_\+index)
@@ -88,12 +110,16 @@ short \mbox{\hyperlink{frwk_8h_a4047388f90c29f74fdaa15903bb9451d}{rpage\+\_\+vid
 \begin{DoxyCompactList}\small\item\em Get the color of a pixel on screen. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a3fecfe974de2a1c49de1dad70c3934a5}{rpage\+\_\+video\+\_\+draw\+\_\+text}} (char $\ast$str, short x, short y, short color\+\_\+index)
 \item 
+void \mbox{\hyperlink{frwk_8h_a7f306d1fcf659ce546a9530675982049}{rpage\+\_\+video\+\_\+draw\+\_\+text\+\_\+bit\+\_\+mask}} (char $\ast$str, short x, short y, short color\+\_\+index, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} bit\+\_\+mask)
+\item 
 short \mbox{\hyperlink{frwk_8h_a15dc1bbb28686c3250729f4ddd94c623}{rpage\+\_\+video\+\_\+get\+\_\+text\+\_\+width}} (char $\ast$str)
 \begin{DoxyCompactList}\small\item\em Get text width in pixels. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a45dc096b0a7d32b3e12b29efcba1bba6}{rpage\+\_\+video\+\_\+draw\+\_\+tileset}} (rpage\+\_\+bitmap $\ast$tileset\+\_\+bitmap, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$tileset, \mbox{\hyperlink{structrect}{rect}} $\ast$tile\+\_\+rect, short tileset\+\_\+width)
 \begin{DoxyCompactList}\small\item\em Draw a tileset-\/based image to the current screen. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a9ac610e0160eb66dcd0770d3de31024a}{rpage\+\_\+video\+\_\+save\+\_\+to\+\_\+bitmap}} (rpage\+\_\+bitmap $\ast$dest\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height)
-\item 
+\begin{DoxyCompactList}\small\item\em Store a part of the current screen into a bitmap. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{frwk_8h_a8e5f69b04d9e71002789d2094c694a4f}{rpage\+\_\+video\+\_\+show\+\_\+freemem}} (short x, short y, short width, short height)
+\begin{DoxyCompactList}\small\item\em Display the amount of free memory (D\+E\+B\+UG O\+N\+LY) \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a847f5ddcf266dda300684309c4cc2b63}{rpage\+\_\+bitmap\+\_\+draw\+\_\+tileset}} (rpage\+\_\+bitmap $\ast$dest\+\_\+bitmap, rpage\+\_\+bitmap $\ast$tileset\+\_\+bitmap, \mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$tileset, \mbox{\hyperlink{structrect}{rect}} $\ast$tile\+\_\+rect, short tileset\+\_\+width)
 \begin{DoxyCompactList}\small\item\em Draw a tileset-\/based image into a bitmap. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a1736806e637ab18dfc5eadf642886e42}{rpage\+\_\+bitmap\+\_\+blit}} (rpage\+\_\+bitmap $\ast$source\+\_\+bitmap, short source\+\_\+x, short source\+\_\+y, short width, short height, short x, short y, rpage\+\_\+bitmap $\ast$dest\+\_\+bitmap)
@@ -119,9 +145,9 @@ void \mbox{\hyperlink{frwk_8h_adfeeabf32ae793f743a5ae50e067b586}{rpage\+\_\+bitm
 void \mbox{\hyperlink{frwk_8h_a8eb1071d247e755f955d1f5e1798d3b9}{rpage\+\_\+move\+\_\+sprite}} (short sprite\+\_\+index, rpage\+\_\+hardware\+\_\+sprite $\ast$sprite, \mbox{\hyperlink{structvec2}{vec2}} $\ast$position)
 \begin{DoxyCompactList}\small\item\em Refresh the image/position of an hardware sprite. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_af2c043de588e0562c82bdbab56e87b1d}{rpage\+\_\+remove\+\_\+sprite}} (short sprite\+\_\+index)
-\item 
+\begin{DoxyCompactList}\small\item\em Remove the sprite based on his index. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{frwk_8h_ac111675a349bf9377d277c3e4083731a}{rpage\+\_\+sprite\+\_\+is\+\_\+enabled}} (short sprite\+\_\+index)
-\item 
+\begin{DoxyCompactList}\small\item\em Returns T\+R\+UE is the sprite with this index is currently enabled. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{frwk_8h_a2ca62b383518672c065560ec827b3460}{rpage\+\_\+input\+\_\+init}} (void)
 \item 
 void \mbox{\hyperlink{frwk_8h_acf9e491981fa625855a5019ff4ee8740}{rpage\+\_\+input\+\_\+update}} (void)
@@ -137,7 +163,7 @@ void \mbox{\hyperlink{frwk_8h_a348a550e2787a8a18d45a8e36f5803b3}{rpage\+\_\+mous
 void \mbox{\hyperlink{frwk_8h_aa39c6d14e8e8a4f2959342a276d37bbb}{rpage\+\_\+mouse\+\_\+hide}} (void)
 \begin{DoxyCompactList}\small\item\em Hide the mouse cursor. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a1d8086960a2b21702d8ceb3bef3ff3d6}{rpage\+\_\+mouse\+\_\+set\+\_\+bitmap}} (\mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}} $\ast$sprite\+\_\+data, \mbox{\hyperlink{structvec2}{vec2}} $\ast$hotspot)
-\item 
+\begin{DoxyCompactList}\small\item\em Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a6597108fe658949b24bb65ca96e9a4fc}{rpage\+\_\+mouse\+\_\+get\+\_\+values}} (short $\ast$button, \mbox{\hyperlink{structvec2}{vec2}} $\ast$mouse\+\_\+coords)
 \begin{DoxyCompactList}\small\item\em Read the current mouse coordinates and button states. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{frwk_8h_a7cbc0cbc257224974b9341cf24bbe6a1}{rpage\+\_\+mouse\+\_\+get\+\_\+prev\+\_\+values}} (short $\ast$button, \mbox{\hyperlink{structvec2}{vec2}} $\ast$mouse\+\_\+coords)
@@ -151,7 +177,7 @@ void \mbox{\hyperlink{frwk_8h_a7cbc0cbc257224974b9341cf24bbe6a1}{rpage\+\_\+mous
 \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} \mbox{\hyperlink{frwk_8h_ab44e02bdcf2bf01b68a014f521d6a62d}{rpage\+\_\+mouse\+\_\+button\+\_\+right\+\_\+was\+\_\+down}} (void)
 \begin{DoxyCompactList}\small\item\em Test if the right mouse button was pressed but isn\textquotesingle{}t anymore. \end{DoxyCompactList}\item 
 unsigned short \mbox{\hyperlink{frwk_8h_a714850bf2131602d9d2e2e38c79c7241}{rpage\+\_\+keyboard\+\_\+rawkey}} (void)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Raw read the keyboard input. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Enumeration Type Documentation}
@@ -177,7 +203,7 @@ mode\+\_\+hires&\\
 \end{DoxyEnumFields}
 
 
-Definition at line 44 of file frwk.\+h.
+Definition at line 51 of file frwk.\+h.
 
 
 
@@ -269,6 +295,51 @@ Return the width in pixels of a \+::rpage\+\_\+bitmap.
 
 Allocate a new \+::rpage\+\_\+bitmap and return its address in video memory. 
 
+\mbox{\Hypertarget{frwk_8h_a82e7217c612ffbb7aa972a56093e89fe}\label{frwk_8h_a82e7217c612ffbb7aa972a56093e89fe}} 
+\index{frwk.h@{frwk.h}!rpage\_file\_close@{rpage\_file\_close}}
+\index{rpage\_file\_close@{rpage\_file\_close}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_file\_close()}{rpage\_file\_close()}}
+{\footnotesize\ttfamily void rpage\+\_\+file\+\_\+close (\begin{DoxyParamCaption}\item[{rpage\+\_\+file}]{file }\end{DoxyParamCaption})}
+
+
+
+Close a current file. 
+
+\mbox{\Hypertarget{frwk_8h_ab3ebe2620c3a5a3423de3cd83f974bea}\label{frwk_8h_ab3ebe2620c3a5a3423de3cd83f974bea}} 
+\index{frwk.h@{frwk.h}!rpage\_file\_open@{rpage\_file\_open}}
+\index{rpage\_file\_open@{rpage\_file\_open}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_file\_open()}{rpage\_file\_open()}}
+{\footnotesize\ttfamily rpage\+\_\+file rpage\+\_\+file\+\_\+open (\begin{DoxyParamCaption}\item[{char $\ast$}]{filename,  }\item[{long}]{mode }\end{DoxyParamCaption})}
+
+Standard file open, using the OS layer. \textquotesingle{}mode\textquotesingle{} can be set to\+:~\newline
+
+\begin{DoxyItemize}
+\item M\+O\+D\+E\+\_\+\+O\+P\+E\+N\+\_\+\+F\+I\+LE\+: an existing file is opened for reading or writing~\newline
+
+\item M\+O\+D\+E\+\_\+\+C\+R\+E\+A\+T\+E\+\_\+\+F\+I\+LE\+: a new file is created for writing~\newline
+
+\item M\+O\+D\+E\+\_\+\+O\+P\+E\+N\+\_\+\+O\+R\+\_\+\+C\+R\+E\+A\+TE\+: opens a file with an shared lock, but creates it if it didn\textquotesingle{}t exist~\newline
+ 
+\end{DoxyItemize}\mbox{\Hypertarget{frwk_8h_a0682d7341f2692c0766de0bfdad214c3}\label{frwk_8h_a0682d7341f2692c0766de0bfdad214c3}} 
+\index{frwk.h@{frwk.h}!rpage\_file\_read@{rpage\_file\_read}}
+\index{rpage\_file\_read@{rpage\_file\_read}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_file\_read()}{rpage\_file\_read()}}
+{\footnotesize\ttfamily long rpage\+\_\+file\+\_\+read (\begin{DoxyParamCaption}\item[{rpage\+\_\+file}]{file,  }\item[{void $\ast$}]{buffer,  }\item[{long}]{len }\end{DoxyParamCaption})}
+
+
+
+Read data from file into a buffer. 
+
+\mbox{\Hypertarget{frwk_8h_a6816fd38b2e5e02ca475fdf8679da700}\label{frwk_8h_a6816fd38b2e5e02ca475fdf8679da700}} 
+\index{frwk.h@{frwk.h}!rpage\_file\_write@{rpage\_file\_write}}
+\index{rpage\_file\_write@{rpage\_file\_write}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_file\_write()}{rpage\_file\_write()}}
+{\footnotesize\ttfamily long rpage\+\_\+file\+\_\+write (\begin{DoxyParamCaption}\item[{rpage\+\_\+file}]{file,  }\item[{void $\ast$}]{buffer,  }\item[{long}]{len }\end{DoxyParamCaption})}
+
+
+
+Write a data buffer into the file. 
+
 \mbox{\Hypertarget{frwk_8h_a10700c3294fbabbce76c4b3b485978c6}\label{frwk_8h_a10700c3294fbabbce76c4b3b485978c6}} 
 \index{frwk.h@{frwk.h}!rpage\_free\_memory\_block@{rpage\_free\_memory\_block}}
 \index{rpage\_free\_memory\_block@{rpage\_free\_memory\_block}!frwk.h@{frwk.h}}
@@ -288,6 +359,16 @@ Wrapper to the system-\/specific memory deallocator.
 
 
 Return the largest free memory block available to store the graphics data (aka Chipram on the Amiga side). 
+
+\mbox{\Hypertarget{frwk_8h_aed0638a46c0f689f257c94d3892a654a}\label{frwk_8h_aed0638a46c0f689f257c94d3892a654a}} 
+\index{frwk.h@{frwk.h}!rpage\_get\_avail\_memory@{rpage\_get\_avail\_memory}}
+\index{rpage\_get\_avail\_memory@{rpage\_get\_avail\_memory}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_get\_avail\_memory()}{rpage\_get\_avail\_memory()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_af632da489ebc3708ec3ab6791ee53fa4}{U\+L\+O\+NG}} rpage\+\_\+get\+\_\+avail\+\_\+memory (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Return the total of available memory. 
 
 \mbox{\Hypertarget{frwk_8h_a98b1aba9b086ffe8519872651423e68c}\label{frwk_8h_a98b1aba9b086ffe8519872651423e68c}} 
 \index{frwk.h@{frwk.h}!rpage\_get\_avail\_non\_video\_memory@{rpage\_get\_avail\_non\_video\_memory}}
@@ -358,6 +439,10 @@ Pull the mouse/keyboard update from the input system.
 \index{rpage\_keyboard\_rawkey@{rpage\_keyboard\_rawkey}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_keyboard\_rawkey()}{rpage\_keyboard\_rawkey()}}
 {\footnotesize\ttfamily unsigned short rpage\+\_\+keyboard\+\_\+rawkey (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Raw read the keyboard input. 
 
 \mbox{\Hypertarget{frwk_8h_adadfb585dab04a7b6099959917a25122}\label{frwk_8h_adadfb585dab04a7b6099959917a25122}} 
 \index{frwk.h@{frwk.h}!rpage\_load\_pak\_into\_bitmap@{rpage\_load\_pak\_into\_bitmap}}
@@ -465,6 +550,10 @@ Hide the mouse cursor.
 \subsubsection{\texorpdfstring{rpage\_mouse\_set\_bitmap()}{rpage\_mouse\_set\_bitmap()}}
 {\footnotesize\ttfamily void rpage\+\_\+mouse\+\_\+set\+\_\+bitmap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{utils_8h_aefbb6ca39ebcf009709e607d159766d5}{U\+W\+O\+RD}} $\ast$}]{sprite\+\_\+data,  }\item[{\mbox{\hyperlink{structvec2}{vec2}} $\ast$}]{hotspot }\end{DoxyParamCaption})}
 
+
+
+Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format. 
+
 \mbox{\Hypertarget{frwk_8h_afbea9a3d5660c37d6bbf468bb1d65de4}\label{frwk_8h_afbea9a3d5660c37d6bbf468bb1d65de4}} 
 \index{frwk.h@{frwk.h}!rpage\_mouse\_show@{rpage\_mouse\_show}}
 \index{rpage\_mouse\_show@{rpage\_mouse\_show}!frwk.h@{frwk.h}}
@@ -495,11 +584,25 @@ Change the look of the mouse cursor to warn the end-\/user that the application 
 
 Refresh the image/position of an hardware sprite. 
 
+\mbox{\Hypertarget{frwk_8h_aefd0721afa031a9909c338a7fc005289}\label{frwk_8h_aefd0721afa031a9909c338a7fc005289}} 
+\index{frwk.h@{frwk.h}!rpage\_reclaim\_system\_memory@{rpage\_reclaim\_system\_memory}}
+\index{rpage\_reclaim\_system\_memory@{rpage\_reclaim\_system\_memory}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_reclaim\_system\_memory()}{rpage\_reclaim\_system\_memory()}}
+{\footnotesize\ttfamily void rpage\+\_\+reclaim\+\_\+system\+\_\+memory (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Try to deallocate as many system resources as possible. 
+
 \mbox{\Hypertarget{frwk_8h_af2c043de588e0562c82bdbab56e87b1d}\label{frwk_8h_af2c043de588e0562c82bdbab56e87b1d}} 
 \index{frwk.h@{frwk.h}!rpage\_remove\_sprite@{rpage\_remove\_sprite}}
 \index{rpage\_remove\_sprite@{rpage\_remove\_sprite}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_remove\_sprite()}{rpage\_remove\_sprite()}}
 {\footnotesize\ttfamily void rpage\+\_\+remove\+\_\+sprite (\begin{DoxyParamCaption}\item[{short}]{sprite\+\_\+index }\end{DoxyParamCaption})}
+
+
+
+Remove the sprite based on his index. 
 
 \mbox{\Hypertarget{frwk_8h_a3c444606f122a393a00e206711de0395}\label{frwk_8h_a3c444606f122a393a00e206711de0395}} 
 \index{frwk.h@{frwk.h}!rpage\_set\_process\_priority@{rpage\_set\_process\_priority}}
@@ -513,6 +616,10 @@ Set the multitasking priority of the current task.~\newline
 \index{rpage\_sprite\_is\_enabled@{rpage\_sprite\_is\_enabled}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_sprite\_is\_enabled()}{rpage\_sprite\_is\_enabled()}}
 {\footnotesize\ttfamily \mbox{\hyperlink{utils_8h_a050c65e107f0c828f856a231f4b4e788}{B\+O\+OL}} rpage\+\_\+sprite\+\_\+is\+\_\+enabled (\begin{DoxyParamCaption}\item[{short}]{sprite\+\_\+index }\end{DoxyParamCaption})}
+
+
+
+Returns T\+R\+UE is the sprite with this index is currently enabled. 
 
 \mbox{\Hypertarget{frwk_8h_a4a89de8ba787f35b4b802a700f8f268f}\label{frwk_8h_a4a89de8ba787f35b4b802a700f8f268f}} 
 \index{frwk.h@{frwk.h}!rpage\_system\_alert@{rpage\_system\_alert}}
@@ -553,6 +660,16 @@ Un-\/initialize the framework, close the system libraries.
 
 
 Blit a bitmap into the screen. 
+
+\mbox{\Hypertarget{frwk_8h_a4201efbab9208a8e4de29adb1d9a713f}\label{frwk_8h_a4201efbab9208a8e4de29adb1d9a713f}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_blt\_bmp\_bt@{rpage\_video\_blt\_bmp\_bt}}
+\index{rpage\_video\_blt\_bmp\_bt@{rpage\_video\_blt\_bmp\_bt}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_blt\_bmp\_bt()}{rpage\_video\_blt\_bmp\_bt()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+blt\+\_\+bmp\+\_\+bt (\begin{DoxyParamCaption}\item[{rpage\+\_\+bitmap $\ast$}]{source\+\_\+bitmap,  }\item[{short}]{source\+\_\+x,  }\item[{short}]{source\+\_\+y,  }\item[{short}]{width,  }\item[{short}]{height,  }\item[{short}]{x,  }\item[{short}]{y,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{bit\+\_\+mask }\end{DoxyParamCaption})}
+
+
+
+Blit a bitmap into the screen using a bitplan mask, each bit of the \textquotesingle{}bt\textquotesingle{} parameter being the mask for each bitplan. 
 
 \mbox{\Hypertarget{frwk_8h_a19c11fb41b80075438fe2ea58ac53af4}\label{frwk_8h_a19c11fb41b80075438fe2ea58ac53af4}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_blt\_bmp\_clip@{rpage\_video\_blt\_bmp\_clip}}
@@ -604,6 +721,16 @@ Blit a bitmap into the screen.~\newline
 
 Clear the screen. 
 
+\mbox{\Hypertarget{frwk_8h_a28c95fd158ea9befbd98c34503dc2985}\label{frwk_8h_a28c95fd158ea9befbd98c34503dc2985}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_clear\_bit\_mask@{rpage\_video\_clear\_bit\_mask}}
+\index{rpage\_video\_clear\_bit\_mask@{rpage\_video\_clear\_bit\_mask}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_clear\_bit\_mask()}{rpage\_video\_clear\_bit\_mask()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+clear\+\_\+bit\+\_\+mask (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{bit\+\_\+mask }\end{DoxyParamCaption})}
+
+
+
+Set the default font file/size for every next call to \mbox{\hyperlink{frwk_8h_a3fecfe974de2a1c49de1dad70c3934a5}{rpage\+\_\+video\+\_\+draw\+\_\+text}}. 
+
 \mbox{\Hypertarget{frwk_8h_a3c190b451701765ed645730b986c9aff}\label{frwk_8h_a3c190b451701765ed645730b986c9aff}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_close@{rpage\_video\_close}}
 \index{rpage\_video\_close@{rpage\_video\_close}!frwk.h@{frwk.h}}
@@ -644,7 +771,13 @@ Draw a text string to the screen.~\newline
 
 \begin{DoxyItemize}
 \item The font must be defined prior to this operation, see \mbox{\hyperlink{frwk_8h_a09345e03dcc61f74d14eccf236978655}{rpage\+\_\+video\+\_\+set\+\_\+font}} 
-\end{DoxyItemize}\mbox{\Hypertarget{frwk_8h_a45dc096b0a7d32b3e12b29efcba1bba6}\label{frwk_8h_a45dc096b0a7d32b3e12b29efcba1bba6}} 
+\end{DoxyItemize}\mbox{\Hypertarget{frwk_8h_a7f306d1fcf659ce546a9530675982049}\label{frwk_8h_a7f306d1fcf659ce546a9530675982049}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_draw\_text\_bit\_mask@{rpage\_video\_draw\_text\_bit\_mask}}
+\index{rpage\_video\_draw\_text\_bit\_mask@{rpage\_video\_draw\_text\_bit\_mask}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_draw\_text\_bit\_mask()}{rpage\_video\_draw\_text\_bit\_mask()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+draw\+\_\+text\+\_\+bit\+\_\+mask (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{short}]{x,  }\item[{short}]{y,  }\item[{short}]{color\+\_\+index,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{bit\+\_\+mask }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{frwk_8h_a45dc096b0a7d32b3e12b29efcba1bba6}\label{frwk_8h_a45dc096b0a7d32b3e12b29efcba1bba6}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_draw\_tileset@{rpage\_video\_draw\_tileset}}
 \index{rpage\_video\_draw\_tileset@{rpage\_video\_draw\_tileset}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_video\_draw\_tileset()}{rpage\_video\_draw\_tileset()}}
@@ -742,6 +875,10 @@ Tell R-\/\+P\+A\+GE to swap the logical and the physical buffers. Everything tha
 \subsubsection{\texorpdfstring{rpage\_video\_save\_to\_bitmap()}{rpage\_video\_save\_to\_bitmap()}}
 {\footnotesize\ttfamily void rpage\+\_\+video\+\_\+save\+\_\+to\+\_\+bitmap (\begin{DoxyParamCaption}\item[{rpage\+\_\+bitmap $\ast$}]{dest\+\_\+bitmap,  }\item[{short}]{source\+\_\+x,  }\item[{short}]{source\+\_\+y,  }\item[{short}]{width,  }\item[{short}]{height }\end{DoxyParamCaption})}
 
+
+
+Store a part of the current screen into a bitmap. 
+
 \mbox{\Hypertarget{frwk_8h_a333cd9f8a5a0a74c1f8638a70ae590d6}\label{frwk_8h_a333cd9f8a5a0a74c1f8638a70ae590d6}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_screen\_to\_back@{rpage\_video\_screen\_to\_back}}
 \index{rpage\_video\_screen\_to\_back@{rpage\_video\_screen\_to\_back}!frwk.h@{frwk.h}}
@@ -762,15 +899,31 @@ Send the game screen to the back (Amiga only)
 
 Bring the game screen to top (Amiga only) 
 
+\mbox{\Hypertarget{frwk_8h_ad3c32473e1444c0d97ee1c38737d25c3}\label{frwk_8h_ad3c32473e1444c0d97ee1c38737d25c3}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_scroll@{rpage\_video\_scroll}}
+\index{rpage\_video\_scroll@{rpage\_video\_scroll}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_scroll()}{rpage\_video\_scroll()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+scroll (\begin{DoxyParamCaption}\item[{short}]{x,  }\item[{short}]{y }\end{DoxyParamCaption})}
+
+
+
+Hardware scrolling. 
+
+\mbox{\Hypertarget{frwk_8h_ad2535dac9d8c166554e19655056876ac}\label{frwk_8h_ad2535dac9d8c166554e19655056876ac}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_scroll\_bit\_mask@{rpage\_video\_scroll\_bit\_mask}}
+\index{rpage\_video\_scroll\_bit\_mask@{rpage\_video\_scroll\_bit\_mask}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_scroll\_bit\_mask()}{rpage\_video\_scroll\_bit\_mask()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+scroll\+\_\+bit\+\_\+mask (\begin{DoxyParamCaption}\item[{short}]{x,  }\item[{short}]{y,  }\item[{\mbox{\hyperlink{utils_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}}]{bit\+\_\+mask }\end{DoxyParamCaption})}
+
+
+
+F\+I\+X\+M\+E! 
+
 \mbox{\Hypertarget{frwk_8h_a09345e03dcc61f74d14eccf236978655}\label{frwk_8h_a09345e03dcc61f74d14eccf236978655}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_set\_font@{rpage\_video\_set\_font}}
 \index{rpage\_video\_set\_font@{rpage\_video\_set\_font}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_video\_set\_font()}{rpage\_video\_set\_font()}}
 {\footnotesize\ttfamily void rpage\+\_\+video\+\_\+set\+\_\+font (\begin{DoxyParamCaption}\item[{char $\ast$}]{font\+\_\+filename,  }\item[{short}]{font\+\_\+size }\end{DoxyParamCaption})}
-
-
-
-Set the default font file/size for every next call to \mbox{\hyperlink{frwk_8h_a3fecfe974de2a1c49de1dad70c3934a5}{rpage\+\_\+video\+\_\+draw\+\_\+text}}. 
 
 \mbox{\Hypertarget{frwk_8h_ad2dc983ed7bd3e4c37640135f5142d23}\label{frwk_8h_ad2dc983ed7bd3e4c37640135f5142d23}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_set\_palette@{rpage\_video\_set\_palette}}
@@ -785,11 +938,21 @@ Set the current palette of the screen.~\newline
 \subsubsection{\texorpdfstring{rpage\_video\_set\_palette\_to\_black()}{rpage\_video\_set\_palette\_to\_black()}}
 {\footnotesize\ttfamily void rpage\+\_\+video\+\_\+set\+\_\+palette\+\_\+to\+\_\+black (\begin{DoxyParamCaption}\item[{short}]{first\+\_\+color,  }\item[{short}]{last\+\_\+color }\end{DoxyParamCaption})}
 
+
+
+Blacken the current palette of the screen.~\newline
+ 
+
 \mbox{\Hypertarget{frwk_8h_ab741b11bf55e077990d9ba8188dae6bb}\label{frwk_8h_ab741b11bf55e077990d9ba8188dae6bb}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_set\_palette\_to\_grey@{rpage\_video\_set\_palette\_to\_grey}}
 \index{rpage\_video\_set\_palette\_to\_grey@{rpage\_video\_set\_palette\_to\_grey}!frwk.h@{frwk.h}}
 \subsubsection{\texorpdfstring{rpage\_video\_set\_palette\_to\_grey()}{rpage\_video\_set\_palette\_to\_grey()}}
 {\footnotesize\ttfamily void rpage\+\_\+video\+\_\+set\+\_\+palette\+\_\+to\+\_\+grey (\begin{DoxyParamCaption}\item[{short}]{first\+\_\+color,  }\item[{short}]{last\+\_\+color }\end{DoxyParamCaption})}
+
+
+
+Set the current palette of the screen to a gradient of greys.~\newline
+ 
 
 \mbox{\Hypertarget{frwk_8h_a9df128780031b90d9bd16c40011548c0}\label{frwk_8h_a9df128780031b90d9bd16c40011548c0}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_set\_pixel@{rpage\_video\_set\_pixel}}
@@ -800,6 +963,16 @@ Set the current palette of the screen.~\newline
 
 
 Draw a pixel to the screen. 
+
+\mbox{\Hypertarget{frwk_8h_a8e5f69b04d9e71002789d2094c694a4f}\label{frwk_8h_a8e5f69b04d9e71002789d2094c694a4f}} 
+\index{frwk.h@{frwk.h}!rpage\_video\_show\_freemem@{rpage\_video\_show\_freemem}}
+\index{rpage\_video\_show\_freemem@{rpage\_video\_show\_freemem}!frwk.h@{frwk.h}}
+\subsubsection{\texorpdfstring{rpage\_video\_show\_freemem()}{rpage\_video\_show\_freemem()}}
+{\footnotesize\ttfamily void rpage\+\_\+video\+\_\+show\+\_\+freemem (\begin{DoxyParamCaption}\item[{short}]{x,  }\item[{short}]{y,  }\item[{short}]{width,  }\item[{short}]{height }\end{DoxyParamCaption})}
+
+
+
+Display the amount of free memory (D\+E\+B\+UG O\+N\+LY) 
 
 \mbox{\Hypertarget{frwk_8h_ad35f2d78acf4e6232b7eed532e9e1d69}\label{frwk_8h_ad35f2d78acf4e6232b7eed532e9e1d69}} 
 \index{frwk.h@{frwk.h}!rpage\_video\_sync\_buffers@{rpage\_video\_sync\_buffers}}

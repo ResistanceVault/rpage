@@ -14,7 +14,7 @@
 /*
 Graphic assets
 */
-#include "rpage/amiga/screen_size.h"
+#include "rpage/aos/screen_size.h"
 
 short scr_x_offset = 0, scr_y_offset = 0;
 SDL_Window *main_window = NULL;

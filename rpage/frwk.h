@@ -11,8 +11,8 @@
 #ifdef LATTICE
 #include <exec/types.h>
 #include <graphics/gfx.h>
-#include "rpage/amiga/color.h"
-#include "rpage/amiga/screen_size.h"
+#include "rpage/aos/color.h"
+#include "rpage/aos/screen_size.h"
 
 typedef BPTR rpage_file;
 typedef struct BitMap rpage_bitmap;
@@ -25,6 +25,13 @@ typedef struct SimpleSprite rpage_hardware_sprite;
 
 #define MAX_HARDWARE_SPRITES 8
 #define PLATFORM_DRAW_TWICE(_EXPR_){rpage_video_flip_buffers(); _EXPR_; rpage_video_present_screen(); rpage_video_flip_buffers(); _EXPR_; rpage_video_present_screen(); }
+
+/// An existing file is opened for reading or writing.
+#define MODE_OPEN_FILE      MODE_OLDFILE
+/// A new file is created for writing.
+#define MODE_CREATE_FILE    MODE_NEWFILE
+/// Opens a file with an shared lock, but creates it if it didn't exist.
+#define MODE_OPEN_OR_CREATE MODE_READWRITE
 
 #endif
 
@@ -64,14 +71,30 @@ void rpage_system_flash(void);
 /// Wrapper to the system-specific memory deallocator.
 void rpage_free_memory_block(BYTE *block_ptr, UWORD block_size);
 /// Return how many free memory is available to store the graphics data (aka Chipram on the Amiga side).
-ULONG  rpage_get_avail_video_memory(void);
+ULONG rpage_get_avail_video_memory(void);
 /// Return the largest free memory block available to store the graphics data (aka Chipram on the Amiga side).
-ULONG  rpage_get_avail_largest_video_memory(void);
+ULONG rpage_get_avail_largest_video_memory(void);
 /// Return how many general purpose free memory is available (aka Fastram/Slowram on the Amiga side).
-ULONG  rpage_get_avail_non_video_memory(void);
+ULONG rpage_get_avail_non_video_memory(void);
+/// Return the total of available memory.
+ULONG rpage_get_avail_memory(void);
+/// Try to deallocate as many system resources as possible
+void rpage_reclaim_system_memory(void);
 
 /// Get the elapsed time, in milliseconds, since ::rpage_init was invoked.
 ULONG rpage_get_clock(void);
+
+/// Standard file open, using the OS layer. 'mode' can be set to:<br>
+/// * MODE_OPEN_FILE: an existing file is opened for reading or writing<br>
+/// * MODE_CREATE_FILE: a new file is created for writing<br>
+/// * MODE_OPEN_OR_CREATE: opens a file with an shared lock, but creates it if it didn't exist<br>
+rpage_file rpage_file_open(char *filename, long mode);
+/// Close a current file.
+void rpage_file_close(rpage_file file);
+/// Read data from file into a buffer.
+long rpage_file_read(rpage_file file, void *buffer, long len);
+/// Write a data buffer into the file.
+long rpage_file_write(rpage_file file, void *buffer, long len);
 
 /// Open the main video output by allocating a blank screen framebuffer.<br>
 /// The screenmode is defined by ::rpage_screen_modes. The current enum is tied to the regular Amiga OCS specifications.
@@ -83,6 +106,7 @@ UWORD rpage_video_get_depth(void);
 /// Clear the screen.
 void rpage_video_clear(void);
 /// Set the default font file/size for every next call to ::rpage_video_draw_text
+void rpage_video_clear_bit_mask(UBYTE bit_mask);
 void rpage_video_set_font(char *font_filename, short font_size);
 /// Wait for the vertical blank.
 void rpage_video_vsync(void);
@@ -102,9 +126,15 @@ void rpage_video_sync_buffers(void);
 void rpage_video_screen_to_front(void);
 /// Send the game screen to the back (Amiga only)
 void rpage_video_screen_to_back(void);
+/// Hardware scrolling
+void rpage_video_scroll(short x, short y);
 
+/// FIXME!
+void rpage_video_scroll_bit_mask(short x, short y, UBYTE bit_mask);
 /// Blit a bitmap into the screen.
 void rpage_video_blt_bmp(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y);
+/// Blit a bitmap into the screen using a bitplan mask, each bit of the 'bt' parameter being the mask for each bitplan.
+void rpage_video_blt_bmp_bt(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, UBYTE bit_mask);
 /// Blit a bitmap into the screen.<br>
 /// A bitmap mask is used to merge the source into the destination. The bitmap mask should be 1bit wide.<br>
 void rpage_video_blt_bmp_mask(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, rpage_bitmap *mask_bitmap);
@@ -122,7 +152,9 @@ void rpage_video_blt_bmp_clip_mask_bt(rpage_bitmap *source_bitmap, short source_
 /// Set the current palette of the screen.<br>
 /// The color format is RGB444.
 void rpage_video_set_palette(rpage_palette *palette, short palette_size);
+/// Blacken the current palette of the screen.<br>
 void rpage_video_set_palette_to_black(short first_color, short last_color);
+/// Set the current palette of the screen to a gradient of greys.<br>
 void rpage_video_set_palette_to_grey(short first_color, short last_color);
 /// Draw an empty polygon (quad only) to the screen.<br>
 /// * Color index range is (0,31) on the Amiga side.
@@ -142,11 +174,15 @@ short rpage_video_get_pixel(short x, short y);
 /// Draw a text string to the screen.<br>
 /// * The font must be defined prior to this operation, see ::rpage_video_set_font
 void rpage_video_draw_text(char *str, short x, short y, short color_index);
+void rpage_video_draw_text_bit_mask(char *str, short x, short y, short color_index, UBYTE bit_mask);
 /// Get text width in pixels
 short rpage_video_get_text_width(char *str);
 /// Draw a tileset-based image to the current screen.
 void rpage_video_draw_tileset(rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width);
+/// Store a part of the current screen into a bitmap.
 void rpage_video_save_to_bitmap(rpage_bitmap *dest_bitmap, short source_x, short source_y, short width, short height);
+/// Display the amount of free memory (DEBUG ONLY)
+void rpage_video_show_freemem(short x, short y, short width, short height);
 
 /// Draw a tileset-based image into a bitmap.
 void rpage_bitmap_draw_tileset(rpage_bitmap *dest_bitmap, rpage_bitmap *tileset_bitmap, UBYTE *tileset, rect *tile_rect, short tileset_width);
@@ -179,7 +215,9 @@ void rpage_bitmap_free(rpage_bitmap *bitmap);
 
 /// Refresh the image/position of an hardware sprite
 void rpage_move_sprite(short sprite_index, rpage_hardware_sprite *sprite, vec2 *position);
+/// Remove the sprite based on his index.
 void rpage_remove_sprite(short sprite_index);
+/// Returns TRUE is the sprite with this index is currently enabled.
 BOOL rpage_sprite_is_enabled(short sprite_index);
 
 /// Initialize the input system.<br>
@@ -198,7 +236,7 @@ void rpage_mouse_show(void);
 void rpage_mouse_wait(void);
 /// Hide the mouse cursor.
 void rpage_mouse_hide(void);
-///
+/// Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format.
 void rpage_mouse_set_bitmap(UWORD *sprite_data, vec2 *hotspot);
 /// Read the current mouse coordinates and button states.
 void rpage_mouse_get_values(short *button, vec2 *mouse_coords);
@@ -213,7 +251,7 @@ BOOL rpage_mouse_button_right_is_down(void);
 BOOL rpage_mouse_button_left_was_down(void);
 /// Test if the right mouse button was pressed but isn't anymore.
 BOOL rpage_mouse_button_right_was_down(void);
-/// 
+/// Raw read the keyboard input.
 unsigned short rpage_keyboard_rawkey(void);
 
 #endif
