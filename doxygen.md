@@ -1,6 +1,8 @@
 # R-PAGE
 ## Resistance's Portable-Adventure-Game-Engine
 
+![](docs/img/rpage_logo.png)
+
 **R-PAGE** (pronounced 'arpège') is a **C framework** meant to accelerate the creation of **adventure games** for the Amiga OCS/ECS range of computers. It is designed with portability in mind, speed performance being a lesser concern.<br>
 R-PAGE is brought to you by the **demoscene** group [RESISTANCE](https://resistance.no/).
 
@@ -9,6 +11,10 @@ R-PAGE is brought to you by the **demoscene** group [RESISTANCE](https://resista
 * Portable code, builds on SAS/C
 * Reportedly works on MorphOS using the built-in AmigaOS emulation layer
 * AMIGA OCS/ECS only (AGA is on the roadmap)
+
+### Main repository
+
+See: [https://github.com/ResistanceVault/rpage](https://github.com/ResistanceVault/rpage)
 
 ### What can I do with this ?
 At the moment, R-PAGE is more a framework than a full feature engine. Feel free to use it as a boostrap for your own adventure project. The roadmap, however, includes a very basic adventure game to showcase the features of this framework.
