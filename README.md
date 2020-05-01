@@ -29,6 +29,7 @@ You should start looking for [frwk.h](rpage/frwk.h)
 * [Doynamite](https://github.com/AxisOxy/Planet-Rocklobster) 68k ASM decompression routine by Oxyron
 * [ptreplay.library](http://aminet.net/package/mus/play/ptreplay66) ProTracker replay library by Mattias Karlsson and Andreas
 Palsson
+* [FP_ADPCM](http://aminet.net/package/util/pack/MT_ADPCM) ADPCM codec by Tobias "MastaTabs" Seiler & Christian "FlowerPower" Buchner.
 
 ## License/Contact
 R-PAGE is released under the MIT License. See [license.txt](license.txt).<br>
