@@ -16,6 +16,7 @@ void load_imploded_protracker_music(char *filename);
 void load_packed_protacker_music(char *filename);
 void save_protracker_music(char *filename);
 void load_protacker_music(char *filename, int filesize);
+void save_protracker_music(char *filename);
 void unload_protacker_music(void);
 void play_protracker_music(void);
 void protracker_set_fade_speed(short fade_speed);

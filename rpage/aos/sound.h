@@ -12,13 +12,6 @@
 #ifndef SOUND_ROUTINES
 #define SOUND_ROUTINES
 
-/* ADPCM */
-typedef struct
-{
-	int valprev;
-	int index;
-} CodecState;
-
 /* Sound channels: */
 #define LEFT0         0
 #define RIGHT0        1
@@ -58,8 +51,8 @@ extern void StopSound(UBYTE channel);
 extern void RemoveSound(SoundInfo *info);
 void RemoveSoundStruct(SoundInfo *info);
 extern SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_block);
-void adpcm_decoder_init(void);
-void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output);
+// void adpcm_decoder_init(void);
+void adpcm_decode(UBYTE *input, int numSamples, BYTE *output);
 
 #endif
 #endif

@@ -18,6 +18,7 @@
 
 #include "rpage/aos/sound.h"
 #include "rpage/err.h"
+#include "rpage/aos/adpcm.h"
 
 #define CLOCK_CONSTANT 3579545
 #define MUSIC_PRIORITY 0
@@ -26,40 +27,6 @@ extern struct DosLibrary *DOSBase;
 
 /* An IOAudio pointer to each sound channel: */
 struct IOAudio *IOA[4] = {NULL, NULL, NULL, NULL};
-
-/* Intel ADPCM step variation table */
-static int indexTable[16] = {
-		-1,
-		-1,
-		-1,
-		-1,
-		2,
-		4,
-		6,
-		8,
-		-1,
-		-1,
-		-1,
-		-1,
-		2,
-		4,
-		6,
-		8,
-};
-
-static int stepsizeTable[89] = {
-		7, 8, 9, 10, 11, 12, 13, 14, 16, 17,
-		19, 21, 23, 25, 28, 31, 34, 37, 41, 45,
-		50, 55, 60, 66, 73, 80, 88, 97, 107, 118,
-		130, 143, 157, 173, 190, 209, 230, 253, 279, 307,
-		337, 371, 408, 449, 494, 544, 598, 658, 724, 796,
-		876, 963, 1060, 1166, 1282, 1411, 1552, 1707, 1878, 2066,
-		2272, 2499, 2749, 3024, 3327, 3660, 4026, 4428, 4871, 5358,
-		5894, 6484, 7132, 7845, 8630, 9493, 10442, 11487, 12635, 13899,
-		15289, 16818, 18500, 20350, 22385, 24623, 27086, 29794, 32767};
-
-static int indexTable68000[16];
-static int stepsizeTable68000[89 * 16];
 
 /// Load a packer sound file. <br>
 /// The sound is encoded either in raw or mdpcm. <br>
@@ -146,8 +113,7 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 
 				if (strncmp(encoder_tag, "ADPC", 4) == 0)
 				{
-					CodecState c_st;
-					adpcm_decode(&c_st, encoded_block, unpacked_block_size, unpacked_block);
+					adpcm_decode(encoded_block, unpacked_block_size, unpacked_block);
 				}
 				else if (strncmp(encoder_tag, "GLI2", 4) == 0)
 				{
@@ -720,94 +686,58 @@ BOOL MoveTo(STRPTR check_string, FILE *file_ptr)
 	}
 }
 
-/*
-** Intel/DVI ADPCM coder/decoder.
-** Adapted for the 68000 Motorola CPU by https://github.com/Kalmalyzer
-**
-** The algorithm for this coder was taken from the IMA Compatability Project
-** proceedings, Vol 2, Number 2; May 1992.
-**
-** Version 1.2, 18-Dec-92.
-*/
-
-void adpcm_decoder_init(void)
+// void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output)
+void adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
 {
-	int i, delta;
-	for (i = 0; i < 16; i++)
-		indexTable68000[i] = indexTable[i] << 4;
+	const ULONG JoinCode = 0;
+	WORD EstMax = (WORD)(JoinCode & 0xffff);
+	UWORD Delta = (UWORD)((JoinCode & 0xffff0000) >> 16);
+	ULONG lDelta = 0;
+	const UBYTE Bits = 4;
+	
+	if(!Delta) Delta = 5;
+	
+	Length /= 3;
 
-	for (i = 0; i < 89; i++)
-	{
-		for (delta = 0; delta < 16; delta++)
-		{
-			int origPredictor = stepsizeTable[i];
-			int predictor = origPredictor >> 3;
-			if (delta & 4)
-				predictor += origPredictor;
-			if (delta & 2)
-				predictor += origPredictor >> 1;
-			if (delta & 1)
-				predictor += origPredictor >> 2;
-			if (delta & 8)
-				predictor = -predictor;
-			stepsizeTable68000[i * 16 + delta] = predictor;
+	while(Length--) {
+		UBYTE sampleCount = 24/Bits;
+		ULONG temp = (Source[0] << 16) | (Source[1] << 8) | Source[2];
+		Source+=3;
+
+		while(sampleCount--) {
+			WORD newEstMax = (Delta >> 1);
+			UBYTE Shifter  = (temp >> sampleCount*Bits);
+			UBYTE b = (Shifter & bitmask[Bits-1]);
+
+			if ((Bits == 4) && ((Shifter & 0xf) == 0))
+				Delta = 4;
+
+			while(b--) {
+				newEstMax += Delta;
+			}
+
+			lDelta = Delta * Matrix[Bits-2][Shifter & bitmask[Bits-1]];
+
+			if(Shifter & (1<<(Bits-1))) {	// SignBit
+				newEstMax = -newEstMax;
+			}
+			EstMax = (EstMax + newEstMax) & 0xffff;
+			
+			Delta = (UWORD)((LONG)(lDelta + 8192) >> 14);
+			
+			if(Delta < 5) Delta = 5;
+
+			newEstMax = EstMax >> 6;
+			if(127 < newEstMax)
+				*Destination++ = 127;
+			else if( -128 > newEstMax) {
+				*Destination++ = -128;
+			}
+			else
+				*Destination++ = newEstMax;
 		}
 	}
-}
-
-void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output)
-{
-	UBYTE *inp;			 /* Input buffer pointer */
-	UBYTE *outp;		 /* output buffer pointer */
-	int delta;			 /* Current adpcm output value */
-	int valpred;		 /* Predicted value */
-	int vpdiff;			 /* Current change to valpred */
-	int index;			 /* Current step change index */
-	int inputbuffer; /* place to keep next 4-bit value */
-	int bufferstep;	 /* toggle between inputbuffer/input */
-
-	outp = output;
-	inp = input;
-	inputbuffer = *inp;
-
-	valpred = state->valprev;
-	index = state->index;
-
-	bufferstep = 0;
-
-	for (; numSamples > 0; numSamples--)
-	{
-
-		if (bufferstep)
-		{
-			delta = inputbuffer & 0xf;
-		}
-		else
-		{
-			inputbuffer = *inp++;
-			delta = (inputbuffer >> 4) & 0xf;
-		}
-		bufferstep = !bufferstep;
-
-		vpdiff = stepsizeTable68000[index | delta];
-		index += indexTable68000[delta];
-		if (index < 0)
-			index = 0;
-		if (index > (88 << 4))
-			index = (88 << 4);
-
-		valpred += vpdiff;
-
-		if (valpred > 32767)
-			valpred = 32767;
-		else if (valpred < -32768)
-			valpred = -32768;
-
-		*outp++ = (valpred >> 9);
-	}
-
-	state->valprev = valpred;
-	state->index = index;
+	// return (Delta<<16|(EstMax&0xffff));
 }
 
 #endif

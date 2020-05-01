@@ -177,6 +177,7 @@ void load_imploded_protracker_music(char *filename)
 								_file = asset_build_device_path(spl_files[i], ".pak");
 								sfx = LoadPackedSound(_file, game_get_unpacking_buffer(), smpl_list_ptr);
 								smpl_list_ptr += sfx->FileLength;
+								printf("Sample #%d: '%s.pak, %X bytes'.\n", i, spl_files[i], sfx->FileLength);
 								RemoveSoundStruct(sfx);
 							}
 						}
