@@ -104,7 +104,7 @@ void save_protracker_music(char *filename)
 	}
 }
 
-void load_imploded_protracker_music(char *filename)
+void load_imploded_protracker_music(char *filename, UBYTE *unpacking_sample_buffer, char *asset_path)
 {
 	int unpacked_block_size, packed_block_size, i;
 	BYTE *packed_block, *unpacked_block, *smpl_list_ptr, *smpl_ptr_save;
@@ -173,9 +173,9 @@ void load_imploded_protracker_music(char *filename)
 							// load each sample
 							if (spl_files[i])
 							{
-								char *_file;
-								_file = asset_build_device_path(spl_files[i], ".pak");
-								sfx = LoadPackedSound(_file, game_get_unpacking_buffer(), smpl_list_ptr);
+								char _file[256];
+								sprintf(_file, "%s%s.pak", asset_path, spl_files[i]);
+								sfx = LoadPackedSound(_file, unpacking_sample_buffer, smpl_list_ptr);
 								smpl_list_ptr += sfx->FileLength;
 								printf("Sample #%d: '%s.pak, %X bytes'.\n", i, spl_files[i], sfx->FileLength);
 								RemoveSoundStruct(sfx);

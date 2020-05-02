@@ -12,7 +12,7 @@
 
 BOOL init_protracker_player(void);
 void uninit_protracker_player(void);
-void load_imploded_protracker_music(char *filename);
+void load_imploded_protracker_music(char *filename, UBYTE *unpacking_sample_buffer, char *asset_path);
 void load_packed_protacker_music(char *filename);
 void save_protracker_music(char *filename);
 void load_protacker_music(char *filename, int filesize);
