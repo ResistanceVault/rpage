@@ -13,8 +13,8 @@
 #include <string.h>
 
 #include "ext/tinfl.h"
-#include "rpage/aos/shrinkler.h"
-#include "rpage/aos/doynax.h"
+#include "ext/aos/shrinkler.h"
+#include "ext/aos/nrv2.h"
 
 #include "rpage/aos/sound.h"
 #include "rpage/err.h"
@@ -50,9 +50,9 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 	UWORD mod_size;
 	BYTE /* *unpacked_block, */ *encoded_block;
 	SoundInfo *sound;
-
-	// printf("LoadPackedSound(%s)\n", filename);
-
+#ifdef DEBUG_MACROS
+	printf("LoadPackedSound(%s)\n", filename);
+#endif
 	if ((fileHandle = Open(filename, MODE_OLDFILE)))
 	{
 		Read(fileHandle, &tag, 4);
@@ -63,30 +63,37 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 			if (strncmp(tag, "SIZE", 4) == 0)
 			{
 				Read(fileHandle, &unpacked_block_size, 4);
-				// printf("unpacked_block_size = %d\n", unpacked_block_size);
-
+#ifdef DEBUG_MACROS				
+				printf("unpacked_block_size = %d\n", unpacked_block_size);
+#endif
 				// read the replay frequency
 				Read(fileHandle, &tag, 4); // FREQ
 				Read(fileHandle, &frequency, 4);
 
 				// read the encoder name
 				Read(fileHandle, &encoder_tag, 4);
-				// printf("encoder found : %c%c%c%c.\n", encoder_tag[0],encoder_tag[1],encoder_tag[2],encoder_tag[3]);
-
+#ifdef DEBUG_MACROS
+				printf("encoder found : %c%c%c%c.\n", encoder_tag[0],encoder_tag[1],encoder_tag[2],encoder_tag[3]);
+#endif
 				Read(fileHandle, &tag, 4);
 				if (strncmp(tag, "SIZE", 4) == 0)
 				{
 					Read(fileHandle, &encoded_block_size, 4);
-					// printf("encoded_block_size = %d\n", encoded_block_size);
-
+#ifdef DEBUG_MACROS
+					printf("encoded_block_size = %d\n", encoded_block_size);
+#endif
 					// read the compressor name
 					Read(fileHandle, &compressor_tag, 4);
-					// printf("compressor found : %c%c%c%c.\n", compressor_tag[0],compressor_tag[1],compressor_tag[2],compressor_tag[3]);
+#ifdef DEBUG_MACROS
+					printf("compressor found : %c%c%c%c.\n", compressor_tag[0],compressor_tag[1],compressor_tag[2],compressor_tag[3]);
+#endif
 					Read(fileHandle, &tag, 4);
 					if (strncmp(tag, "SIZE", 4) == 0)
 					{
 						Read(fileHandle, &packed_block_size, 4);
-						// printf("packed_block_size = %d\n", packed_block_size);
+#ifdef DEBUG_MACROS
+						printf("packed_block_size = %d\n", packed_block_size);
+#endif
 						Read(fileHandle, packed_block, packed_block_size);
 					}
 					else
@@ -100,20 +107,23 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 
 			if ((encoded_block_size > 0) && (unpacked_block_size > 0) && (packed_block_size > 0))
 			{
+				// printf("unpacked_block = %x\n", unpacked_block);
 				if (unpacked_block == NULL)
 					unpacked_block = AllocMem(unpacked_block_size, MEMF_CHIP);
 				encoded_block = (UBYTE *)calloc(encoded_block_size, sizeof(UBYTE));
+				// printf("unpacked_block (post malloc) = %x\n", unpacked_block);
 
+				// printf("compressor_tag = %c%c%c%c\n", compressor_tag[0], compressor_tag[1], compressor_tag[2], compressor_tag[3]);
 				if (strncmp(compressor_tag, "MINZ", 4) == 0)
 					tinfl_decompress_mem_to_mem(encoded_block, encoded_block_size, packed_block, packed_block_size, 1);
 				else if (strncmp(compressor_tag, "SHRK", 4) == 0)
 					ShrinklerDecompress(packed_block, encoded_block, NULL, NULL);
-				else if (strncmp(compressor_tag, "D68K", 4) == 0)
-					doynaxdepack(packed_block, encoded_block);
+				else if (strncmp(compressor_tag, "NRV2", 4) == 0)
+					nrv2s_unpack(packed_block, encoded_block);
 
 				if (strncmp(encoder_tag, "ADPC", 4) == 0)
 				{
-					adpcm_decode(encoded_block, unpacked_block_size, unpacked_block);
+					adpcm_decode(encoded_block, encoded_block_size, unpacked_block);
 				}
 				else if (strncmp(encoder_tag, "GLI2", 4) == 0)
 				{
@@ -144,19 +154,19 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 }
 
 /* Declare the functions we are going to use: */
-SoundInfo *PrepareSound(STRPTR file);
-BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
-							 WORD delta_rate, UWORD repeat);
-void StopSound(UBYTE channel);
-void RemoveSound();
+// SoundInfo *PrepareSound(STRPTR file);
+// BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
+// 							 WORD delta_rate, UWORD repeat);
+// void StopSound(UBYTE channel);
+// void RemoveSound();
 
-BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
-								SoundInfo *info);
-UWORD LoadSound(STRPTR filename, SoundInfo *info);
-ULONG GetSize(STRPTR filename);
-ULONG SizeIFF(STRPTR filename);
-UWORD ReadIFF(STRPTR filename, SoundInfo *info);
-BOOL MoveTo(STRPTR check_string, FILE *file_ptr);
+// BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
+// 								SoundInfo *info);
+// UWORD LoadSound(STRPTR filename, SoundInfo *info);
+// ULONG GetSize(STRPTR filename);
+// ULONG SizeIFF(STRPTR filename);
+// UWORD ReadIFF(STRPTR filename, SoundInfo *info);
+// BOOL MoveTo(STRPTR check_string, FILE *file_ptr);
 
 /// PrepareSound() loads a sampled sound file (IFF or FutureSound) into  <br>
 /// a buffer that is automatically allocated. All information about the  <br>
@@ -270,6 +280,9 @@ BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
 	{
 		/* We will now start playing the sound: */
 		BeginIO((struct IORequest *)IOA[channel]);
+#ifdef DEBUG_MACROS
+		printf("PlaySound(), IOA[%d] = %x\n", channel, IOA[channel]);
+#endif
 		return (TRUE); /* OK! */
 	}
 	else
@@ -301,7 +314,9 @@ void StopSound(UBYTE channel)
 		/* 3. If there exist a Message Port, delete it: */
 		if (IOA[channel]->ioa_Request.io_Message.mn_ReplyPort)
 			DeletePort(IOA[channel]->ioa_Request.io_Message.mn_ReplyPort);
-
+#ifdef DEBUG_MACROS
+		printf("StopSound(), IOA[%d] = %x\n", channel, IOA[channel]);
+#endif
 		FreeMem(IOA[channel], sizeof(struct IOAudio));
 		IOA[channel] = NULL;
 	}
@@ -328,6 +343,9 @@ void RemoveSound(SoundInfo *info)
 	if (info != NULL)
 	{
 		/* Deallocate the sound buffer: */
+#ifdef DEBUG_MACROS
+		printf("RemoveSound(), SoundBuffer = %x, FileLength = %d\n", info->SoundBuffer, info->FileLength);
+#endif
 		FreeMem(info->SoundBuffer, info->FileLength);
 
 		/* Deallocate the SoundInfo structure: */
@@ -687,7 +705,7 @@ BOOL MoveTo(STRPTR check_string, FILE *file_ptr)
 }
 
 // void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output)
-void adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
+BYTE *adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
 {
 	const ULONG JoinCode = 0;
 	WORD EstMax = (WORD)(JoinCode & 0xffff);
@@ -738,6 +756,7 @@ void adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
 		}
 	}
 	// return (Delta<<16|(EstMax&0xffff));
+	return Destination;
 }
 
 #endif

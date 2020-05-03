@@ -45,14 +45,21 @@ typedef struct
 	Fixed volume;						 /* Playback volume from 0 to 0x10000 */
 } Voice8Header;
 
+BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel, SoundInfo *info);
+ULONG GetSize(STRPTR filename);
+ULONG SizeIFF(STRPTR filename);
+UWORD ReadIFF(STRPTR filename, SoundInfo *info);
+BOOL MoveTo(STRPTR check_string, FILE *file_ptr);
+
 extern SoundInfo *PrepareSound(STRPTR file);
 extern BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel, WORD delta_rate, UWORD repeat);
 extern void StopSound(UBYTE channel);
 extern void RemoveSound(SoundInfo *info);
-void RemoveSoundStruct(SoundInfo *info);
+extern void RemoveSoundStruct(SoundInfo *info);
+extern UWORD LoadSound(STRPTR filename, SoundInfo *info);
 extern SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_block);
 // void adpcm_decoder_init(void);
-void adpcm_decode(UBYTE *input, int numSamples, BYTE *output);
+BYTE *adpcm_decode(UBYTE *input, int numSamples, BYTE *output);
 
 #endif
 #endif

@@ -26,7 +26,7 @@ You should start looking for [frwk.h](rpage/frwk.h)
 ### 3rd party softwares included in R-PAGE:
 * [tinfl.c](https://github.com/richgel999/miniz) (Zlib compression/decompression) by Richard Geldreich
 * [Shrinkler](https://github.com/askeksa/Shrinkler) 68k ASM decompression routine by Aske Simon Christensen
-* [Doynamite](https://github.com/AxisOxy/Planet-Rocklobster) 68k ASM decompression routine by Oxyron
+* [nrv2s](https://github.com/jonathanbennett73/amiga-pjz-sax-offender/tree/master/Projects/SaxOffender/Framework/Depack) 68k ASM decompression routine by Ross
 * [ptreplay.library](http://aminet.net/package/mus/play/ptreplay66) ProTracker replay library by Mattias Karlsson and Andreas
 Palsson
 * [FP_ADPCM](http://aminet.net/package/util/pack/MT_ADPCM) ADPCM codec by Tobias "MastaTabs" Seiler & Christian "FlowerPower" Buchner.

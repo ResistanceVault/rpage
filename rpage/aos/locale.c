@@ -10,8 +10,8 @@
 #include "rpage/frwk.h"
 #include "ext/tinfl.h"
 #include "rpage/aos/locale.h"
-#include "rpage/aos/shrinkler.h"
-#include "rpage/aos/doynax.h"
+#include "ext/aos/shrinkler.h"
+#include "ext/aos/nrv2.h"
 #include "rpage/err.h"
 
 extern struct DosLibrary *DOSBase;
@@ -61,7 +61,7 @@ UBYTE *load_pak_locale_to_array(char *text_array[], UWORD array_size, char *file
 #ifdef DEBUG_MACROS            
                 printf("packed_block_size = %d\n", packed_block_size);
 #endif
-                packed_block = (UBYTE *)calloc(DOYNAX_ALLOC_PAD(packed_block_size), sizeof(UBYTE));
+                packed_block = (UBYTE *)calloc(packed_block_size, sizeof(UBYTE));
                 Read(fileHandle, packed_block, packed_block_size);
 
                 if (strncmp(packer_tag, "MINZ", 4) == 0)
@@ -78,13 +78,13 @@ UBYTE *load_pak_locale_to_array(char *text_array[], UWORD array_size, char *file
 #endif
                     ShrinklerDecompress(packed_block, unpacked_block, NULL, NULL);
                 }
-                else if (strncmp(packer_tag, "D68K", 4) == 0)
+                else if (strncmp(packer_tag, "NRV2", 4) == 0)
                 {
 #ifdef DEBUG_MACROS
-                    printf("Calling D68K decoder!\n");
+                    printf("Calling NRV2X decoder!\n");
 #endif
-                    doynaxdepack(packed_block, unpacked_block);
-                }
+                    nrv2s_unpack(packed_block, unpacked_block);
+                }                
 
                 // Transfer the content to an array
                 str_ptr = unpacked_block;

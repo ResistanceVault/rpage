@@ -21,8 +21,8 @@
 #include "rpage/aos/io.h"
 
 #include "ext/tinfl.h"
-#include "rpage/aos/shrinkler.h"
-#include "rpage/aos/doynax.h"
+#include "ext/aos/shrinkler.h"
+#include "ext/aos/nrv2.h"
 
 #include "rpage/frwk.h"
 #include "rpage/aos/ptracker.h"
@@ -247,23 +247,23 @@ void load_packed_protacker_music(char *filename)
 				else
 					printf(err_no_size_found);
 			}
-			else if (strncmp(tag, "D68K", 4) == 0)
+			else if (strncmp(tag, "NRV2", 4) == 0)
 			{
 				Read(fileHandle, &tag, 4);
 				if (strncmp(tag, "SIZE", 4) == 0)
 				{
 					Read(fileHandle, &packed_block_size, 4);
-					packed_block = AllocMem(DOYNAX_ALLOC_PAD(packed_block_size), 0L);
+					packed_block = AllocMem(packed_block_size, 0L);
 					Read(fileHandle, packed_block, packed_block_size);
 #ifdef DEBUG_MACROS            
-					printf("!!!!D68K block size: %d\n", packed_block_size);
+					printf("!!!!NRV2X block size: %d\n", packed_block_size);
 #endif
-					doynaxdepack(packed_block, unpacked_block);
+					nrv2s_unpack(packed_block, unpacked_block);
 					FreeMem(packed_block, packed_block_size);
 				}
 				else
 					printf(err_no_size_found);
-			}
+			}			
 			else
 			{
 				printf(err_unknown_tag, tag);

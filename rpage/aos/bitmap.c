@@ -11,8 +11,8 @@
 #include "rpage/aos/debug.h"
 #include "rpage/aos/color.h"
 #include "ext/tinfl.h"
-#include "rpage/aos/shrinkler.h"
-#include "rpage/aos/doynax.h"
+#include "ext/aos/shrinkler.h"
+#include "ext/aos/nrv2.h"
 #include "rpage/frwk.h"
 #include "rpage/err.h"
 
@@ -185,10 +185,10 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, amiga_color **palette, BYTE 
 				else
 					printf(err_no_size_found);
 			}
-			else if (strncmp(tag, "D68K", 4) == 0)
+			else if (strncmp(tag, "NRV2", 4) == 0)
 			{
 #ifdef DEBUG_MACROS
-				printf(", found 'doynamite68k' data!");
+				printf(", found 'nrv2x' data!");
 #endif
 				Read(fileHandle, &tag, 4);
 				if (strncmp(tag, "SIZE", 4) == 0)
@@ -196,11 +196,11 @@ BOOL load_pak_img_to_bitmap(struct BitMap **bitmap, amiga_color **palette, BYTE 
 					UBYTE *Destination;
 					Read(fileHandle, &packed_block_size, 2);
 #ifdef DEBUG_MACROS
-					printf(", doynamite68k block size: %d", packed_block_size);
+					printf(", nrv2x block size: %d", packed_block_size);
 #endif
 					Read(fileHandle, packed_block, packed_block_size);
 					Destination = (**bitmap).Planes[0];
-					doynaxdepack(packed_block, Destination);
+					nrv2s_unpack(packed_block, Destination);
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -376,10 +376,10 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 				else
 					printf(err_no_size_found);
 			}
-			else if (strncmp(tag, "D68K", 4) == 0)
+			else if (strncmp(tag, "NRV2", 4) == 0)
 			{
 #ifdef DEBUG_MACROS
-				printf(", found 'doynamite68k' data!");
+				printf(", found 'nrv2x' data!");
 #endif
 				Read(fileHandle, &tag, 4);
 				if (strncmp(tag, "SIZE", 4) == 0)
@@ -388,13 +388,13 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 
 					Read(fileHandle, &packed_block_size, 2);
 					if (self_alloc_unpack_buffer)
-						packed_block = AllocMem(DOYNAX_ALLOC_PAD(packed_block_size) * sizeof(BYTE), MEMF_CLEAR);
+						packed_block = AllocMem(packed_block_size * sizeof(BYTE), MEMF_CLEAR);
 #ifdef DEBUG_MACROS
-					printf(", doynamite68k block size: %d", packed_block_size);
+					printf(", nrv2x block size: %d", packed_block_size);
 #endif
 					Read(fileHandle, packed_block, packed_block_size);
 					Destination = (**new_bitmap).Planes[0];
-					doynaxdepack(packed_block, Destination);
+					nrv2s_unpack(packed_block, Destination);
 					if (self_alloc_unpack_buffer)
 						FreeMem(packed_block, packed_block_size);
 #ifdef DEBUG_MACROS
@@ -403,7 +403,7 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 				}
 				else
 					printf(err_no_size_found);
-			}			
+			}					
 #ifdef DEBUG_MACROS
 			printf("\n");
 #endif
