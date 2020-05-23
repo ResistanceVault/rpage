@@ -48,9 +48,9 @@ void clear_bitmap(struct BitMap *bitmap);
 /*  
 	Simple bitblit
 */
-#define BLIT_BITMAP_S(SRC_BITMAP, DEST_BITMAP, WIDTH, HEIGHT, X, Y) BltBitMap(SRC_BITMAP, 0, 0, \
+#define BLIT_BITMAP_S(SRC_BITMAP, DEST_BITMAP, SCREEN_WIDTH, SCREEN_HEIGHT, X, Y) BltBitMap(SRC_BITMAP, 0, 0, \
 						DEST_BITMAP, X, Y,  \
-						WIDTH, HEIGHT,      \
+						SCREEN_WIDTH, SCREEN_HEIGHT,      \
 						0xC0, 0xFF, NULL);
 
 #endif // #ifndef BITMAP_ROUTINES

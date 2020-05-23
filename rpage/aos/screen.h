@@ -11,18 +11,12 @@
 #include <graphics/gfxbase.h>
 
 typedef struct{
-	USHORT width;
-	USHORT height;
-	UBYTE depth;
-	unsigned int view_modes;
-} screen_geometry;
-
-typedef struct{
 	struct BitMap *bitmaps[2];
 	amiga_color *palettes[2];
 	struct Screen *screen;
 	struct Window *window;
 	BOOL double_buffer_enabled;
+	struct RastPort *rp;
 	USHORT physical;
 } buffered_screen;
 
@@ -33,7 +27,7 @@ typedef struct{
 void WaitVBL(buffered_screen *screen);
 void disableScreen(void);
 void enableScreen(void);
-buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _colors, BOOL _dbuffer);
+// buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _colors, BOOL _dbuffer);
 buffered_screen *openMainScreen(void);
 void closeMainScreen(buffered_screen *main_screen);
 struct BitMap *setupBitMap(LONG, LONG, LONG);

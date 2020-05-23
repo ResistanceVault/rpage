@@ -11,6 +11,7 @@
 
 #ifndef SOUND_ROUTINES
 #define SOUND_ROUTINES
+#define DEBUG_ENABLE_AUDIO
 
 /* Sound channels: */
 #define LEFT0         0

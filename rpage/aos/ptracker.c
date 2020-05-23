@@ -50,6 +50,7 @@ extern struct Custom far custom;
 
 BOOL init_protracker_player(void)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	if (SysBase->LibNode.lib_Version >= 36)
 		if (!AssignPath("Libs","Libs"))
 			printf("/!\\Cannot assign local Libs: folder. The Ptreplay library might not load properly!\n");
@@ -67,10 +68,14 @@ BOOL init_protracker_player(void)
 	protracker_mod_volume = protracker_fade_max_volume;
 
 	return TRUE;
+#else
+	return FALSE;
+#endif
 }
 
 void uninit_protracker_player(void)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	unload_protacker_music();
 
 	if (PTReplayBase)
@@ -78,10 +83,12 @@ void uninit_protracker_player(void)
 		CloseLibrary(PTReplayBase);
 		PTReplayBase = NULL;
 	}
+#endif
 }
 
 void load_protacker_music(char *filename, int filesize)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	if (filesize < 0)
 	{
 		filesize = file_get_size(filename);
@@ -91,10 +98,12 @@ void load_protacker_music(char *filename, int filesize)
 	protracker_mod_data = load_raw_to_mem((UBYTE *)filename, (ULONG)filesize, TRUE);
 	protracker_mod_size = filesize;
 	printf("load_protacker_music(%s) loaded at %x.\n", filename, (unsigned int)protracker_mod_data);
+#endif
 }
 
 void save_protracker_music(char *filename)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	rpage_file file;
 	if (protracker_mod_data != NULL)
 	{
@@ -102,10 +111,12 @@ void save_protracker_music(char *filename)
 		rpage_file_write(file, protracker_mod_data, protracker_mod_size);
 		rpage_file_close(file);
 	}
+#endif
 }
 
 void load_imploded_protracker_music(char *filename, UBYTE *unpacking_sample_buffer, char *asset_path)
 {
+#ifdef DEBUG_ENABLE_AUDIO		
 	int unpacked_block_size, packed_block_size, i;
 	BYTE *packed_block, *unpacked_block, *smpl_list_ptr, *smpl_ptr_save;
 	BPTR fileHandle;
@@ -192,11 +203,13 @@ void load_imploded_protracker_music(char *filename, UBYTE *unpacking_sample_buff
 				}
 			}
 		}
-	}						
+	}
+#endif					
 }
 
 void load_packed_protacker_music(char *filename)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	int unpacked_block_size, packed_block_size;
 	BPTR fileHandle;
 	char tag[4];
@@ -282,10 +295,12 @@ void load_packed_protacker_music(char *filename)
 
 	protracker_mod_data = unpacked_block;
 	protracker_mod_size = unpacked_block_size;
+#endif
 }
 
 void unload_protacker_music(void)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	if (protracker_mod_data != NULL && protracker_mod_playing != NULL)
 	{
 		//	Stop music
@@ -301,10 +316,12 @@ void unload_protacker_music(void)
 		protracker_mod_playing = NULL;
 		protracker_mod_data = NULL;
 	}
+#endif
 }
 
 void play_protracker_music(void)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	if (PTReplayBase)
 		if (protracker_mod_data != NULL && protracker_mod_playing == NULL)
 		{
@@ -321,11 +338,14 @@ void play_protracker_music(void)
 		}
 	else
 		rpage_system_alert("Ptreplay.library was not open!");
+#endif
 }
 
 void protracker_update_state(void)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	if (PTReplayBase)
+	{
 		if (protracker_mod_data != NULL)
 		{
 			if (protracker_fade_speed != 0)
@@ -336,11 +356,15 @@ void protracker_update_state(void)
 					unload_protacker_music();
 			}
 		}
+	}
+#endif
 }
 
 void protracker_set_fade_speed(short fade_speed)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	protracker_fade_speed = fade_speed;
+#endif
 }
 
 #endif

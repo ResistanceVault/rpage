@@ -5,6 +5,7 @@
 */
 
 /* Include some important header files: */
+#include <assert.h>
 #include "rpage/aos/inc.prl"
 #include <exec/types.h>
 #include <exec/memory.h>
@@ -43,12 +44,13 @@ struct IOAudio *IOA[4] = {NULL, NULL, NULL, NULL};
 /// ____ (4 bytes) Size of the compressed block
 SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_block)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	ULONG encoded_block_size = 0, unpacked_block_size = 0, packed_block_size = 0;
 	ULONG frequency = 8000;
 	BPTR fileHandle;
 	char encoder_tag[4], compressor_tag[4], tag[4];
 	UWORD mod_size;
-	BYTE /* *unpacked_block, */ *encoded_block;
+	BYTE *encoded_block = NULL;
 	SoundInfo *sound;
 #ifdef DEBUG_MACROS
 	printf("LoadPackedSound(%s)\n", filename);
@@ -110,38 +112,53 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 				// printf("unpacked_block = %x\n", unpacked_block);
 				if (unpacked_block == NULL)
 					unpacked_block = AllocMem(unpacked_block_size, MEMF_CHIP);
+
 				encoded_block = (UBYTE *)calloc(encoded_block_size, sizeof(UBYTE));
-				// printf("unpacked_block (post malloc) = %x\n", unpacked_block);
+				assert(unpacked_block != NULL);
 
-				// printf("compressor_tag = %c%c%c%c\n", compressor_tag[0], compressor_tag[1], compressor_tag[2], compressor_tag[3]);
-				if (strncmp(compressor_tag, "MINZ", 4) == 0)
-					tinfl_decompress_mem_to_mem(encoded_block, encoded_block_size, packed_block, packed_block_size, 1);
-				else if (strncmp(compressor_tag, "SHRK", 4) == 0)
-					ShrinklerDecompress(packed_block, encoded_block, NULL, NULL);
-				else if (strncmp(compressor_tag, "NRV2", 4) == 0)
-					nrv2s_unpack(packed_block, encoded_block);
-
-				if (strncmp(encoder_tag, "ADPC", 4) == 0)
+				if (encoded_block != NULL)
 				{
-					adpcm_decode(encoded_block, encoded_block_size, unpacked_block);
+					// printf("unpacked_block (post malloc) = %x\n", unpacked_block);
+
+					// printf("compressor_tag = %c%c%c%c\n", compressor_tag[0], compressor_tag[1], compressor_tag[2], compressor_tag[3]);
+					if (strncmp(compressor_tag, "MINZ", 4) == 0)
+						tinfl_decompress_mem_to_mem(encoded_block, encoded_block_size, packed_block, packed_block_size, 1);
+					else if (strncmp(compressor_tag, "SHRK", 4) == 0)
+						ShrinklerDecompress(packed_block, encoded_block, NULL, NULL);
+					else if (strncmp(compressor_tag, "NRV2", 4) == 0)
+						nrv2s_unpack(packed_block, encoded_block);
+
+					if (strncmp(encoder_tag, "ADPC", 4) == 0)
+					{
+						adpcm_decode(encoded_block, encoded_block_size, unpacked_block);
+					}
+					else if (strncmp(encoder_tag, "GLI2", 4) == 0)
+					{
+						printf("Gligli MDPCM not supported yet!\n");
+					}
+					else if (strncmp(encoder_tag, "8SVX", 4) == 0)
+					{
+						memcpy(unpacked_block, encoded_block, unpacked_block_size);
+					}
+
+					sound = (SoundInfo *)calloc(1, sizeof(SoundInfo));
+					assert(sound != NULL);
+					sound->SoundBuffer = unpacked_block;
+					sound->FileLength = unpacked_block_size;
+					sound->RecordRate = frequency;
+
+					free(encoded_block);
+					encoded_block = NULL;
+
+					return sound;
 				}
-				else if (strncmp(encoder_tag, "GLI2", 4) == 0)
+				else
 				{
-					printf("Gligli MDPCM not supported yet!\n");
+					printf("LoadPackedSound(), encoded_block calloc() failed!\n");
+					return NULL;					
 				}
-				else if (strncmp(encoder_tag, "8SVX", 4) == 0)
-				{
-					memcpy(unpacked_block, encoded_block, unpacked_block_size);
-				}
-
-				sound = (SoundInfo *)calloc(1, sizeof(SoundInfo));
-				sound->SoundBuffer = unpacked_block;
-				sound->FileLength = unpacked_block_size;
-				sound->RecordRate = frequency;
-
-				free(encoded_block);
-
-				return sound;
+				
+				
 			}
 		}
 		else
@@ -151,6 +168,9 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 	}
 
 	return NULL;
+#else
+	return NULL;
+#endif		
 }
 
 /* Declare the functions we are going to use: */
@@ -184,15 +204,15 @@ SoundInfo *LoadPackedSound(char *filename, BYTE *packed_block, BYTE *unpacked_bl
 
 SoundInfo *PrepareSound(STRPTR file)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	/* Declare a pointer to a SoundInfo structure: */
-	SoundInfo *info;
+	SoundInfo *info = NULL;
 
 	/* Allocate memory for a SoundInfo structure: (The memory can be of */
 	/* any type, and should be cleared.                                 */
-	info = (SoundInfo *)AllocMem(sizeof(SoundInfo),
-																			MEMF_PUBLIC | MEMF_CLEAR);
+	info = (SoundInfo *)AllocMem(sizeof(SoundInfo), MEMF_PUBLIC | MEMF_CLEAR);
 
-	if (info)
+	if (info != NULL)
 	{
 		/* The memory have been successfully allocated. */
 
@@ -242,7 +262,10 @@ SoundInfo *PrepareSound(STRPTR file)
 
 	/* We have not been able to prepare the sound. All allocated memory */
 	/* have been deallocated, and we return NULL.                       */
-	return (NULL); /* ERROR! */
+	return NULL; /* ERROR! */
+#else
+	return NULL;
+#endif
 }
 
 /* PlaySound()                                                          */
@@ -268,6 +291,7 @@ SoundInfo *PrepareSound(STRPTR file)
 BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
 							 WORD delta_rate, UWORD repeat)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	/* Before we may play the sound, we must make sure that the sound is */
 	/* not already being played. We will therefore call the function     */
 	/* StopSound(), in order to stop the sound if it is playing:         */
@@ -283,10 +307,13 @@ BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
 #ifdef DEBUG_MACROS
 		printf("PlaySound(), IOA[%d] = %x\n", channel, IOA[channel]);
 #endif
-		return (TRUE); /* OK! */
+		return TRUE; /* OK! */
 	}
 	else
-		return (FALSE); /* ERROR! */
+		return FALSE; /* ERROR! */
+#else
+	return FALSE;
+#endif
 }
 
 /* StopSound()                                                         */
@@ -301,6 +328,7 @@ BOOL PlaySound(SoundInfo *info, UWORD volume, UBYTE channel,
 
 void StopSound(UBYTE channel)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	/* Check if the IOAudio structure exist: */
 	if (IOA[channel])
 	{
@@ -317,9 +345,13 @@ void StopSound(UBYTE channel)
 #ifdef DEBUG_MACROS
 		printf("StopSound(), IOA[%d] = %x\n", channel, IOA[channel]);
 #endif
-		FreeMem(IOA[channel], sizeof(struct IOAudio));
-		IOA[channel] = NULL;
+		if (IOA[channel] != NULL)
+		{
+			FreeMem(IOA[channel], sizeof(struct IOAudio));
+			IOA[channel] = NULL;
+		}
 	}
+#endif
 }
 
 /* RemoveSound()                                                        */
@@ -336,6 +368,7 @@ void StopSound(UBYTE channel)
 
 void RemoveSound(SoundInfo *info)
 {
+#ifdef DEBUG_ENABLE_AUDIO		
 	/* IMPORTANT! The sound must have been */
 	/* stopped before you may remove it!!! */
 
@@ -346,27 +379,35 @@ void RemoveSound(SoundInfo *info)
 #ifdef DEBUG_MACROS
 		printf("RemoveSound(), SoundBuffer = %x, FileLength = %d\n", info->SoundBuffer, info->FileLength);
 #endif
-		FreeMem(info->SoundBuffer, info->FileLength);
+		if (info->SoundBuffer != NULL)
+		{
+			FreeMem(info->SoundBuffer, info->FileLength);
+			info->SoundBuffer = NULL;
+		}
 
 		/* Deallocate the SoundInfo structure: */
 		free(info);
+		info = NULL;
 		// FreeMem(info, sizeof(SoundInfo));
 		// info = NULL;
 	}
+#endif
 }
 
 void RemoveSoundStruct(SoundInfo *info)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	/* IMPORTANT! The sound must have been */
 	/* stopped before you may remove it!!! */
 	/* Have we allocated a SoundInfo structure? */
-	if (info)
+	if (info != NULL)
 	{
 		/* Deallocate the SoundInfo structure: */
 		// FreeMem(info, sizeof(SoundInfo));
 		free(info);
-		// info = NULL;
+		info = NULL;
 	}
+#endif
 }
 
 /* PrepareIOA()                                                           */
@@ -384,9 +425,9 @@ void RemoveSoundStruct(SoundInfo *info)
 /*           RIGHT1 or LEFT1)                                             */
 /* pointer:  (CPTR) Actually a pointer to a SoundInfo structure.          */
 
-BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
-								SoundInfo *info)
+BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel, SoundInfo *info)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	UBYTE ch;
 
 	/* Declare a pointer to a MsgPort structure: */
@@ -404,8 +445,11 @@ BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
 		{
 			/* ERROR! Could not create message port! */
 			/* Deallocate the IOAudio structure: */
-			FreeMem(IOA[channel], sizeof(struct IOAudio));
-			IOA[channel] = NULL;
+			if (IOA[channel] != NULL)
+			{
+				FreeMem(IOA[channel], sizeof(struct IOAudio));
+				IOA[channel] = NULL;
+			}
 
 			return (FALSE); /* ERROR! */
 		}
@@ -435,8 +479,11 @@ BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
 				DeletePort(port);
 
 				/* Deallocate the IOAudio structure: */
-				FreeMem(IOA[channel], sizeof(struct IOAudio));
-				IOA[channel] = NULL;
+				if (IOA[channel] != NULL)
+				{
+					FreeMem(IOA[channel], sizeof(struct IOAudio));
+					IOA[channel] = NULL;
+				}
 
 				return (FALSE); /* ERROR! */
 			}
@@ -466,7 +513,10 @@ BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
 			}
 		}
 	}
-	return (FALSE); /* ERROR! */
+	return FALSE; /* ERROR! */
+#else
+	return FALSE;
+#endif	
 }
 
 /* LoadSound()                                                         */
@@ -482,6 +532,7 @@ BOOL PrepareIOA(UWORD period, UWORD volume, UWORD cycles, UBYTE channel,
 
 UWORD LoadSound(STRPTR filename, SoundInfo *info)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	FILE *file_ptr;		 /* Pointer to a file. */
 	ULONG length;			 /* Data Length. */
 	UWORD record_rate; /* Record rate. */
@@ -533,6 +584,9 @@ UWORD LoadSound(STRPTR filename, SoundInfo *info)
 		// printf("LoadSound() record_rate = %d\n", record_rate);
 		return (record_rate);
 	}
+#else
+	return NULL;
+#endif
 }
 
 /* GetSize()                                                         */
@@ -546,6 +600,7 @@ UWORD LoadSound(STRPTR filename, SoundInfo *info)
 
 ULONG GetSize(STRPTR filename)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	FILE *file_ptr; /* Pointer to a file. */
 	ULONG length;		/* Data length. */
 
@@ -571,6 +626,9 @@ ULONG GetSize(STRPTR filename)
 	}
 	// printf("GetSize() length = %d\n", length);
 	return (length);
+#else
+	return 0;
+#endif
 }
 
 /* SizeIFF()                                                         */
@@ -584,6 +642,7 @@ ULONG GetSize(STRPTR filename)
 
 ULONG SizeIFF(STRPTR filename)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	FILE *file_ptr;								/* Pointer to a file. */
 	STRPTR empty_string = "    "; /* Four spaces. */
 	LONG dummy;										/* A dummy variable. */
@@ -619,6 +678,9 @@ ULONG SizeIFF(STRPTR filename)
 	}
 	/* Return zero: (ERROR) */
 	return (0);
+#else
+	return 0;
+#endif
 }
 
 /* ReadIFF()                                                           */
@@ -634,6 +696,7 @@ ULONG SizeIFF(STRPTR filename)
 
 UWORD ReadIFF(STRPTR filename, SoundInfo *info)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	FILE *file_ptr;								/* Pointer to a file. */
 	STRPTR empty_string = "    "; /* Four spaces. */
 	LONG dummy;										/* A dummy variable. */
@@ -673,6 +736,9 @@ UWORD ReadIFF(STRPTR filename, SoundInfo *info)
 	}
 	/* Return zero: (ERROR) */
 	return (0);
+#else
+	return 0;
+#endif
 }
 
 /* MoveTo()                                                  */
@@ -684,6 +750,7 @@ UWORD ReadIFF(STRPTR filename, SoundInfo *info)
 
 BOOL MoveTo(STRPTR check_string, FILE *file_ptr)
 {
+#ifdef DEBUG_ENABLE_AUDIO	
 	STRPTR empty_string = "    "; /* Four spaces. */
 	int skip, loop;								/* How much data should be skiped. */
 	LONG dummy;										/* A dummy variable. */
@@ -702,11 +769,15 @@ BOOL MoveTo(STRPTR check_string, FILE *file_ptr)
 		for (loop = 0; loop < skip; loop++)
 			fread((char *)&dummy, 1, 1, file_ptr);
 	}
+#else
+	return FALSE;
+#endif
 }
 
 // void adpcm_decode(CodecState *state, UBYTE *input, int numSamples, UBYTE *output)
 BYTE *adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
 {
+#ifdef DEBUG_ENABLE_AUDIO
 	const ULONG JoinCode = 0;
 	WORD EstMax = (WORD)(JoinCode & 0xffff);
 	UWORD Delta = (UWORD)((JoinCode & 0xffff0000) >> 16);
@@ -757,6 +828,9 @@ BYTE *adpcm_decode(UBYTE *Source, int Length, BYTE *Destination)
 	}
 	// return (Delta<<16|(EstMax&0xffff));
 	return Destination;
+#else
+	return NULL;
+#endif
 }
 
 #endif

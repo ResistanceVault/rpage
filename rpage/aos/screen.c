@@ -47,6 +47,7 @@ void flipBuffers(buffered_screen *screen)
 		screen->physical = (USHORT)(screen->physical)^1;
 		screen->screen->RastPort.BitMap	= screen->bitmaps[screen->physical];
 		screen->screen->ViewPort.RasInfo->BitMap = screen->bitmaps[screen->physical];
+		// screen->rp = &(screen->screen->RastPort);
 	}
 #ifdef DEBUG_MACROS	
 	printf("flipBuffers() : physical screen: %d\n", screen->physical);
@@ -77,49 +78,37 @@ void synchronizeBuffers(buffered_screen *screen)
 		short i;
 		for(i = 0; i < (1 << screen->screen->BitMap.Depth); i++)
 			screen->palettes[getLogicalBitmapIndex(screen)][i] = screen->palettes[getPhysicalBitmapIndex(screen)][i];
-		BltBitMap(screen->bitmaps[screen->physical], 0, 0, screen->bitmaps[getLogicalBitmapIndex(screen)], 0, 0, WIDTH, HEIGHT, 0xC0, 0xFF, NULL);
+		BltBitMap(screen->bitmaps[screen->physical], 0, 0, screen->bitmaps[getLogicalBitmapIndex(screen)], 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0xC0, 0xFF, NULL);
 		WaitBlit();
 	}
 }
 
-buffered_screen *openMainScreen(void)
-{
-	return openMainScreenCustom(WIDTH, HEIGHT, 1 << DEPTH, DBUFFER_ENABLED);
-}
-
 UWORD screenGetDepth(void)
 {
-	return DEPTH;
+	return SCREEN_DEPTH;
 }
 
 #define SCR_PAD_X 16
 
-buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _colors, BOOL _dbuffer)
+buffered_screen *openMainScreen(void)
 {
 	int i;
 	static buffered_screen bscreen;
 	struct NewScreen new_screen;
 	struct NewWindow new_window;
 
-	screen_geometry this_screen;
-
-	this_screen.width = _width + SCR_PAD_X;
-	this_screen.height = _height;
-	this_screen.depth = color_to_depth(_colors);
-	this_screen.view_modes = SPRITES;
-
 #ifdef DEBUG_MACROS
-	printf("openMainScreenCustom(%d, %d, %d, %d), depth = %d\n", _width, _height, _colors, _dbuffer, this_screen.depth);
+	printf("openMainScreenCustom(%d, %d, %d, %d), depth = %d\n", SCREEN_WIDTH, SCREEN_HEIGHT, COLORS, DBUFFER_ENABLED, this_screen.depth);
 #endif
 
-	bscreen.double_buffer_enabled = _dbuffer;
+	bscreen.double_buffer_enabled = DBUFFER_ENABLED;
 	bscreen.physical = 0; /* the physical screen (front buffer) has index 0. */
 
-	for(i = 0; i < (_dbuffer?2:1); i++)
+	for(i = 0; i < (DBUFFER_ENABLED?2:1); i++)
 	{
-		bscreen.bitmaps[i] = setupBitMap(this_screen.depth, this_screen.width, this_screen.height);
-		bscreen.palettes[i] = (amiga_color *)calloc(_colors, sizeof(amiga_color));
-		memset(bscreen.palettes[i], 0x000, _colors);
+		bscreen.bitmaps[i] = setupBitMap(SCREEN_DEPTH, SCREEN_WIDTH, SCREEN_HEIGHT);
+		bscreen.palettes[i] = (amiga_color *)calloc(COLORS, sizeof(amiga_color));
+		memset(bscreen.palettes[i], 0x000, COLORS);
 	}
 
 #ifdef DEBUG_MACROS
@@ -130,14 +119,14 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 	{
 		new_screen.LeftEdge = 0;
 		new_screen.TopEdge = 0;
-		new_screen.Width = this_screen.width;
-		new_screen.Height = this_screen.height;
-		new_screen.Depth = this_screen.depth;
-		new_screen.ViewModes = this_screen.view_modes;
+		new_screen.Width = SCREEN_WIDTH;
+		new_screen.Height = SCREEN_HEIGHT;
+		new_screen.Depth = SCREEN_DEPTH;
+		new_screen.ViewModes = SPRITES;
 		new_screen.BlockPen = 0;
 		new_screen.DetailPen = 0;
 
-		if (_width >= 640)
+		if (SCREEN_WIDTH >= 640)
 		{
 			new_screen.ViewModes |= HIRES;
 #ifdef DEBUG_MACROS			
@@ -145,7 +134,7 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 #endif
 		}
 
-		if (_height >= 512)
+		if (SCREEN_HEIGHT >= 512)
 		{
 			new_screen.ViewModes |= LACE;
 #ifdef DEBUG_MACROS
@@ -164,8 +153,8 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 		{
 			ShowTitle(bscreen.screen, FALSE);
 			/* Blacken the palette */
-			// set_palette_to_black(&(bscreen.screen->ViewPort), 0, _colors);
-			set_palette_to_grey(&(bscreen.screen->ViewPort), 0, _colors);
+			// set_palette_to_black(&(bscreen.screen->ViewPort), 0, COLORS);
+			set_palette_to_grey(&(bscreen.screen->ViewPort), 0, COLORS);
 
 			WaitTOF();
 
@@ -175,8 +164,8 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 			new_window.DetailPen = 0;
 			new_window.BlockPen = 0;
 			new_window.Title = NULL;
-			new_window.Width = this_screen.width - SCR_PAD_X;
-			new_window.Height = this_screen.height;
+			new_window.Width = SCREEN_WIDTH; // - SCR_PAD_X;
+			new_window.Height = SCREEN_HEIGHT;
 			new_window.BlockPen = 0;
 			new_window.DetailPen = 0;
 			new_window.IDCMPFlags = IDCMP_MOUSEMOVE | IDCMP_MOUSEBUTTONS | IDCMP_RAWKEY | IDCMP_INTUITICKS;
@@ -196,15 +185,16 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 			}
 
 			bscreen.screen->FirstWindow = bscreen.window;
+			// bscreen.rp = &(bscreen.screen->RastPort);
 
 			ScreenToFront(bscreen.screen);
 			return &bscreen;
 		}
 		else
 		{
-			for(i = 0; i  < (_dbuffer?2:1); i++)
+			for(i = 0; i  < (DBUFFER_ENABLED?2:1); i++)
 			{
-				freeBitMap(bscreen.bitmaps[i], this_screen.depth, this_screen.width, this_screen.height);
+				freeBitMap(bscreen.bitmaps[i], SCREEN_DEPTH, SCREEN_WIDTH, SCREEN_HEIGHT);
 				free(bscreen.palettes[i]);
 			}
 			printf("openMainScreenCustom(), OpenScreen() failed!\n");
@@ -220,7 +210,6 @@ buffered_screen *openMainScreenCustom(USHORT _width, USHORT _height, USHORT _col
 
 void closeMainScreen(buffered_screen *screen)
 {
-	screen_geometry this_screen;
 #ifdef DEBUG_MACROS
 	printf("closeMainScreen()\n");
 #endif
@@ -239,10 +228,7 @@ void closeMainScreen(buffered_screen *screen)
 
 		for(i = 0; i  < ((!(screen->double_buffer_enabled))?1:2); i++)
 		{
-			this_screen.depth = _bmp[i]->Depth;
-			this_screen.width = _bmp[i]->BytesPerRow << 3;
-			this_screen.height = _bmp[i]->Rows;
-			freeBitMap(_bmp[i], this_screen.depth, this_screen.width, this_screen.height);
+			freeBitMap(_bmp[i], SCREEN_DEPTH, SCREEN_WIDTH, SCREEN_HEIGHT);
 			free(screen->palettes[i]);
 		}
 
@@ -273,7 +259,11 @@ struct BitMap *setupBitMap(LONG depth, LONG width, LONG height)
 		freePlanes(main_bitmap, depth, width, height);
 	}
 
-	FreeMem(main_bitmap, (LONG)sizeof(struct BitMap));
+	if (main_bitmap != NULL)
+	{
+		FreeMem(main_bitmap, (LONG)sizeof(struct BitMap));
+		main_bitmap = NULL;
+	}
 	return NULL;
 }
 
@@ -282,7 +272,11 @@ struct BitMap *setupBitMap(LONG depth, LONG width, LONG height)
 */
 VOID freeBitMap(struct BitMap *main_bitmaps, LONG depth, LONG width, LONG height)
 {
-	freePlanes(main_bitmaps, depth, width, height);
+	if (main_bitmaps != NULL)
+	{
+		freePlanes(main_bitmaps, depth, width, height);
+		main_bitmaps = NULL;
+	}	
 	// FreeMem(main_bitmaps, (LONG)sizeof(struct BitMap));
 }
 

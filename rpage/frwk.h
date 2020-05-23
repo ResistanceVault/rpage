@@ -230,10 +230,14 @@ void rpage_input_enable(BOOL enabled);
 /// Flush the latest mouse update from the input system.<br>
 /// This maybe required on a multitasking system.
 void rpage_mouse_button_flush(void);
+/// Private function that sets a bitmap to the mouse cursor
+void rpage_mouse_set_system_image(unsigned short img_index);
 /// Show the mouse cursor.
 void rpage_mouse_show(void);
 /// Change the look of the mouse cursor to warn the end-user that the application is currently busy.
 void rpage_mouse_wait(void);
+/// Change the look of the mouse cursor to warn the end-user that s.he should read some text.
+void rpage_mouse_read(void);
 /// Hide the mouse cursor.
 void rpage_mouse_hide(void);
 /// Defines the new aspect of the mouse cursor. Bitmap format is the regular Amiga hardware sprite format.

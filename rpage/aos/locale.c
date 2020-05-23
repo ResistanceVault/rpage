@@ -26,7 +26,7 @@ UBYTE *load_pak_locale_to_array(char *text_array[], UWORD array_size, char *file
     BPTR fileHandle;
 	char tag[4], packer_tag[4];
     UWORD unpacked_block_size, packed_block_size;
-    UBYTE *packed_block, *unpacked_block = NULL, *str_ptr;
+    UBYTE *packed_block = NULL, *unpacked_block = NULL, *str_ptr;
     short i;
 #ifdef DEBUG_MACROS
     printf("load_pak_locale_to_array(%s,%d);\n", filename, array_size);
@@ -105,7 +105,11 @@ UBYTE *load_pak_locale_to_array(char *text_array[], UWORD array_size, char *file
                 }
 
                 // Free the allocated memory
-                free(packed_block);
+                if (packed_block != NULL)
+                {
+                    free(packed_block);
+                    packed_block = NULL;
+                }
                 // free(unpacked_block);
             }
             else

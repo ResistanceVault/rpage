@@ -11,14 +11,14 @@
 #define DEFAULT_HEIGHT 200
 #define DISPL_WIDTH (DEFAULT_WIDTH)
 #define DISPL_HEIGHT (DEFAULT_HEIGHT)
-#define WIDTH (DEFAULT_WIDTH)
-#define HEIGHT (DEFAULT_HEIGHT)
+#define SCREEN_WIDTH (DEFAULT_WIDTH)
+#define SCREEN_HEIGHT (DEFAULT_HEIGHT)
 #ifdef VGA_ENABLED
-#define DEPTH    7
+#define SCREEN_DEPTH    7
 #else
-#define DEPTH    5
+#define SCREEN_DEPTH    5
 #endif
-#define COLOURS  (1 << DEPTH)
+#define COLORS  (1 << SCREEN_DEPTH)
 
 #endif // #ifndef SCREEN_SIZE
 #endif

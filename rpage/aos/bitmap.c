@@ -29,6 +29,9 @@ struct BitMap *allocate_new_bitmap(short width, short height, short depth)
 	new_bitmap = (struct BitMap *)AllocMem((LONG)sizeof(struct BitMap), MEMF_CLEAR);
 	InitBitMap(new_bitmap, depth, width, height);
 
+#ifdef DEBUG_MACROS
+	printf("allocate_new_bitmap(), size = %d", size * depth);
+#endif
 	plane_prt = (PLANEPTR)AllocMem(size * depth, MEMF_CHIP | MEMF_CLEAR);
 	for (i = 0; i < depth; i++)
 	{
@@ -342,8 +345,11 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 					Read(fileHandle, packed_block, packed_block_size);
 					// printf("!!!!MINIZ block size: %d\n", packed_block_size);
 					tinfl_decompress_mem_to_mem((**new_bitmap).Planes[0], size * d, packed_block, packed_block_size, 1);
-					if (self_alloc_unpack_buffer)
+					if (self_alloc_unpack_buffer && packed_block != NULL)
+					{
 						FreeMem(packed_block, packed_block_size);
+						packed_block = NULL;
+					}
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -367,8 +373,11 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 #endif
 					Read(fileHandle, packed_block, packed_block_size);
 					ShrinklerDecompress(packed_block, (**new_bitmap).Planes[0], NULL, NULL);
-					if (self_alloc_unpack_buffer)
+					if (self_alloc_unpack_buffer && packed_block != NULL)
+					{
 						FreeMem(packed_block, packed_block_size);
+						packed_block = NULL;
+					}
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -395,8 +404,11 @@ BOOL load_pak_img_to_new_bitmap(struct BitMap **new_bitmap, amiga_color **new_pa
 					Read(fileHandle, packed_block, packed_block_size);
 					Destination = (**new_bitmap).Planes[0];
 					nrv2s_unpack(packed_block, Destination);
-					if (self_alloc_unpack_buffer)
+					if (self_alloc_unpack_buffer && packed_block != NULL)
+					{
 						FreeMem(packed_block, packed_block_size);
+						packed_block = NULL;
+					}
 #ifdef DEBUG_MACROS
 					printf(", loaded packed plane #%d", i);
 #endif
@@ -458,7 +470,6 @@ void free_allocated_bitmap(struct BitMap *allocated_bitmap)
 	if (allocated_bitmap)
 	{
 		UWORD i;
-		ULONG block_len;
 
 #ifdef DEBUG_MACROS		
 		printf("free_allocated_bitmap() allocated_bitmap = %x\n", (int)allocated_bitmap);
@@ -468,18 +479,25 @@ void free_allocated_bitmap(struct BitMap *allocated_bitmap)
 		      (*allocated_bitmap).Depth,
 		      (int)(*allocated_bitmap).pad);
 #endif
-		block_len = RASSIZE((*allocated_bitmap).BytesPerRow * 8, (*allocated_bitmap).Rows);
-		for (i = 0; i < (*allocated_bitmap).Depth; i++)
+		if (allocated_bitmap->Planes[0] != NULL)
+			FreeMem(allocated_bitmap->Planes[0], RASSIZE(allocated_bitmap->BytesPerRow << 3, allocated_bitmap->Rows) * allocated_bitmap->Depth);
+		else
+			printf("free_allocated_bitmap() error, plane ptr should not be NULL!\n");		
+
+		for (i = 0; i < allocated_bitmap->Depth; i++)
 		{
 #ifdef DEBUG_MACROS				
-			printf("FreeMem() plane[%i], block_len = %i\n", i, (int)block_len);
+			printf("FreeMem() plane[%i], adr = %x, block_len = %i\n", i, allocated_bitmap->Planes[i], (int)block_len);
 #endif
-			FreeMem((*allocated_bitmap).Planes[i],
-						   block_len);
+			if (allocated_bitmap->Planes[i] != NULL)
+				allocated_bitmap->Planes[i] = NULL;
 		}
 
-		block_len = (LONG)sizeof(struct BitMap);
-		FreeMem(allocated_bitmap, block_len);
+		if (allocated_bitmap != NULL)
+		{
+			FreeMem(allocated_bitmap, (LONG)sizeof(struct BitMap));
+			allocated_bitmap = NULL;
+		}
 	}
 }
 

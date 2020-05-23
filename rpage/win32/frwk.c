@@ -94,7 +94,7 @@ void rpage_video_open(int screen_mode)
 		{
 			SDL_SetHint("SDL_HINT_RENDER_SCALE_QUALITY", "nearest");
 			main_renderer = SDL_CreateRenderer(main_window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-			SDL_RenderSetLogicalSize(main_renderer, WIDTH, HEIGHT);
+			SDL_RenderSetLogicalSize(main_renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			SDL_SetRenderDrawColor(main_renderer, 255, 0, 255, 255);
 		}
 		else

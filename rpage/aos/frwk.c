@@ -55,9 +55,6 @@ extern struct Custom far custom;
 struct Task *main_task = NULL;
 BYTE oldPri;
 
-struct View my_view;
-struct View *my_old_view;
-
 /* Main ViewPort */
 buffered_screen *main_screen = NULL;
 short scr_x_offset = 0, scr_y_offset = 0;
@@ -232,11 +229,15 @@ ULONG rpage_get_avail_memory(void)
 
 void rpage_free_memory_block(BYTE *block_ptr, UWORD block_size)
 {
-    FreeMem(block_ptr, block_size);
+    if (block_ptr != NULL)
+        FreeMem(block_ptr, block_size);
+    else
+        rpage_system_alert("rpage_free_memory_block(), pointer is NULL!");
 }
 
 void rpage_system_alert(char *alert_message)
 {
+#ifdef GAME_VISUAL_DEBUG
     char guru_format_message[128];
     short margin_x; 
 #ifdef DEBUG_MACROS
@@ -252,6 +253,9 @@ void rpage_system_alert(char *alert_message)
     guru_format_message[1] = margin_x & 0xFF;
     guru_format_message[2] = 0xF;
     DisplayAlert(RECOVERY_ALERT, guru_format_message, 32);
+#else
+    printf("/!\\%s\n", alert_message);
+#endif
 }
 
 void rpage_system_flash(void)
@@ -374,9 +378,9 @@ void rpage_video_clear_bit_mask(UBYTE bit_mask)
     if (main_screen != NULL)
     {
         short i;
-        for (i = 0; i < main_screen->screen->RastPort.BitMap->Depth; i++)
+        for (i = 0; i < SCREEN_DEPTH; i++)
             if (bit_mask & (1 << i))
-                BltClear(main_screen->screen->RastPort.BitMap->Planes[i], RASSIZE(main_screen->screen->Width, main_screen->screen->Height), 0);
+                BltClear(main_screen->screen->RastPort.BitMap->Planes[i], RASSIZE(SCREEN_WIDTH, SCREEN_HEIGHT), 0);
     }
     else
     {
@@ -393,10 +397,10 @@ void rpage_video_clear(void)
     if (main_screen != NULL)
     {
         short i;
-        for (i = 0; i < main_screen->screen->RastPort.BitMap->Depth; i++)
+        for (i = 0; i < SCREEN_DEPTH; i++)
         {
             // memset(main_screen->RastPort.BitMap->Planes[i], 0x0, RASSIZE(main_screen->Width, main_screen->Height));
-            BltClear(main_screen->screen->RastPort.BitMap->Planes[i], RASSIZE(main_screen->screen->Width, main_screen->screen->Height), 0);
+            BltClear(main_screen->screen->RastPort.BitMap->Planes[i], RASSIZE(SCREEN_WIDTH, SCREEN_HEIGHT), 0);
             // WaitBlit();
         }
     }
@@ -446,7 +450,7 @@ void __inline rpage_video_scroll_bit_mask(short x, short y, UBYTE bit_mask)
         dst_y = y;
     }
 
-    BltBitMap(main_screen->bitmaps[main_screen->physical], src_x, src_y, main_screen->bitmaps[main_screen->physical], dst_x, dst_y, WIDTH - abs(x), HEIGHT - abs(y), 0xC0, bit_mask, NULL);
+    BltBitMap(main_screen->bitmaps[main_screen->physical], src_x, src_y, main_screen->bitmaps[main_screen->physical], dst_x, dst_y, SCREEN_WIDTH - abs(x), SCREEN_HEIGHT - abs(y), 0xC0, bit_mask, NULL);
 }
 
 void __inline rpage_bitmap_blit(rpage_bitmap *source_bitmap, short source_x, short source_y, short width, short height, short x, short y, rpage_bitmap *dest_bitmap)
@@ -615,15 +619,39 @@ void __inline rpage_video_set_palette_to_black(short first_color, short last_col
 void __inline rpage_video_set_palette_to_grey(short first_color, short last_color)
 {
 	int loop;
-	for (loop = first_color; loop <= last_color; loop++)
-	{
-		int luma = range_adjust(loop, first_color, last_color, 0, 255);
-#ifdef VGA_ENABLED
-		main_screen->palettes[main_screen->physical][loop] = components_to_rgb8(luma, luma, luma);
-#else        
-		main_screen->palettes[main_screen->physical][loop] = components_to_rgb4(luma, luma, luma);
-#endif
-	}
+    int *luma, tmp_col;
+
+    luma = (int *)calloc(last_color + 1, sizeof(int));
+    if (luma != NULL)
+    {
+        for (loop = first_color; loop <= last_color; loop++)
+            luma[loop] = range_adjust(loop, first_color, last_color, 0, 255);
+
+        // Swap some of the colors (19 <-> 31, 18 <-> 4),
+        // so that the Amiga cursor looks ok.
+        if (last_color >= 31)
+        {
+            tmp_col = luma[19];
+            luma[19] = luma[31];
+            luma[31] = tmp_col;
+
+            tmp_col = luma[18];
+            luma[18] = luma[4];
+            luma[4] = tmp_col;
+        }
+
+        // Set the colors
+        for (loop = first_color; loop <= last_color; loop++)
+        {
+    #ifdef VGA_ENABLED
+            main_screen->palettes[main_screen->physical][loop] = components_to_rgb8(luma[loop], luma[loop], luma[loop]);
+    #else        
+            main_screen->palettes[main_screen->physical][loop] = components_to_rgb4(luma[loop], luma[loop], luma[loop]);
+    #endif
+        }
+
+        free(luma);
+    }
 }
 
 void rpage_video_show_freemem(short x, short y, short width, short height)
@@ -713,7 +741,7 @@ void rpage_bitmap_draw_tileset(rpage_bitmap *dest_bitmap, rpage_bitmap *tileset_
 void __inline rpage_video_fill_rect(rect *r, short color)
 {
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+        color = (1 << SCREEN_DEPTH) - 1;
     SetAPen(&(main_screen->screen->RastPort), color);
     RectFill( &(main_screen->screen->RastPort), r->sx, r->sy, r->ex, r->ey);
 }
@@ -751,7 +779,7 @@ void __inline rpage_video_fill_rect_clip(rect *r, short color, rect *clipping_re
         return;
 
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+        color = (1 << SCREEN_DEPTH) - 1;
     SetAPen(&(main_screen->screen->RastPort), color);
     tmp_mask = main_screen->screen->RastPort.Mask;
     main_screen->screen->RastPort.Mask = 0x8;    
@@ -762,7 +790,7 @@ void __inline rpage_video_fill_rect_clip(rect *r, short color, rect *clipping_re
 void rpage_video_draw_polygon(poly *p, short color)
 {
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+        color = (1 << SCREEN_DEPTH) - 1;
     SetAPen(&(main_screen->screen->RastPort), color);
     Move(&(main_screen->screen->RastPort), p->p0.x, p->p0.y);
     Draw(&(main_screen->screen->RastPort), p->p1.x, p->p1.y);          
@@ -777,11 +805,11 @@ void rpage_video_draw_rect(rect *r, short color)
 
     video_rect.sx = 0;
     video_rect.sy = 0;
-    video_rect.ex = main_screen->screen->Width - 1;
-    video_rect.ey = main_screen->screen->Height - 1;
+    video_rect.ex = SCREEN_WIDTH - 1;
+    video_rect.ey = SCREEN_HEIGHT - 1;
 
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+        color = (1 << SCREEN_DEPTH) - 1;
     SetAPen(&(main_screen->screen->RastPort), color);
     Move(&(main_screen->screen->RastPort), max(r->sx, video_rect.sx), max(r->sy, video_rect.sy));
     Draw(&(main_screen->screen->RastPort), min(r->ex, video_rect.ex), max(r->sy, video_rect.sy));
@@ -793,7 +821,7 @@ void rpage_video_draw_rect(rect *r, short color)
 void __inline rpage_video_set_pixel(short x, short y, short color)
 {
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;    
+        color = (1 << SCREEN_DEPTH) - 1;    
     SetAPen(&(main_screen->screen->RastPort), color);
     WritePixel(&(main_screen->screen->RastPort), x, y);
 }
@@ -844,12 +872,12 @@ void rpage_video_draw_text_bit_mask(char *str, short x, short y, short color_ind
 void rpage_video_draw_text(char *str, short x, short y, short color)
 {
     if (color < 0)
-        color = (1 << main_screen->screen->RastPort.BitMap->Depth) - 1;
+        color = (1 << SCREEN_DEPTH) - 1;
 
     if (x < 0)
-        x = (main_screen->screen->Width - TextLength(&(main_screen->screen->RastPort), str, strlen(str))) >> 1;
+        x = (SCREEN_WIDTH - TextLength(&(main_screen->screen->RastPort), str, strlen(str))) >> 1;
     if (y < 0)
-        y = (main_screen->screen->Height - 8) >> 1;
+        y = (SCREEN_HEIGHT - 8) >> 1;
 
     SetAPen(&(main_screen->screen->RastPort), color);
     SetBPen(&(main_screen->screen->RastPort), 0);
@@ -1081,32 +1109,50 @@ void rpage_mouse_set_bitmap(UWORD *sprite_data, vec2 *hotspot)
         rpage_system_alert("Cannot set cursor state without a window ownership!");
 }
 
-void rpage_mouse_show(void)
+void rpage_mouse_set_system_image(unsigned short img_index)
 {
     if (main_screen != NULL && main_screen->screen->FirstWindow != NULL)
     {
 #ifdef DEBUG_MACROS
-        printf("rpage_mouse_show()\n");
+        printf("rpage_mouse_set_system_img(%d)\n", img_index);
 #endif
-        // main_screen->window->Flags = main_screen->window->Flags | WFLG_WINDOWACTIVE;
-        SetPointer(main_screen->screen->FirstWindow, pointer_normal_data, 16, 16, -1, -1);
+        SetPointer(main_screen->screen->FirstWindow, system_cursors_img[img_index], 16, 16, system_cursors_hotspot[img_index].x, system_cursors_hotspot[img_index].y);
     }
     else
-        rpage_system_alert("Cannot set cursor state without a window ownership!");
+        rpage_system_alert("Cannot set cursor state without a window ownership!");   
+}
+
+void rpage_mouse_show(void)
+{
+    rpage_mouse_set_system_image(MOUSE_CURSOR_POINT);
+//     if (main_screen != NULL && main_screen->screen->FirstWindow != NULL)
+//     {
+// #ifdef DEBUG_MACROS
+//         printf("rpage_mouse_show()\n");
+// #endif
+//         SetPointer(main_screen->screen->FirstWindow, system_cursors_img[MOUSE_CURSOR_POINT], 16, 16, system_cursors_hotspot[MOUSE_CURSOR_POINT].x, system_cursors_hotspot[MOUSE_CURSOR_POINT].y);
+//     }
+//     else
+//         rpage_system_alert("Cannot set cursor state without a window ownership!");
 }
 
 void rpage_mouse_wait(void)
 {
-    if (main_screen != NULL && main_screen->screen->FirstWindow != NULL)
-    {
-#ifdef DEBUG_MACROS
-        printf("rpage_mouse_wait()\n");
-#endif
-        // ClearPointer(main_screen->screen->FirstWindow);
-        SetPointer(main_screen->screen->FirstWindow, wait_pointer, WAIT_POINTER_HEIGHT, 16, -1, -1);
-    }
-    else
-        rpage_system_alert("Cannot set cursor state without a window ownership!");
+    rpage_mouse_set_system_image(MOUSE_CURSOR_WAIT);
+//     if (main_screen != NULL && main_screen->screen->FirstWindow != NULL)
+//     {
+// #ifdef DEBUG_MACROS
+//         printf("rpage_mouse_wait()\n");
+// #endif
+//         SetPointer(main_screen->screen->FirstWindow, system_cursors_img[MOUSE_CURSOR_WAIT], 16, 16, system_cursors_hotspot[MOUSE_CURSOR_WAIT].x, system_cursors_hotspot[MOUSE_CURSOR_WAIT].y);
+//     }
+//     else
+//         rpage_system_alert("Cannot set cursor state without a window ownership!");
+}
+
+void rpage_mouse_read(void)
+{
+    rpage_mouse_set_system_image(MOUSE_CURSOR_READ);
 }
 
 void rpage_mouse_hide(void)
@@ -1116,7 +1162,7 @@ void rpage_mouse_hide(void)
 #ifdef DEBUG_MACROS
         printf("rpage_mouse_hide()\n");
 #endif
-        SetPointer(main_screen->screen->FirstWindow, pointer_normal_data, 0, 0, 0, 0);
+        SetPointer(main_screen->screen->FirstWindow, system_cursors_img[0], 0, 0, 0, 0);
     }
     else
         rpage_system_alert("Cannot set cursor state without a window ownership!");
