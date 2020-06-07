@@ -9,7 +9,7 @@ R-PAGE is brought to you by the **demoscene** group [RESISTANCE](https://resista
 * Written in C language
 * AmigaOS & OS-friendly for all the access to the Amiga hardware
 * Portable code, builds on SAS/C
-* Reportedly works on MorphOS using the built-in AmigaOS emulation layer
+* ~~Reportedly works on MorphOS using the built-in AmigaOS emulation layer~~
 * AMIGA OCS/ECS only (AGA is on the roadmap)
 
 ### What can I do with this ?
